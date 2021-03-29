@@ -3489,11 +3489,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Research\\Workday\\workday\\api\\Workday.PayrollScheduler\\Workday.PayrollScheduler.csproj",
+      "projectUniqueName": "D:\\Repos\\workday\\api\\Workday.PayrollScheduler\\Workday.PayrollScheduler.csproj",
       "projectName": "Workday.PayrollScheduler",
-      "projectPath": "D:\\Research\\Workday\\workday\\api\\Workday.PayrollScheduler\\Workday.PayrollScheduler.csproj",
+      "projectPath": "D:\\Repos\\workday\\api\\Workday.PayrollScheduler\\Workday.PayrollScheduler.csproj",
       "packagesPath": "C:\\Users\\Ariyanto\\.nuget\\packages\\",
-      "outputPath": "D:\\Research\\Workday\\workday\\api\\Workday.PayrollScheduler\\obj\\",
+      "outputPath": "D:\\Repos\\workday\\api\\Workday.PayrollScheduler\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3512,8 +3512,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj": {
-              "projectPath": "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj"
+            "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj": {
+              "projectPath": "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj"
             }
           }
         }

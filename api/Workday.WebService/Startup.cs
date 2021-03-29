@@ -1,4 +1,20 @@
-﻿using System;
+﻿
+/*--------------------------------------------------
+ *
+ *  Workday - HRIS and Payroll System
+ * 
+ *  Version : 1.0
+ *  Author  : Ariyanto
+ *  E-mail  : neonerdy@gmail.com
+ * 
+ *  © 2021, All Right Reserved  
+ * 
+ *--------------------------------------------------
+ */
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

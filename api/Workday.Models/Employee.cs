@@ -1,4 +1,19 @@
-﻿using System;
+﻿
+/*--------------------------------------------------
+ *
+ *  Workday - HRIS and Payroll System
+ * 
+ *  Version : 1.0
+ *  Author  : Ariyanto
+ *  E-mail  : neonerdy@gmail.com
+ * 
+ *  © 2021, All Right Reserved  
+ * 
+ *--------------------------------------------------
+ */
+
+
+using System;
 using System.Collections.Generic;
 
 namespace Workday.Models
@@ -6,6 +21,7 @@ namespace Workday.Models
     public class Employee
     {
         //Personal
+
         public Guid ID { get; set; }
         public string EmployeeCode { get; set; }
         public string EmployeeName { get; set; }
@@ -16,8 +32,7 @@ namespace Workday.Models
         public string MaritalStatus { get; set; }
         public int NumberOfChilds { get; set; }
         public string BloodType { get; set; }
-
-
+        
         //Address
 
         public string Address { get; set; }
@@ -28,8 +43,7 @@ namespace Workday.Models
         public string NationalIdentityId { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-
-        
+                
         //Office
 
         public Guid BranchId { get; set; }
@@ -43,7 +57,7 @@ namespace Workday.Models
         public string EmploymentStatus { get; set; }
         public Guid ApprovalLineId { get; set; }
 
-        
+                
         //Payroll
 
         public decimal BasicSalary { get; set; }
@@ -56,6 +70,7 @@ namespace Workday.Models
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        public List<EmployeeAttachment> EmployeeAttachments { get; set; }
         public List<EmployeeCourse> EmployeeCourses { get; set; }
         public List<EmployeeEducation> EmployeeEducations { get; set; }
         public List<EmployeeFamily> EmployeeFamilies { get; set; }

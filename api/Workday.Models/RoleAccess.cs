@@ -16,15 +16,13 @@ using System;
 
 namespace Workday.Models
 {
-    public class EmployeeEducation
+    public class RoleAccess
     {
         public Guid ID { get; set; }
-        public Guid EmployeeId { get; set; }
-        public string Grade { get; set; }
-        public string InstitutionName { get; set; }
-        public string Majors { get; set; }
-        public string StartYear { get; set; }
-        public string EndYear { get; set; }
+        public string RoleId { get; set; }
+        public bool IsAllowDashboard { get; set; }
+        public bool IsAllowPayroll { get; set; }
+
 
     }
 }

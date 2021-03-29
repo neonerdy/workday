@@ -16,15 +16,15 @@ using System;
 
 namespace Workday.Models
 {
-    public class EmployeeEducation
+    public class Task
     {
         public Guid ID { get; set; }
-        public Guid EmployeeId { get; set; }
-        public string Grade { get; set; }
-        public string InstitutionName { get; set; }
-        public string Majors { get; set; }
-        public string StartYear { get; set; }
-        public string EndYear { get; set; }
-
+        public string Title { get; set; }
+        public string Priority { get; set; }
+        public Guid AssignedTo { get; set; }
+        public string Estimation { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -1,6 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+/*--------------------------------------------------
+ *
+ *  Workday - HRIS and Payroll System
+ * 
+ *  Version : 1.0
+ *  Author  : Ariyanto
+ *  E-mail  : neonerdy@gmail.com
+ * 
+ *  © 2021, All Right Reserved  
+ * 
+ *--------------------------------------------------
+ */
+
+using System;
 
 namespace Workday.Models
 {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj": {}
+    "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj": {}
   },
   "projects": {
-    "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj": {
+    "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj",
+        "projectUniqueName": "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj",
         "projectName": "Workday.Models",
-        "projectPath": "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj",
+        "projectPath": "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj",
         "packagesPath": "C:\\Users\\Ariyanto\\.nuget\\packages\\",
-        "outputPath": "D:\\Research\\Workday\\workday\\api\\Workday.Models\\obj\\",
+        "outputPath": "D:\\Repos\\workday\\api\\Workday.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

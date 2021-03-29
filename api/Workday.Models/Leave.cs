@@ -12,22 +12,24 @@
  *--------------------------------------------------
  */
 
+
 using System;
 
 namespace Workday.Models
 {
-    public class EmployeeCourse
+    public class Leave
     {
         public Guid ID { get; set; }
         public Guid EmployeeId { get; set; }
-        public string CourseName { get; set; }
-        public string Provider { get; set; }
+        public Guid LeaveTypeId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Duration { get; set; }
-        public bool IsCertified { get; set; }
-
+        public string Note { get; set; }
+        public string Status { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public DateTime ApprovedDate { get; set; }
+        public bool IsTaken { get; set; }
 
     }
-
 }

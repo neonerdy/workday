@@ -16,15 +16,15 @@ using System;
 
 namespace Workday.Models
 {
-    public class EmployeeEducation
+    public class Setting
     {
         public Guid ID { get; set; }
-        public Guid EmployeeId { get; set; }
-        public string Grade { get; set; }
-        public string InstitutionName { get; set; }
-        public string Majors { get; set; }
-        public string StartYear { get; set; }
-        public string EndYear { get; set; }
-
+        public string CompanyName { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string ZipCode { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -12397,11 +12397,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Research\\Workday\\workday\\api\\Workday.WebService\\Workday.WebService.csproj",
+      "projectUniqueName": "D:\\Repos\\workday\\api\\Workday.WebService\\Workday.WebService.csproj",
       "projectName": "Workday.WebService",
-      "projectPath": "D:\\Research\\Workday\\workday\\api\\Workday.WebService\\Workday.WebService.csproj",
+      "projectPath": "D:\\Repos\\workday\\api\\Workday.WebService\\Workday.WebService.csproj",
       "packagesPath": "C:\\Users\\Ariyanto\\.nuget\\packages\\",
-      "outputPath": "D:\\Research\\Workday\\workday\\api\\Workday.WebService\\obj\\",
+      "outputPath": "D:\\Repos\\workday\\api\\Workday.WebService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12420,8 +12420,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj": {
-              "projectPath": "D:\\Research\\Workday\\workday\\api\\Workday.Models\\Workday.Models.csproj"
+            "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj": {
+              "projectPath": "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj"
             }
           }
         }
