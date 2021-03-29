@@ -1,0 +1,14 @@
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.csprojAssemblyReference.cache
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.csproj.CoreCompileInputs.cache
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.RazorAssemblyInfo.cache
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.RazorAssemblyInfo.cs
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.AssemblyInfoInputs.cache
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.AssemblyInfo.cs
+D:\Research\WorkdayCore\WorkdayCore\bin\Debug\netcoreapp2.2\WorkdayCore.deps.json
+D:\Research\WorkdayCore\WorkdayCore\bin\Debug\netcoreapp2.2\WorkdayCore.runtimeconfig.json
+D:\Research\WorkdayCore\WorkdayCore\bin\Debug\netcoreapp2.2\WorkdayCore.runtimeconfig.dev.json
+D:\Research\WorkdayCore\WorkdayCore\bin\Debug\netcoreapp2.2\WorkdayCore.dll
+D:\Research\WorkdayCore\WorkdayCore\bin\Debug\netcoreapp2.2\WorkdayCore.pdb
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.RazorTargetAssemblyInfo.cache
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.dll
+D:\Research\WorkdayCore\WorkdayCore\obj\Debug\netcoreapp2.2\WorkdayCore.pdb

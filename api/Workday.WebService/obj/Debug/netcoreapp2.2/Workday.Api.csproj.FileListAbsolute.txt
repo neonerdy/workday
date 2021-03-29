@@ -1,0 +1,17 @@
+D:\Research\Workday\WorkdayAPI\bin\Debug\netcoreapp2.2\Workday.Api.deps.json
+D:\Research\Workday\WorkdayAPI\bin\Debug\netcoreapp2.2\Workday.Api.runtimeconfig.json
+D:\Research\Workday\WorkdayAPI\bin\Debug\netcoreapp2.2\Workday.Api.runtimeconfig.dev.json
+D:\Research\Workday\WorkdayAPI\bin\Debug\netcoreapp2.2\Workday.Api.dll
+D:\Research\Workday\WorkdayAPI\bin\Debug\netcoreapp2.2\Workday.Api.pdb
+D:\Research\Workday\WorkdayAPI\bin\Debug\netcoreapp2.2\Workday.Models.dll
+D:\Research\Workday\WorkdayAPI\bin\Debug\netcoreapp2.2\Workday.Models.pdb
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.csprojAssemblyReference.cache
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.csproj.CoreCompileInputs.cache
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.RazorAssemblyInfo.cache
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.RazorAssemblyInfo.cs
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.AssemblyInfoInputs.cache
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.AssemblyInfo.cs
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.RazorTargetAssemblyInfo.cache
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.csproj.CopyComplete
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.dll
+D:\Research\Workday\WorkdayAPI\obj\Debug\netcoreapp2.2\Workday.Api.pdb
