@@ -1,0 +1,569 @@
+USE [WORKDAY]
+GO
+/****** Object:  Table [dbo].[WorkSchedule]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[WorkSchedule](
+	[ID] [uniqueidentifier] NOT NULL,
+	[ScheduleName] [varchar](50) NULL,
+	[ScheduleIn] [varchar](50) NULL,
+	[ScheduleOut] [varchar](50) NULL,
+	[Note] [varchar](50) NULL,
+ CONSTRAINT [PK_WorkSchedule] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Users](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[UserName] [varchar](50) NULL,
+	[Password] [varchar](50) NULL,
+	[RoleId] [uniqueidentifier] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedDate] [datetime] NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Tasks]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Tasks](
+	[ID] [uniqueidentifier] NOT NULL,
+	[Title] [varchar](50) NULL,
+	[Priority] [varchar](50) NULL,
+	[AssignedTo] [uniqueidentifier] NULL,
+	[Estimation] [varchar](50) NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[Status] [varchar](50) NULL,
+ CONSTRAINT [PK_Tasks] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Settings]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Settings](
+	[ID] [uniqueidentifier] NOT NULL,
+	[CompanyName] [varchar](50) NULL,
+	[Address] [varchar](50) NULL,
+	[Province] [nchar](10) NULL,
+	[City] [varchar](50) NULL,
+	[ZipCode] [varchar](50) NULL,
+	[Phone] [varchar](50) NULL,
+	[Email] [varchar](50) NULL,
+ CONSTRAINT [PK_Settings] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[SalaryComponents]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[SalaryComponents](
+	[ID] [uniqueidentifier] NOT NULL,
+	[ComponentName] [varchar](50) NULL,
+	[Type] [varchar](50) NULL,
+	[Occurance] [varchar](50) NULL,
+	[Amount] [decimal](18, 0) NULL,
+ CONSTRAINT [PK_SalaryComponents] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Roles]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Roles](
+	[ID] [uniqueidentifier] NOT NULL,
+	[RoleName] [varchar](50) NULL,
+	[Description] [varchar](50) NULL,
+ CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[RoleAccesses]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RoleAccesses](
+	[ID] [uniqueidentifier] NULL,
+	[RoleId] [uniqueidentifier] NULL,
+	[IsAllowDashboard] [bit] NULL,
+	[IsAllowPayroll] [bit] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Payrolls]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Payrolls](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[Month] [int] NULL,
+	[Year] [int] NULL,
+	[ReportingDate] [datetime] NULL,
+	[BasicSalaryAmount] [decimal](18, 0) NULL,
+	[AllowanceAmount] [decimal](18, 0) NULL,
+	[DeductionAmount] [decimal](18, 0) NULL,
+	[OverTimeAmount] [decimal](18, 0) NULL,
+	[TakeHomePayAmount] [decimal](18, 0) NULL,
+	[CreatedDate] [datetime] NULL,
+ CONSTRAINT [PK_Payrolls] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PayrollComponents]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PayrollComponents](
+	[ID] [uniqueidentifier] NOT NULL,
+	[PayrollId] [uniqueidentifier] NULL,
+	[SalaryComponentId] [uniqueidentifier] NULL,
+	[Amount] [decimal](18, 0) NULL,
+ CONSTRAINT [PK_PayrollComponents] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Overtimes]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Overtimes](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[OverTimeDate] [datetime] NULL,
+	[WorkScheduleId] [uniqueidentifier] NULL,
+	[ClockIn] [varchar](50) NULL,
+	[ClockOut] [varchar](50) NULL,
+	[DurationHour] [int] NULL,
+	[DurationMinute] [int] NULL,
+	[Note] [varchar](50) NULL,
+	[Status] [varchar](50) NULL,
+ CONSTRAINT [PK_Overtimes] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Messages]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Messages](
+	[ID] [uniqueidentifier] NOT NULL,
+	[SenderId] [uniqueidentifier] NULL,
+	[DestinationId] [uniqueidentifier] NULL,
+	[Subject] [varchar](50) NULL,
+	[SentDate] [datetime] NULL,
+	[Body] [varchar](500) NULL,
+	[Tag] [varchar](50) NULL,
+	[Status] [varchar](50) NULL,
+ CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[LeaveTypes]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[LeaveTypes](
+	[ID] [uniqueidentifier] NOT NULL,
+	[LeaveTypeName] [varchar](50) NULL,
+	[DaysGiven] [int] NULL,
+	[IsDeduction] [bit] NULL,
+	[Note] [varchar](50) NULL,
+ CONSTRAINT [PK_LeaveTypes] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Leaves]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Leaves](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[LeaveTypeId] [uniqueidentifier] NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[Note] [varchar](50) NULL,
+	[Status] [varchar](50) NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedDate] [datetime] NULL,
+	[ApprovedDate] [datetime] NULL,
+	[IsTaken] [bit] NULL,
+ CONSTRAINT [PK_Leaves] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[JobTitles]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[JobTitles](
+	[ID] [uniqueidentifier] NOT NULL,
+	[JobTitleName] [varchar](50) NULL,
+	[Description] [varchar](50) NULL,
+ CONSTRAINT [PK_JobTitles] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[EmployeeSalaries]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeSalaries](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[SalaryComponentId] [uniqueidentifier] NULL,
+	[Amount] [decimal](18, 0) NULL,
+ CONSTRAINT [PK_EmployeeSalaries] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Employees]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Employees](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeCode] [varchar](50) NULL,
+	[EmployeeName] [varchar](250) NULL,
+	[BirthDate] [datetime] NULL,
+	[BirthPlace] [varchar](50) NULL,
+	[Address] [varchar](50) NULL,
+	[City] [varchar](50) NULL,
+	[Province] [varchar](50) NULL,
+	[ZipCode] [varchar](50) NULL,
+	[Nationality] [varchar](50) NULL,
+	[NationalIdentityId] [varchar](50) NULL,
+	[Phone] [varchar](50) NULL,
+	[Email] [varchar](50) NULL,
+	[Gender] [bit] NULL,
+	[Religion] [varchar](50) NULL,
+	[MaritalStatus] [varchar](50) NULL,
+	[NumberOfChilds] [int] NULL,
+	[BloodType] [varchar](50) NULL,
+	[BranchId] [uniqueidentifier] NULL,
+	[DepartmentId] [uniqueidentifier] NULL,
+	[JobTitleId] [uniqueidentifier] NULL,
+	[JoinDate] [datetime] NULL,
+	[ResignDate] [datetime] NULL,
+	[EmploymentStatus] [varchar](50) NULL,
+	[WorkScheduleId] [uniqueidentifier] NULL,
+	[ApprovalLineId] [uniqueidentifier] NULL,
+	[BasicSalary] [decimal](18, 0) NULL,
+	[PaymentType] [varchar](50) NULL,
+	[BankName] [varchar](50) NULL,
+	[BankAccount] [varchar](50) NULL,
+	[NPWP] [varchar](50) NULL,
+	[Photo] [varchar](50) NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModifiedDate] [datetime] NULL,
+ CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[EmployeeFamilies]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[EmployeeFamilies](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[FamilyName] [varchar](50) NULL,
+	[Relationship] [varchar](50) NULL,
+	[MaritalStatus] [varchar](50) NULL,
+	[Address] [varchar](50) NULL,
+	[Phone] [varchar](50) NULL,
+	[IsEmergencyContact] [bit] NULL,
+ CONSTRAINT [PK_EmployeeFamilies] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[EmployeeEducations]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[EmployeeEducations](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[Grade] [varchar](50) NULL,
+	[InstitutionName] [varchar](50) NULL,
+	[Majors] [varchar](50) NULL,
+	[StartYear] [varchar](50) NULL,
+	[EndYear] [varchar](50) NULL,
+ CONSTRAINT [PK_EmployeeEducations] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[EmployeeCourses]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[EmployeeCourses](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[CourseName] [varchar](50) NULL,
+	[Provider] [varchar](50) NULL,
+	[StartDate] [datetime] NULL,
+	[EndDate] [datetime] NULL,
+	[Duration] [varchar](50) NULL,
+	[IsCertified] [bit] NULL,
+ CONSTRAINT [PK_EmployeeCourses] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[EmployeeAttachments]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[EmployeeAttachments](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[FileName] [varchar](50) NULL,
+	[Type] [varchar](50) NULL,
+	[Size] [varchar](50) NULL,
+	[UploadedDate] [datetime] NULL,
+ CONSTRAINT [PK_EmployeeAttachments] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Departments]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Departments](
+	[ID] [uniqueidentifier] NOT NULL,
+	[DepartmentName] [varchar](50) NULL,
+	[Description] [varchar](50) NULL,
+ CONSTRAINT [PK_Departments] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Claims]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Claims](
+	[ID] [uniqueidentifier] NOT NULL,
+	[ClaimName] [varchar](50) NULL,
+	[Limit] [varchar](50) NULL,
+	[EffectiveDate] [datetime] NULL,
+	[Description] [varchar](250) NULL,
+ CONSTRAINT [PK_Reibursements] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[ClaimRequests]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ClaimRequests](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[ClaimId] [uniqueidentifier] NULL,
+	[ClaimDate] [datetime] NULL,
+	[Note] [varchar](50) NULL,
+	[IsApproved] [bit] NULL,
+	[ApprovalLineId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_ReimbursementRequests] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Branches]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Branches](
+	[ID] [uniqueidentifier] NOT NULL,
+	[BranchName] [varchar](50) NULL,
+	[Province] [varchar](50) NULL,
+	[City] [varchar](50) NULL,
+ CONSTRAINT [PK_Branchs] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Attendances]    Script Date: 03/29/2021 13:58:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Attendances](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[WorkScheduleId] [uniqueidentifier] NULL,
+	[AttendanceDate] [datetime] NULL,
+	[ClockIn] [varchar](50) NULL,
+	[ClockOut] [varchar](50) NULL,
+	[Status] [varchar](50) NULL,
+	[LateDuration] [varchar](50) NULL,
+	[Note] [varchar](50) NULL,
+ CONSTRAINT [PK_Attendance] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO

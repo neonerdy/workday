@@ -20,7 +20,7 @@ namespace Workday.Models
     {
         public Guid ID { get; set; }
         public Guid EmployeeId { get; set; }
-        public Guid ClaimtId { get; set; }
+        public Guid ClaimId { get; set; }
         public DateTime ClaimDate { get; set; }
         public string Note { get; set; }
         public bool IsApproved { get; set; }

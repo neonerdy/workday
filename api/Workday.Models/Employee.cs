@@ -55,6 +55,7 @@ namespace Workday.Models
         public DateTime JoinDate { get; set; }
         public DateTime ResignDate { get; set; }
         public string EmploymentStatus { get; set; }
+        public Guid WorkScheduleId { get; set; }
         public Guid ApprovalLineId { get; set; }
 
                 
