@@ -61,3 +61,63 @@ Error Number:207,State:1,Class:16 (15b3c349)
 2021-03-29T13:42:11.0875711+07:00 80000137-0004-ff00-b63f-84710c7967bb [INF] Executing action method "Workday.WebService.EmployeeController.GetAll (Workday.WebService)" - Validation state: Valid (dad538d7)
 2021-03-29T13:44:19.6872953+07:00 8000001f-0004-f800-b63f-84710c7967bb [INF] Request starting HTTP/1.1 GET http://localhost:64244/   (ca22a1cb)
 2021-03-29T13:44:19.7424318+07:00 8000001f-0004-f800-b63f-84710c7967bb [INF] Request finished in 59.4323ms 404  (791a596a)
+2021-03-29T17:34:45.4398141+07:00 0HM7IJP2JSOIJ:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:5000/   (ca22a1cb)
+2021-03-29T17:34:45.4888890+07:00 0HM7IJP2JSOIJ:00000001 [INF] Request finished in 54.2862ms 404  (791a596a)
+2021-03-29T17:34:53.1624442+07:00 0HM7IJP2JSOIJ:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/employee/getall   (ca22a1cb)
+2021-03-29T17:34:53.1678887+07:00 0HM7IJP2JSOIJ:00000002 [INF] Executing endpoint '"Workday.WebService.EmployeeController.GetAll (Workday.WebService)"' (500cc934)
+2021-03-29T17:34:53.1945659+07:00 0HM7IJP2JSOIJ:00000002 [INF] Route matched with "{action = \"GetAll\", controller = \"Employee\"}". Executing action "Workday.WebService.EmployeeController.GetAll (Workday.WebService)" (a44c0341)
+2021-03-29T17:34:53.2826590+07:00 0HM7IJP2JSOIJ:00000002 [INF] Executing action method "Workday.WebService.EmployeeController.GetAll (Workday.WebService)" - Validation state: Valid (dad538d7)
+2021-03-29T17:34:53.8659108+07:00 0HM7IJP2JSOIJ:00000002 [ERR] System.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ApprovalLineId'.
+Invalid column name 'BankAccount'.
+Invalid column name 'BankName'.
+Invalid column name 'BasicSalary'.
+Invalid column name 'BirthDate'.
+Invalid column name 'BirthPlace'.
+Invalid column name 'BloodType'.
+Invalid column name 'BranchId'.
+Invalid column name 'CreatedDate'.
+Invalid column name 'DepartmentId'.
+Invalid column name 'EmployeeCode'.
+Invalid column name 'EmploymentStatus'.
+Invalid column name 'Gender'.
+Invalid column name 'MaritalStatus'.
+Invalid column name 'ModifiedDate'.
+Invalid column name 'NPWP'.
+Invalid column name 'NationalIdentityId'.
+Invalid column name 'Nationality'.
+Invalid column name 'NumberOfChilds'.
+Invalid column name 'PaymentType'.
+Invalid column name 'Photo'.
+Invalid column name 'Province'.
+Invalid column name 'Religion'.
+Invalid column name 'ResignDate'.
+Invalid column name 'WorkScheduleId'.
+Invalid column name 'ZipCode'.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\Select.cs:line 106
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\AsyncIterator.cs:line 98
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.Aggregate_[TSource,TAccumulate,TResult](IAsyncEnumerable`1 source, TAccumulate seed, Func`3 accumulator, Func`2 resultSelector, CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\Aggregate.cs:line 120
+   at Workday.WebService.EmployeeController.GetAll() in D:\Repos\workday\api\Workday.WebService\Controllers\EmployeeController.cs:line 47
+ClientConnectionId:24372962-7c07-40d8-bce0-7fc7f428dcd7
+Error Number:207,State:1,Class:16 (af4ec507)
+2021-03-29T17:34:53.8722380+07:00 0HM7IJP2JSOIJ:00000002 [INF] Executed action method "Workday.WebService.EmployeeController.GetAll (Workday.WebService)", returned result "Microsoft.AspNetCore.Mvc.OkResult" in 585.0163ms. (50a9e262)
+2021-03-29T17:34:53.8826200+07:00 0HM7IJP2JSOIJ:00000002 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200 (e28ccfae)
+2021-03-29T17:34:53.8886478+07:00 0HM7IJP2JSOIJ:00000002 [INF] Executed action "Workday.WebService.EmployeeController.GetAll (Workday.WebService)" in 689.8894ms (afa2e885)
+2021-03-29T17:34:53.8912910+07:00 0HM7IJP2JSOIJ:00000002 [INF] Executed endpoint '"Workday.WebService.EmployeeController.GetAll (Workday.WebService)"' (99874f2b)
+2021-03-29T17:34:53.8992602+07:00 0HM7IJP2JSOIJ:00000002 [INF] Request finished in 737.225ms 200  (791a596a)
+2021-03-29T17:34:53.9480254+07:00 0HM7IJP2JSOIJ:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico   (ca22a1cb)
+2021-03-29T17:34:53.9496887+07:00 0HM7IJP2JSOIJ:00000003 [INF] Request finished in 1.7115ms 404  (791a596a)
+2021-03-29T17:35:45.2265270+07:00 0HM7IJPKE8EP0:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/employee/getall   (ca22a1cb)
+2021-03-29T17:35:45.2678169+07:00 0HM7IJPKE8EP0:00000001 [INF] Executing endpoint '"Workday.WebService.EmployeeController.GetAll (Workday.WebService)"' (500cc934)
+2021-03-29T17:35:45.2922913+07:00 0HM7IJPKE8EP0:00000001 [INF] Route matched with "{action = \"GetAll\", controller = \"Employee\"}". Executing action "Workday.WebService.EmployeeController.GetAll (Workday.WebService)" (a44c0341)
+2021-03-29T17:35:45.3815077+07:00 0HM7IJPKE8EP0:00000001 [INF] Executing action method "Workday.WebService.EmployeeController.GetAll (Workday.WebService)" - Validation state: Valid (dad538d7)
