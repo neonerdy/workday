@@ -17,9 +17,9 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { Login } from './Login';
 import { Dashboard } from './Dashboard';
-import { People } from './People';
+import { Employee } from './Employee';
 import { AddPeople } from './AddPeople';
-import { AddTask } from './AddTask';
+import { AddEmployee } from './AddEmployee';
 
 
 
@@ -32,8 +32,9 @@ class App extends Component {
           
             
           <Route exact path="/" component={Dashboard}/>
-          <Route exact path="/people" component={People}/>
-          <Route exact path="/add-people" component={AddTask}/>
+          <Route exact path="/dashboard" component={Dashboard}/>
+          <Route exact path="/employee" component={Employee}/>
+          <Route exact path="/add-employee" component={AddEmployee}/>
           
           
           

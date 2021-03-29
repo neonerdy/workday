@@ -49,7 +49,7 @@ export class NavBar extends Component {
                 </li>
 
                 <li>
-                  <Link to="/people">
+                  <Link to="/employee">
                     <i class="fa fa-user"></i>
                     <span>Employee</span>
                   </Link>

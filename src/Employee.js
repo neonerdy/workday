@@ -21,7 +21,7 @@ import axios from 'axios';
 import config from './Config';
 
 
-export class People extends Component
+export class Employee extends Component
 {
     constructor(props) {
         super(props);
@@ -72,7 +72,7 @@ export class People extends Component
 
 
     addPeople =()=> {
-        this.props.history.push("/add-people");
+        this.props.history.push("/add-employee");
     }
 
     editPeople = (id) => {
