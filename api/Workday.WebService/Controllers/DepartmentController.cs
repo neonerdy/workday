@@ -58,9 +58,18 @@ namespace Workday.WebService
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var department = await context.Departments.FindAsync(id);
-            return Ok(department);
+            try
+            {
+                var department = await context.Departments.FindAsync(id);
+                return Ok(department);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
         }
+
 
 
         [HttpPost]
@@ -68,10 +77,16 @@ namespace Workday.WebService
         {
             int result = 0;
 
-            department.ID = Guid.NewGuid();
-            context.Add(department);
-            result = await context.SaveChangesAsync();
-
+            try
+            {    
+                department.ID = Guid.NewGuid();
+                context.Add(department);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
 
@@ -80,10 +95,15 @@ namespace Workday.WebService
         public async Task<IActionResult> Update([FromBody] Department department)
         {
             int result = 0;
-
-            context.Update(department);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                context.Update(department);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
 
@@ -92,11 +112,17 @@ namespace Workday.WebService
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var department = await context.Departments.FindAsync(id);
-            context.Remove(department);
-            var result = await context.SaveChangesAsync();
-            
-            return Ok(result);
+            try
+            {
+                var department = await context.Departments.FindAsync(id);
+                context.Remove(department);
+                var result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
         }
 
 

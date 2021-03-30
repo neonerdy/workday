@@ -12,7 +12,6 @@
  *--------------------------------------------------
  */
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +25,13 @@ using Microsoft.Extensions.Logging;
 namespace Workday.WebService
 {
     [Route("api/[controller]/[action]")]
-    public class BranchController : Controller
+    public class OvertimeController : Controller
     {
 
-        private ILogger<BranchController> logger;
+        private ILogger<OvertimeController> logger;
         private ModelContext context;
 
-        public BranchController(ILogger<BranchController> logger)
+        public OvertimeController(ILogger<OvertimeController> logger)
         {
             this.logger = logger;
             context = new ModelContext();
@@ -44,8 +43,8 @@ namespace Workday.WebService
         {
             try
             {
-                var branches = await context.Branches.ToListAsync();
-                return Ok(branches);
+                var overtimes = await context.Overtimes.ToListAsync();
+                return Ok(overtimes);
             }
             catch(Exception ex)
             {
@@ -55,14 +54,14 @@ namespace Workday.WebService
         }
 
 
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                return Ok(branch);
+                var overtime = await context.Overtimes.FindAsync(id);
+                return Ok(overtime);
             }
             catch(Exception ex)
             {
@@ -74,13 +73,13 @@ namespace Workday.WebService
 
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] Branch branch)
+        public async Task<IActionResult> Save([FromBody] Overtime overtime)
         {
             int result = 0;
             try
             {
-                branch.ID = Guid.NewGuid();
-                context.Add(branch);
+                overtime.ID = Guid.NewGuid();
+                context.Add(overtime);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -91,13 +90,14 @@ namespace Workday.WebService
         }
 
 
+
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Branch branch)
+        public async Task<IActionResult> Update([FromBody] Overtime overtime)
         {
             int result = 0;
             try
             {
-                context.Update(branch);
+                context.Update(overtime);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -115,8 +115,8 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                context.Remove(branch);
+                var overtime = await context.Overtimes.FindAsync(id);
+                context.Remove(overtime);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)

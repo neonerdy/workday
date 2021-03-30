@@ -26,26 +26,28 @@ using Microsoft.Extensions.Logging;
 namespace Workday.WebService
 {
     [Route("api/[controller]/[action]")]
-    public class BranchController : Controller
+    public class EmployeeAttachmentController : Controller
     {
 
-        private ILogger<BranchController> logger;
+        private ILogger<EmployeeAttachmentController> logger;
         private ModelContext context;
 
-        public BranchController(ILogger<BranchController> logger)
+        public EmployeeAttachmentController(ILogger<EmployeeAttachmentController> logger)
         {
             this.logger = logger;
             context = new ModelContext();
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("{employeeId}")]
+        public async Task<IActionResult> GetByEmployeeId(Guid employeeId)
         {
             try
             {
-                var branches = await context.Branches.ToListAsync();
-                return Ok(branches);
+                var employeeAttachments = await context.EmployeeAttachments.Where(ee=>ee.EmployeeId == employeeId)
+                    .ToListAsync();
+
+                return Ok(employeeAttachments);
             }
             catch(Exception ex)
             {
@@ -53,34 +55,16 @@ namespace Workday.WebService
             }
             return Ok();
         }
-
-
-        
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
-        {
-            try
-            {
-                var branch = await context.Branches.FindAsync(id);
-                return Ok(branch);
-            }
-            catch(Exception ex)
-            {
-                logger.LogError(ex.ToString());
-            }
-            return Ok();
-        }
-
 
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] Branch branch)
+        public async Task<IActionResult> Save([FromBody] EmployeeAttachment employeeAttachment)
         {
             int result = 0;
             try
             {
-                branch.ID = Guid.NewGuid();
-                context.Add(branch);
+                employeeAttachment.ID = Guid.NewGuid();
+                context.Add(employeeAttachment);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -89,15 +73,16 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
+
 
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Branch branch)
+        public async Task<IActionResult> Update([FromBody] EmployeeAttachment employeeAttachment)
         {
             int result = 0;
             try
             {
-                context.Update(branch);
+                context.Update(employeeAttachment);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -106,6 +91,7 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
+
 
 
 
@@ -115,8 +101,8 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                context.Remove(branch);
+                var employeeAttachments = await context.EmployeeAttachments.FindAsync(id);
+                context.Remove(employeeAttachments);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -125,8 +111,7 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
-
-
+        
 
 
 

@@ -26,13 +26,13 @@ using Microsoft.Extensions.Logging;
 namespace Workday.WebService
 {
     [Route("api/[controller]/[action]")]
-    public class BranchController : Controller
+    public class UserController : Controller
     {
 
-        private ILogger<BranchController> logger;
+        private ILogger<UserController> logger;
         private ModelContext context;
 
-        public BranchController(ILogger<BranchController> logger)
+        public UserController(ILogger<UserController> logger)
         {
             this.logger = logger;
             context = new ModelContext();
@@ -44,8 +44,8 @@ namespace Workday.WebService
         {
             try
             {
-                var branches = await context.Branches.ToListAsync();
-                return Ok(branches);
+                var users = await context.Users.ToListAsync();
+                return Ok(users);
             }
             catch(Exception ex)
             {
@@ -55,14 +55,13 @@ namespace Workday.WebService
         }
 
 
-        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                return Ok(branch);
+                var user = await context.Users.FindAsync(id);
+                return Ok(user);
             }
             catch(Exception ex)
             {
@@ -74,13 +73,13 @@ namespace Workday.WebService
 
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] Branch branch)
+        public async Task<IActionResult> Save([FromBody] User user)
         {
             int result = 0;
             try
             {
-                branch.ID = Guid.NewGuid();
-                context.Add(branch);
+                user.ID = Guid.NewGuid();
+                context.Add(user);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -91,13 +90,14 @@ namespace Workday.WebService
         }
 
 
+
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Branch branch)
+        public async Task<IActionResult> Update([FromBody] User user)
         {
             int result = 0;
             try
             {
-                context.Update(branch);
+                context.Update(user);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -115,8 +115,8 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                context.Remove(branch);
+                var user = await context.Users.FindAsync(id);
+                context.Remove(user);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -125,8 +125,6 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
-
-
 
 
 

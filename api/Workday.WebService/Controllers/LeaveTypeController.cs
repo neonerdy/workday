@@ -26,13 +26,13 @@ using Microsoft.Extensions.Logging;
 namespace Workday.WebService
 {
     [Route("api/[controller]/[action]")]
-    public class BranchController : Controller
+    public class LeaveTypeController : Controller
     {
 
-        private ILogger<BranchController> logger;
+        private ILogger<LeaveTypeController> logger;
         private ModelContext context;
 
-        public BranchController(ILogger<BranchController> logger)
+        public LeaveTypeController(ILogger<LeaveTypeController> logger)
         {
             this.logger = logger;
             context = new ModelContext();
@@ -44,8 +44,8 @@ namespace Workday.WebService
         {
             try
             {
-                var branches = await context.Branches.ToListAsync();
-                return Ok(branches);
+                var leaveTypes = await context.LeaveTypes.ToListAsync();
+                return Ok(leaveTypes);
             }
             catch(Exception ex)
             {
@@ -55,14 +55,13 @@ namespace Workday.WebService
         }
 
 
-        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                return Ok(branch);
+                var leave = await context.Leaves.FindAsync(id);
+                return Ok(leave);
             }
             catch(Exception ex)
             {
@@ -74,13 +73,13 @@ namespace Workday.WebService
 
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] Branch branch)
+        public async Task<IActionResult> Save([FromBody] LeaveType leaveType)
         {
             int result = 0;
             try
             {
-                branch.ID = Guid.NewGuid();
-                context.Add(branch);
+                leaveType.ID = Guid.NewGuid();
+                context.Add(leaveType);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -91,13 +90,14 @@ namespace Workday.WebService
         }
 
 
+
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Branch branch)
+        public async Task<IActionResult> Update([FromBody] LeaveType leaveType)
         {
             int result = 0;
             try
             {
-                context.Update(branch);
+                context.Update(leaveType);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -115,8 +115,8 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                context.Remove(branch);
+                var leaveType = await context.Leaves.FindAsync(id);
+                context.Remove(leaveType);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -125,7 +125,6 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
-
 
 
 

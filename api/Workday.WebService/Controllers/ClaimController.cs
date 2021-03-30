@@ -58,43 +58,72 @@ namespace Workday.WebService
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var claim = await context.Claims.FindAsync(id);
-            return Ok(claim);
+            try
+            {
+                var claim = await context.Claims.FindAsync(id);
+                return Ok(claim);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
         }
+
 
 
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] Claim claim)
         {
             int result = 0;
-
-            claim.ID = Guid.NewGuid();
-            context.Add(claim);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                claim.ID = Guid.NewGuid();
+                context.Add(claim);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
+
 
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Claim claim)
         {
             int result = 0;
-
-            context.Update(claim);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                context.Update(claim);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
+
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var claim = await context.Claims.FindAsync(id);
-            context.Remove(claim);
-            var result = await context.SaveChangesAsync();
-            
+            int result = 0;
+            try
+            {
+                var claim = await context.Claims.FindAsync(id);
+                context.Remove(claim);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+
             return Ok(result);
         }
 

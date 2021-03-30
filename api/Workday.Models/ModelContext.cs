@@ -28,7 +28,7 @@ namespace Workday.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeAttachment> EmployeeAttachments { get; set; }
         public DbSet<EmployeeCourse> EmployeeCourses { get; set; }
-        public DbSet<EmployeeEducation> EmployeeEducation { get; set; }
+        public DbSet<EmployeeEducation> EmployeeEducations { get; set; }
         public DbSet<EmployeeFamily> EmployeeFamilies { get; set; }
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
         public DbSet<WorkSchedule> WorkSchedules { get; set; }

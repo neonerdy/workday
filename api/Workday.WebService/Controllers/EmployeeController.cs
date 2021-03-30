@@ -58,50 +58,76 @@ namespace Workday.WebService
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var employee = await context.Employees.FindAsync(id);
-            return Ok(employee);
+            try
+            {
+                var employee = await context.Employees.FindAsync(id);
+                return Ok(employee);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] Employee employee)
         {
             int result = 0;
-
-            employee.ID = Guid.NewGuid();
-            employee.CreatedDate = DateTime.Now;
-
-            context.Add(employee);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                employee.ID = Guid.NewGuid();
+                employee.CreatedDate = DateTime.Now;
+                context.Add(employee);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
+
 
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Employee employee)
         {
             int result = 0;
-
-            employee.ModifiedDate = DateTime.Now;
-            context.Update(employee);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                employee.ModifiedDate = DateTime.Now;
+                context.Update(employee);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
+
+
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var employee = await context.Employees.FindAsync(id);
-            context.Remove(employee);
-            var result = await context.SaveChangesAsync();
-            
+            int result = 0;
+            try
+            {
+                var employee = await context.Employees.FindAsync(id);
+                context.Remove(employee);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
-
-
-
 
 
 

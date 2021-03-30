@@ -58,19 +58,33 @@ namespace Workday.WebService
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var attendance = await context.Attendances.FindAsync(id);
-            return Ok(attendance);
+            try
+            {
+                var attendance = await context.Attendances.FindAsync(id);
+                return Ok(attendance);
+            }
+            catch(Exception ex) 
+            {
+                 logger.LogError(ex.ToString());
+            }
+            return Ok();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] Attendance attendance)
         {
             int result = 0;
-
-            attendance.ID = Guid.NewGuid();
-            context.Add(attendance);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                attendance.ID = Guid.NewGuid();
+                context.Add(attendance);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex) 
+            {
+                 logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
 
@@ -79,10 +93,15 @@ namespace Workday.WebService
         public async Task<IActionResult> Update([FromBody] Attendance attendance)
         {
             int result = 0;
-
-            context.Update(attendance);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                context.Update(attendance);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex) 
+            {
+                 logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
 
@@ -91,10 +110,17 @@ namespace Workday.WebService
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var attendance = await context.Attendances.FindAsync(id);
-            context.Remove(attendance);
-            var result = await context.SaveChangesAsync();
-            
+            int result = 0;
+            try
+            {
+                var attendance = await context.Attendances.FindAsync(id);
+                context.Remove(attendance);
+                result = await context.SaveChangesAsync();
+            }
+             catch(Exception ex) 
+            {
+                 logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
 

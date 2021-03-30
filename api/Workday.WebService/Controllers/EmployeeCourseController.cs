@@ -26,26 +26,28 @@ using Microsoft.Extensions.Logging;
 namespace Workday.WebService
 {
     [Route("api/[controller]/[action]")]
-    public class BranchController : Controller
+    public class EmployeeCourseController : Controller
     {
 
-        private ILogger<BranchController> logger;
+        private ILogger<EmployeeCourseController> logger;
         private ModelContext context;
 
-        public BranchController(ILogger<BranchController> logger)
+        public EmployeeCourseController(ILogger<EmployeeCourseController> logger)
         {
             this.logger = logger;
             context = new ModelContext();
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("{employeeId}")]
+        public async Task<IActionResult> GetByEmployeeId(Guid employeeId)
         {
             try
             {
-                var branches = await context.Branches.ToListAsync();
-                return Ok(branches);
+                var employeeCourses = await context.EmployeeCourses.Where(ec=>ec.EmployeeId == employeeId)
+                    .ToListAsync();
+
+                return Ok(employeeCourses);
             }
             catch(Exception ex)
             {
@@ -53,34 +55,16 @@ namespace Workday.WebService
             }
             return Ok();
         }
-
-
-        
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
-        {
-            try
-            {
-                var branch = await context.Branches.FindAsync(id);
-                return Ok(branch);
-            }
-            catch(Exception ex)
-            {
-                logger.LogError(ex.ToString());
-            }
-            return Ok();
-        }
-
 
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] Branch branch)
+        public async Task<IActionResult> Save([FromBody] EmployeeCourse employeeCourse)
         {
             int result = 0;
             try
             {
-                branch.ID = Guid.NewGuid();
-                context.Add(branch);
+                employeeCourse.ID = Guid.NewGuid();
+                context.Add(employeeCourse);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -89,15 +73,16 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
+
 
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Branch branch)
+        public async Task<IActionResult> Update([FromBody] EmployeeCourse employeeCourse)
         {
             int result = 0;
             try
             {
-                context.Update(branch);
+                context.Update(employeeCourse);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -106,6 +91,7 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
+
 
 
 
@@ -115,8 +101,8 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                context.Remove(branch);
+                var employeeCourse = await context.EmployeeCourses.FindAsync(id);
+                context.Remove(employeeCourse);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)

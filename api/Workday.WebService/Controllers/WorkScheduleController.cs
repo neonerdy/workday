@@ -58,32 +58,52 @@ namespace Workday.WebService
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var workSchedule = await context.WorkSchedules.FindAsync(id);
-            return Ok(workSchedule);
+            try
+            {
+                var workSchedule = await context.WorkSchedules.FindAsync(id);
+                return Ok(workSchedule);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
         }
+
 
 
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] WorkSchedule workSchedule)
         {
             int result = 0;
-
-            workSchedule.ID = Guid.NewGuid();
-            context.Add(workSchedule);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                workSchedule.ID = Guid.NewGuid();
+                context.Add(workSchedule);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
+
 
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] WorkSchedule workSchedule)
         {
             int result = 0;
-
-            context.Update(workSchedule);
-            result = await context.SaveChangesAsync();
-
+            try
+            {    
+                context.Update(workSchedule);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
 
@@ -92,13 +112,19 @@ namespace Workday.WebService
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var workSchedule = await context.WorkSchedules.FindAsync(id);
-            context.Remove(workSchedule);
-            var result = await context.SaveChangesAsync();
-            
+            int result = 0;
+            try
+            {
+                var workSchedule = await context.WorkSchedules.FindAsync(id);
+                context.Remove(workSchedule);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
-
 
 
 

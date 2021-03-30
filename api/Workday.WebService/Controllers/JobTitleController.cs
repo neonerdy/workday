@@ -55,34 +55,56 @@ namespace Workday.WebService
         }
 
 
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var JobTitle = await context.JobTitles.FindAsync(id);
-            return Ok(JobTitle);
+            try
+            {
+                var JobTitle = await context.JobTitles.FindAsync(id);
+                return Ok(JobTitle);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] JobTitle JobTitle)
         {
             int result = 0;
-
-            JobTitle.ID = Guid.NewGuid();
-            context.Add(JobTitle);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                JobTitle.ID = Guid.NewGuid();
+                context.Add(JobTitle);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
+
 
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] JobTitle JobTitle)
         {
             int result = 0;
-
-            context.Update(JobTitle);
-            result = await context.SaveChangesAsync();
-
+            try
+            {
+                context.Update(JobTitle);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
 
@@ -91,14 +113,19 @@ namespace Workday.WebService
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var JobTitle = await context.JobTitles.FindAsync(id);
-            context.Remove(JobTitle);
-            var result = await context.SaveChangesAsync();
-            
+            int result = 0;
+            try
+            {
+                var JobTitle = await context.JobTitles.FindAsync(id);
+                context.Remove(JobTitle);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
             return Ok(result);
         }
-
-
 
 
 

@@ -26,13 +26,13 @@ using Microsoft.Extensions.Logging;
 namespace Workday.WebService
 {
     [Route("api/[controller]/[action]")]
-    public class BranchController : Controller
+    public class SalaryComponentController : Controller
     {
 
-        private ILogger<BranchController> logger;
+        private ILogger<SalaryComponentController> logger;
         private ModelContext context;
 
-        public BranchController(ILogger<BranchController> logger)
+        public SalaryComponentController(ILogger<SalaryComponentController> logger)
         {
             this.logger = logger;
             context = new ModelContext();
@@ -44,8 +44,8 @@ namespace Workday.WebService
         {
             try
             {
-                var branches = await context.Branches.ToListAsync();
-                return Ok(branches);
+                var salaryComponents = await context.SalaryComponents.ToListAsync();
+                return Ok(salaryComponents);
             }
             catch(Exception ex)
             {
@@ -55,16 +55,15 @@ namespace Workday.WebService
         }
 
 
-        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                return Ok(branch);
+                var salaryComponent = await context.SalaryComponents.FindAsync(id);
+                return Ok(salaryComponent);
             }
-            catch(Exception ex)
+            catch(Exception ex) 
             {
                 logger.LogError(ex.ToString());
             }
@@ -74,16 +73,16 @@ namespace Workday.WebService
 
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] Branch branch)
+        public async Task<IActionResult> Save([FromBody] SalaryComponent salaryComponent)
         {
             int result = 0;
             try
             {
-                branch.ID = Guid.NewGuid();
-                context.Add(branch);
+                salaryComponent.ID = Guid.NewGuid();
+                context.Add(salaryComponent);
                 result = await context.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch(Exception ex) 
             {
                 logger.LogError(ex.ToString());
             }
@@ -91,16 +90,17 @@ namespace Workday.WebService
         }
 
 
+
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Branch branch)
+        public async Task<IActionResult> Update([FromBody] SalaryComponent salaryComponent)
         {
             int result = 0;
             try
             {
-                context.Update(branch);
+                context.Update(salaryComponent);
                 result = await context.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch(Exception ex) 
             {
                 logger.LogError(ex.ToString());
             }
@@ -115,11 +115,11 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var branch = await context.Branches.FindAsync(id);
-                context.Remove(branch);
+                var salaryComponent = await context.SalaryComponents.FindAsync(id);
+                context.Remove(salaryComponent);
                 result = await context.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch(Exception ex) 
             {
                 logger.LogError(ex.ToString());
             }
