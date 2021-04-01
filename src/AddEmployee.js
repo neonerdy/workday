@@ -22,6 +22,7 @@ import { NavBar } from './NavBar';
 
 import axios from 'axios';
 import config from './Config';
+import moment from 'moment';
 
 export class AddEmployee extends Component
 {
@@ -29,33 +30,60 @@ export class AddEmployee extends Component
     constructor(props) {
         super(props);
 
-        var userJson = localStorage.getItem("user");
-        var user = JSON.parse(userJson);
+        this.birthDate = React.createRef();
+        this.joinDate = React.createRef();
+        this.resignDate = React.createRef();
 
         this.state = {
-            user: user, 
-            activeProjectId: '',
             error: {},
-            projects: [],
-            category: '',
-            peoples: [],
-            projectId: '',
-            title: '',
-            priority: '',
-            reporterId: '',
-            assigneeId: '',
-            module: '',
-            platform: '',
-            version: '',
-            testerId: '',
-            description: '',
-            isSaving: false
+            branches: [],
+            departments: [],
+            jobTitles: [],
+            workSchedules: [],
+            employeeCode: '',
+            employeeName: '',
+            birthDate: '',
+            birthPlace: '',
+            gender: '',
+            religion: '',
+            maritalStatus: '',
+            numberOfChilds: '',
+            bloodType: '',
+            photo: '',
+            address: '',
+            city: '',
+            province: '',
+            zipCode: '',
+            nationality: '',
+            nationalIdentityId: '',
+            phone: '',
+            email: '',
+            branchId: '',
+            departmentId: '',
+            jobTitleId: '',
+            joinDate: '',
+            resignDate: '',
+            workScheduleId: '',
+            approvalLineId: '',
+            employmentStatus: '',
+            basicSalary: '',
+            paymentType: '',
+            bankName: '',
+            bankAccount: '',
+            npwp: ''
         }
     }
 
+
     componentDidMount() {
+
+        this.getAllBranches();
+        this.getAllDepartments();
+        this.getAllJobTitles();
+        this.getAllWorkSchedules();
     }
 
+    
     onValueChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -63,64 +91,93 @@ export class AddEmployee extends Component
     }
 
     
-    getUserById =(id)=> {
-        axios.get(config.serverUrl + "/api/people/getbyid/" + id).then(response=> {
+  
+    getAllBranches = () => {
+        axios.get(config.serverUrl + "/api/branch/getall").then(response=> {
             this.setState({
-                activeProjectId: response.data.activeProjectId
-            })
-        });
-    }
-
-
-    getAllProjects = () => {
-        axios.get(config.serverUrl + "/api/project/getall").then(response=> {
-            this.setState({
-                projects: response.data
+                branches: response.data
             })
         })
     }
 
-    getAllPeople = () => {
-        axios.get(config.serverUrl + "/api/people/getall").then(response=> {
-           this.setState({
-            peoples: response.data
-           })                        
+    getAllDepartments = () => {
+        axios.get(config.serverUrl + "/api/department/getall").then(response=> {
+            this.setState({
+                departments: response.data
+            })
         })
-
-      
-        
-       
     }
+
+
+    getAllJobTitles = () => {
+        axios.get(config.serverUrl + "/api/jobtitle/getall").then(response=> {
+            this.setState({
+                jobTitles: response.data
+            })
+        })
+    }
+
+
+    getAllWorkSchedules = () => {
+        axios.get(config.serverUrl + "/api/workschedule/getall").then(response=> {
+            this.setState({
+                workSchedules: response.data
+            })
+        })
+    }
+
+
+
+
     
 
-    saveTask = () => {
+    saveEmployee = () => {
         
         let isValid = this.validate();
         if (isValid)
         {
-            let task = {
-                projectId: this.state.activeProjectId,
-                category: this.state.category,
-                title: this.state.title,
-                priority: this.state.priority,
-                reporterId: this.state.reporterId,
-                assigneeId: this.state.assigneeId,
-                module: this.state.module,
-                platform: this.state.platform,
-                version: this.state.version,
-                testerId: this.state.testerId,
-                description: this.state.description
+            let employee = {
+                employeeCode: this.state.employeeCode,
+                employeeName: this.state.employeeName,
+                birthDate:  new Date(moment(this.birthDate.current.value)),
+                birthPlace: this.state.birthPlace,
+                gender: this.state.gender,
+                religion: this.state.religion,
+                maritalStatus: this.state.maritalStatus,
+                numberOfChilds: this.state.numberOfChilds,
+                bloodType: this.state.bloodType,
+                photo: this.state.photo,
+                address: this.state.address,
+                city: this.state.city,
+                province: this.state.province,
+                zipCode: this.state.zipCode,
+                nationality: this.state.nationality,
+                nationalIdentityId: this.state.nationalIdentityId,
+                phone: this.state.phone,
+                email: this.state.email,
+                branchId: this.state.branchId,
+                departmentId: this.state.departmentId,
+                jobTitleId: this.state.jobTitleId,
+                joinDate:  new Date(moment(this.birthDate.current.value)),
+                resignDate: new Date(moment('01/01/1900')),
+                workScheduleId: this.state.workScheduleId,
+                employmentStatus: this.state.employmentStatus,
+                basicSalary: parseFloat(this.state.basicSalary),
+                paymentType: this.state.paymentType,
+                bankName: this.state.bankName,
+                bankAccount: this.state.bankAccount,
+                npwp: this.state.npwp
             }
 
             this.setState({
                 isSaving: true
             })
 
-            axios.post(config.serverUrl + "/api/task/save", task).then(response=> {
+            axios.post(config.serverUrl + "/api/employee/save", employee).then(response=> {
                 this.setState({
                     isSaving: false
                 })
-                this.props.history.push("/task");
+                this.props.history.push("/employee");
             })
         }
     }
@@ -136,30 +193,7 @@ export class AddEmployee extends Component
             isValid = false;
         }
 
-        if (this.state.category == '') {
-            error.category = 'is required';
-            isValid = false;
-        }
-        if (this.state.title == '') {
-            error.title = 'is required';
-            isValid = false;
-        }
-        if (this.state.priority == '') {
-            error.priority = 'is required';
-            isValid = false;
-        }
-        if (this.state.reporterId == '') {
-            error.reporterId = 'is required';
-            isValid = false;
-        }
-        if (this.state.assigneeId == '') {
-            error.assigneeId = 'is required';
-            isValid = false;
-        }
-        if (this.state.testerId == '') {
-            error.testerId = 'is required';
-            isValid = false;
-        }
+       
                
       
         this.setState({
@@ -172,17 +206,10 @@ export class AddEmployee extends Component
 
 
     cancelAdd = () => {
-        this.props.history.push("/task");
+        this.props.history.push("/employee");
     }
 
-    addProject = () => {
-        this.props.history.push("/add-project");
-    }
-
-    addPeople = () => {
-        this.props.history.push("/add-people");
-    }
-
+   
 
     render() {
 
@@ -207,10 +234,7 @@ export class AddEmployee extends Component
 
             <div class="wrapper">
 
-               <Header 
-                    history={this.props.history} 
-                    user={this.state.user}
-                />
+               <Header/>
                 <NavBar/>
               
                  <div class="content-wrapper" style={heightStyle}>
@@ -271,9 +295,16 @@ export class AddEmployee extends Component
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">Birt Date</label>
+                                            <label class="col-md-3 control-label">Birth Date</label>
                                             <div class="col-md-7 col-sm-12 required">
-                                                <input class="form-control" type="text" name="birthDate" onChange={this.onValueChange}/>
+                                          
+                                                <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
+                                                        <input type="text" class="form-control" ref={this.birthDate}/>
+                                                        <div class="input-group-addon">
+                                                            <span class="fa fa-calendar"></span>
+                                                        </div>
+                                                </div>
+
                                             </div>
                                             <div class="col-md-2 col-sm-1">
                                             <span style={errStyle}>{this.state.error.birthDate}</span>
@@ -281,7 +312,7 @@ export class AddEmployee extends Component
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">Birt Place</label>
+                                            <label class="col-md-3 control-label">Birth Place</label>
                                             <div class="col-md-7 col-sm-12 required">
                                                 <input class="form-control" type="text" name="birthPlace" onChange={this.onValueChange}/>
                                             </div>
@@ -322,8 +353,8 @@ export class AddEmployee extends Component
                                             <div class="col-md-7 col-sm-12 required">
                                                 <select class="form-control" name="maritalStatus" onChange={this.onValueChange}>
                                                     <option>Select Marital Status</option>
-                                                    <option value="single">Single</option>
-                                                    <option value="maried">Maried</option>
+                                                    <option value="Single">Single</option>
+                                                    <option value="Maried">Maried</option>
                                                </select>
                                             </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.maritalStatus}</span>
@@ -350,17 +381,6 @@ export class AddEmployee extends Component
                                             </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.bloodType}</span>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Photo</label>
-                                            <div class="col-md-7 col-sm-12 required">
-                                                <input class="form-control" type="text" name="photo" onChange={this.onValueChange}/>
-                                            </div>
-                                            <div class="col-md-2 col-sm-1">
-                                            <span style={errStyle}>{this.state.error.photo}</span>
-                                            </div>
-                                        </div>
-
 
                                       
                                       </div>
@@ -425,10 +445,10 @@ export class AddEmployee extends Component
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label">KTP Number</label>
                                                     <div class="col-md-7 col-sm-12 required">
-                                                        <input class="form-control" type="text" name="ktp" onChange={this.onValueChange}/>
+                                                        <input class="form-control" type="text" name="nationalIdentityId" onChange={this.onValueChange}/>
                                                     </div>
                                                     <div class="col-md-2 col-sm-1">
-                                                    <span style={errStyle}>{this.state.error.ktp}</span>
+                                                    <span style={errStyle}>{this.state.error.nationalIdentityId}</span>
                                                     </div>
                                                 </div>
 
@@ -445,7 +465,7 @@ export class AddEmployee extends Component
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label">E-Mail</label>
                                                     <div class="col-md-7 col-sm-12 required">
-                                                        <input class="form-control" type="text" name="phone" onChange={this.onValueChange}/>
+                                                        <input class="form-control" type="text" name="email" onChange={this.onValueChange}/>
                                                     </div>
                                                     <div class="col-md-2 col-sm-1">
                                                     <span style={errStyle}>{this.state.error.email}</span>
@@ -458,7 +478,6 @@ export class AddEmployee extends Component
 
 
 
-
                                         <div class="tab-pane" id="tab_3">
                                             
                                            <div class="form-horizontal">
@@ -468,7 +487,10 @@ export class AddEmployee extends Component
                                                     <div class="col-md-7 col-sm-12 required">
                                                         <select class="form-control" name="branchId" onChange={this.onValueChange}>
                                                             <option>Select Branch</option>
-                                                    </select>
+                                                            {this.state.branches.map(b=> 
+                                                                <option key={b.id} value={b.id}>{b.branchName}</option>
+                                                            )}
+                                                         </select>
                                                     </div>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.branchId}</span>
                                                 </div>
@@ -478,6 +500,9 @@ export class AddEmployee extends Component
                                                     <div class="col-md-7 col-sm-12 required">
                                                         <select class="form-control" name="departmentId" onChange={this.onValueChange}>
                                                             <option>Select Department</option>
+                                                            {this.state.departments.map(d=> 
+                                                                <option key={d.id} value={d.id}>{d.departmentName}</option>
+                                                            )}
                                                     </select>
                                                     </div>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.departmentId}</span>
@@ -488,6 +513,9 @@ export class AddEmployee extends Component
                                                     <div class="col-md-7 col-sm-12 required">
                                                         <select class="form-control" name="jobTitleId" onChange={this.onValueChange}>
                                                             <option>Select Job Title</option>
+                                                            {this.state.jobTitles.map(jt=> 
+                                                                <option key={jt.id} value={jt.id}>{jt.jobTitleName}</option>
+                                                            )}
                                                     </select>
                                                     </div>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.jobTitleId}</span>
@@ -496,20 +524,16 @@ export class AddEmployee extends Component
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label">Join Date</label>
                                                     <div class="col-md-7 col-sm-12 required">
-                                                        <input class="form-control" type="text" name="joinDate" onChange={this.onValueChange}/>
+                                                        <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
+                                                            <input type="text" class="form-control" ref={this.joinDate}/>
+                                                            <div class="input-group-addon">
+                                                                <span class="fa fa-calendar"></span>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
                                                     <div class="col-md-2 col-sm-1">
                                                     <span style={errStyle}>{this.state.error.joinDate}</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label">Resign Date</label>
-                                                    <div class="col-md-7 col-sm-12 required">
-                                                        <input class="form-control" type="text" name="resignDate" onChange={this.onValueChange}/>
-                                                    </div>
-                                                    <div class="col-md-2 col-sm-1">
-                                                    <span style={errStyle}>{this.state.error.resignDate}</span>
                                                     </div>
                                                 </div>
 
@@ -518,21 +542,15 @@ export class AddEmployee extends Component
                                                     <div class="col-md-7 col-sm-12 required">
                                                         <select class="form-control" name="workScheduleId" onChange={this.onValueChange}>
                                                             <option>Select Work Schedule</option>
+                                                            {this.state.workSchedules.map(ws=> 
+                                                                <option key={ws.id} value={ws.id}>{ws.scheduleName}</option>
+                                                            )}
                                                     </select>
                                                     </div>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.workScheduleId}</span>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label">Approval Line</label>
-                                                    <div class="col-md-7 col-sm-12 required">
-                                                        <select class="form-control" name="approvalLineId" onChange={this.onValueChange}>
-                                                            <option>Select Approval Line</option>
-                                                    </select>
-                                                    </div>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.approvalLineId}</span>
-                                                </div>
-
+                                               
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label">Employment Status</label>
                                                     <div class="col-md-7 col-sm-12 required">
@@ -608,13 +626,6 @@ export class AddEmployee extends Component
                                                     </div>
                                                 </div>
 
-
-
-                                             
-
-                                            
-
-
                                                 
 
                                             </div>         
@@ -628,7 +639,7 @@ export class AddEmployee extends Component
 
                                     <div class="text-right">
                                         <a class="btn btn-link text-left" href="#" onClick={this.cancelAdd}>Cancel</a>
-                                        <button type="button" onClick={this.saveTask} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Save</button>
+                                        <button type="button" onClick={this.saveEmployee} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Save</button>
                                     </div>
 
 

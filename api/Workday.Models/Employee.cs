@@ -30,7 +30,7 @@ namespace Workday.Models
         public string Gender { get; set; }
         public string Religion { get; set; }
         public string MaritalStatus { get; set; }
-        public int NumberOfChilds { get; set; }
+        public string NumberOfChilds { get; set; }
         public string BloodType { get; set; }
         
         //Address
@@ -76,7 +76,6 @@ namespace Workday.Models
         public List<EmployeeEducation> EmployeeEducations { get; set; }
         public List<EmployeeFamily> EmployeeFamilies { get; set; }
         public List<EmployeeSalary> EmployeeSalaries { get; set; }
-
 
     }
 }

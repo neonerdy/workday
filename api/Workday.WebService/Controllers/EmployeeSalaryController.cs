@@ -44,7 +44,8 @@ namespace Workday.WebService
         {
             try
             {
-                var employeeSalaries = await context.EmployeeSalaries.Where(ee=>ee.EmployeeId == employeeId)
+                var employeeSalaries = await context.EmployeeSalaries
+                    .Where(ee=>ee.EmployeeId == employeeId)
                     .ToListAsync();
 
                 return Ok(employeeSalaries);

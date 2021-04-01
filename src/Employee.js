@@ -20,7 +20,6 @@ import { Footer } from './Footer';
 import axios from 'axios';
 import config from './Config';
 
-
 export class Employee extends Component
 {
     constructor(props) {
@@ -32,142 +31,94 @@ export class Employee extends Component
 
 
         this.state = {
-            user: user,
-            initialPeople: [],
-            people : [],
-            isLoading: true,
-            peopleId: '',
-            fullName: ''
+            employees: [],
+            employeeName: ''
         }
     }
 
     componentDidMount() {
-   
+        this.getAllEmployees();
     }
 
     
-    getAllPeople = () => {
-        axios.get(config.serverUrl + "/api/people/getall").then(response=> {
+    getAllEmployees = () => {
+        axios.get(config.serverUrl + "/api/employee/getall").then(response=> {
             this.setState({
-                initialPeople: response.data,
-                people: response.data,
-                isLoading: false
+                employees: response.data
             })
         });
     }
 
-    deletePeople = (id) => {
-        axios.delete(config.serverUrl + "/api/people/delete/" + id).then(response=> {
-            this.getAllPeople();
-        })
-    }
+  
 
-    getPeopleId = (id, fullName) => {
-        
-        this.setState({
-            peopleId: id,
-            fullName:fullName
-        })
-    }
-
-
-    addPeople =()=> {
+    addEmployee =()=> {
         this.props.history.push("/add-employee");
     }
 
-    editPeople = (id) => {
-        this.props.history.push("/edit-people/" + id)
+    editEmployee = (id) => {
+        this.props.history.push("/edit-employee/" + id)
     }
-    
 
-    onSearchChange = (e) => {
+    employeeDetail =(id)=> {
+        this.props.history.push("/employee-detail/" + id);
+    }
 
-        let filteredPeople = this.state.initialPeople.filter(p => p.fullName.toLowerCase()
-            .includes(e.target.value.toLowerCase()) ||
-            p.role.toLowerCase().includes(e.target.value.toLowerCase()) ||
-            p.address.toLowerCase().includes(e.target.value.toLowerCase()) ||
-            p.phone.toLowerCase().includes(e.target.value.toLowerCase()) ||
-            p.email.toLowerCase().includes(e.target.value.toLowerCase())
-        );
 
-            
-        if (e.target.value == '')
-        {
-            this.setState( {
-                people: this.state.initialPeople
-            })
-        }
-        else {
-            this.setState( {
-                people: filteredPeople
-            })
-    
+    renderNik = (employmentStatus, employeeCode) => {
+        if (employmentStatus == 'Permanent') {
+            return(
+                <span class="label label-success"><b>{employeeCode}</b></span>
+            )
+        } else if (employmentStatus == 'Probation') {
+            return(
+                <span class="label label-danger"><b>{employeeCode}</b></span>
+            )
+        } else if (employmentStatus == "Contract") {
+            return(
+                <span class="label label-warning"><b>{employeeCode}</b></span>
+            )
         }
         
     }
 
-
-    refreshPeople = () => {
-        this.getAllPeople();
-    }
-
-
-    dynamicSort = (property) => {
-        var sortOrder = 1;
-        if(property[0] === "-") {
-            sortOrder = -1;
-            property = property.substr(1);
-        }
-        return function (a,b) {
-            var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-            return result * sortOrder;
-        }
-    }
-
-
-    sortTask = (columnName) => {
-        this.state.initialPeople.sort(this.dynamicSort(columnName));
-    }
-
-    refreshPeople = () => {
-        this.getAllPeople();
-    }
-
-
-  
 
    
     render() {
 
-      const heightStyle = {
+        const heightStyle = {
             minHeight: '959.8px'
         }
         const buttonStyle = {
             height: '34px'
         }
-
+        const popupStyle = {
+            width: '800px'
+        }
+        const fontStyle = {
+            fontWeight: 'normal'
+        }
 
         return(
    
             <div class="wrapper">
 
-            <Header 
-                history={this.props.history} 
-                user={this.state.user}
-             />
+            <Header/>
 
                 <NavBar/>
                
                 <div class="content-wrapper" style={heightStyle}>
                 <section class="content-header">
                 <h1>
-                    Employees ({this.state.people.length})
+                    Employees ({this.state.employees.length})
                 </h1>
                 <ol class="breadcrumb">
-                    <button class="btn btn-primary" onClick={this.addPeople}>Add New Employee</button>
+                    <button class="btn btn-primary" onClick={this.addEmployee}>Add New Employee</button>
                 </ol>
                 </section>
                 <br></br>
+
+
+           
 
                 <div id="deletePeople" class="modal fade">
                     <div class="modal-dialog">
@@ -177,25 +128,41 @@ export class Employee extends Component
                                 <h4 class="modal-title">Delete</h4>
                             </div>
                             <div class="modal-body">
-                                Are you sure want to delete {this.state.fullName} ?
+                                Are you sure want to delete {this.state.employeeName} ?
                             </div>
                             
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger" onClick={()=>this.deletePeople(this.state.peopleId)} data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <section class="content">
-                
+
                     <div class="box box-default">
                 
                     <div class="box-body">
+
+                        <div class="btn-group">
+                                <button class="btn btn-default" type="button">Department</button>
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style={buttonStyle}>
+                                <span class="caret"></span>
+                                
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" onClick={()=>this.onCategoryFilter("All")}>All</a></li>
+                                    <li><a href="#" onClick={()=>this.onCategoryFilter("Feature")}>Feature</a></li>
+                                    <li><a href="#" onClick={()=>this.onCategoryFilter("Bug")}>Bug</a></li>
+                                    <li><a href="#" onClick={()=>this.onCategoryFilter("Other")}>Other</a></li>
+                                    
+                                </ul>
+                            </div>
+                          
                         
                         <div class="pull-right">
-                            <button class="btn btn-default" type="button" name="refresh" aria-label="refresh" title="Refresh" onClick={this.refreshPeople}>
+                            <button class="btn btn-default" type="button" name="refresh" aria-label="refresh" title="Refresh">
                                 <i class="fa fa-refresh"></i>
                             </button>
                             
@@ -209,13 +176,31 @@ export class Employee extends Component
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#" onClick={()=>this.sortTask("fullName")}>Full Name</a></li>
-                                    <li><a href="#" onClick={()=>this.sortTask("role")}>Role</a></li>
+                                    <li><a href="#" onClick={()=>this.sortTask("role")}>Departement</a></li>
+                                    <li><a href="#" onClick={()=>this.sortTask("role")}>Title</a></li>
                                     <li><a href="#" onClick={()=>this.sortTask("address")}>Address</a></li>
+                                    <li><a href="#" onClick={()=>this.sortTask("address")}>City</a></li>
                                     <li><a href="#" onClick={()=>this.sortTask("phone")}>Phone</a></li>
                                     <li><a href="#" onClick={()=>this.sortTask("email")}>E-Mail</a></li>
                                 </ul>
                             </div>
 
+                            <div class="btn-group">
+                                <button class="btn btn-default" type="button">
+                                        <i class="fa fa-filter"></i>&nbsp;Filter
+                                </button>
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style={buttonStyle}>
+                                <span class="caret"></span>
+                                
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Probation</a></li>
+                                    <li><a href="#">Contract</a></li>
+                                    <li><a href="#">Permanent</a></li>
+                                </ul>
+                            </div>
+
+                           
                               
                         </div>
                         
@@ -228,24 +213,27 @@ export class Employee extends Component
                          <table id="table-to-xls" class="table table-hover">
                                     <tbody>
                                         <tr>
-                                            <th><u>FULL NAME</u></th>
-                                            <th><u>ROLE</u></th>
+                                            <th><u>NIK</u></th>
+                                            <th><u>EMPLOYEE NAME</u></th>
+                                            <th><u>JOB TITLE</u></th>
                                             <th><u>ADDRESS</u></th>
                                             <th><u>PHONE</u></th>
                                             <th><u>E-MAIL</u></th>
                                             <th>ACTION</th>
                                         </tr>
+                                        {this.state.employees.map(e=> 
                                         <tr>
-                                            <td>ariyanto</td>
-                                            <td>Administrator</td>
-                                            <td>Mahkota Opal No 66, Sentul City</td>
-                                            <td>0856924309</td>
-                                            <td>neonerdy@gmail.com</td>
+                                            <td>{this.renderNik(e.employmentStatus,e.employeeCode)}</td>
+                                            <td><a href="#" onClick={()=>this.employeeDetail(e.id)}>{e.employeeName}</a></td>
+                                            <td>{e.jobTitle.jobTitleName}</td>
+                                            <td>{e.address}</td>
+                                            <td>{e.phone}</td>
+                                            <td>{e.email}</td>
                                             <td>
                                             <a href="#" >Edit</a> &nbsp;|&nbsp; 
                                             <a href="#"  data-toggle="modal" data-target="#deletePeople">Delete</a>                                            </td>
-                                       
                                         </tr>
+                                        )}
                                      
                                         </tbody>
                                     </table>

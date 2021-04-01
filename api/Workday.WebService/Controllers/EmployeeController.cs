@@ -44,7 +44,11 @@ namespace Workday.WebService
         {
             try
             {
-                var employees = await context.Employees.ToListAsync();
+                var employees = await context.Employees
+                    .Include(e=>e.Department)
+                    .Include(e=>e.JobTitle)
+                    .ToListAsync();
+                
                 return Ok(employees);
             }
             catch(Exception ex)
@@ -60,7 +64,12 @@ namespace Workday.WebService
         {
             try
             {
-                var employee = await context.Employees.FindAsync(id);
+                var employee = await context.Employees
+                    .Include(e=>e.Department)
+                    .Include(e=>e.JobTitle)
+                    .Where(e=>e.ID == id)
+                    .SingleOrDefaultAsync();
+                
                 return Ok(employee);
             }
             catch(Exception ex)
@@ -79,7 +88,9 @@ namespace Workday.WebService
             try
             {
                 employee.ID = Guid.NewGuid();
+                employee.ApprovalLineId = Guid.Empty;
                 employee.CreatedDate = DateTime.Now;
+                employee.ModifiedDate = DateTime.Now;
                 context.Add(employee);
                 result = await context.SaveChangesAsync();
             }
