@@ -203,6 +203,142 @@ export class Dashboard extends Component
                 </section>
                 <br></br>
 
+                <section class="content">
+
+                <div class="row">
+
+
+                <div class="col-md-4">
+
+                    <div class="box box-widget widget-user">
+                        <div class="widget-user-header bg-aqua-active">
+                        <h3 class="widget-user-username">Ariyanto</h3>
+                        <h5 class="widget-user-desc">Senior Consultant</h5>
+                        </div>
+                        <div class="widget-user-image">
+                        <img class="img-circle" src="lib/dist/img/ari.jpg" alt="User Avatar"/>
+                        </div>
+                        <div class="box-footer">
+                        <div class="row">
+                            <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">17</h5>
+                                <span class="description-text">TOTAL LEAVE</span>
+                            </div>
+                            </div>
+                            <div class="col-sm-4 border-right">
+                            <div class="description-block">
+                                <h5 class="description-header">10</h5>
+                                <span class="description-text">TAKEN</span>
+                            </div>
+                            </div>
+                            <div class="col-sm-4">
+                            <div class="description-block">
+                                <h5 class="description-header">7</h5>
+                                <span class="description-text">REMAINING</span>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="box box-default">
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Birthday</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        </div>
+                        <div class="box-body no-padding">
+                        <ul class="users-list clearfix">
+                            <li>
+                            <img src="lib/dist/img/user6-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Alexander Pierce</a>
+                            <span class="users-list-date">Today</span>
+                            </li>
+                            <li>
+                            <img src="lib/dist/img/user8-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Norman</a>
+                            <span class="users-list-date">Yesterday</span>
+                            </li>
+                            <li>
+                            <img src="lib/dist/img/user7-128x128.jpg" alt="User Image"/>
+                            <a class="users-list-name" href="#">Jane</a>
+                            <span class="users-list-date">12 Jan</span>
+                            </li>
+                        
+                        
+                        </ul>
+                        </div>
+                        <div class="box-footer text-center">
+                        <a href="javascript:void(0)" class="uppercase">View All Users</a>
+                        </div>
+                    </div>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="box box-default">
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Job Level</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="progress" style={{height: '15px'}}>
+                                            <div class="progress-bar progress-bar-aqua" role="progressbar" style={{width: '5%',ariaValuenow:'5',ariaValuemin:'0',ariaVluemax:'100'}}></div>
+                                            <div class="progress-bar progress-bar-red" role="progressbar" style={{width: '15%',ariaValuenow:'15',ariaValuemin:'0',ariaValuemax:'100'}}></div>
+                                            <div class="progress-bar progress-bar-yellow" role="progressbar" style={{width: '80%', ariaValuenow:'70',ariaValuemin:'0',ariaValuemax:'100'}}></div>
+
+                            </div>
+                        </div>
+
+                        <div class="box-footer no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#">Director
+                            <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
+                            <li><a href="#">Manager <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
+                            </li>
+                            <li><a href="#">Staff
+                            <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
+                        </ul>
+                        </div>
+
+
+                       
+                    </div>
+
+
+                    </div>
+
+
+              
+
+
+
+
+
+
+
+
+                </div>
+
+
+                </section>
+
          
 
             </div>

@@ -1,13 +1,13 @@
 USE [WORKDAY]
 GO
-/****** Object:  Table [dbo].[WorkSchedule]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[WorkSchedules]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
-CREATE TABLE [dbo].[WorkSchedule](
+CREATE TABLE [dbo].[WorkSchedules](
 	[ID] [uniqueidentifier] NOT NULL,
 	[ScheduleName] [varchar](50) NULL,
 	[ScheduleIn] [varchar](50) NULL,
@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[WorkSchedule](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -44,7 +44,7 @@ CREATE TABLE [dbo].[Users](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Tasks]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Tasks]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[Tasks](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Settings]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Settings]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -92,7 +92,7 @@ CREATE TABLE [dbo].[Settings](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[SalaryComponents]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[SalaryComponents]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,7 +113,7 @@ CREATE TABLE [dbo].[SalaryComponents](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -132,7 +132,7 @@ CREATE TABLE [dbo].[Roles](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[RoleAccesses]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[RoleAccesses]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -144,7 +144,7 @@ CREATE TABLE [dbo].[RoleAccesses](
 	[IsAllowPayroll] [bit] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Payrolls]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Payrolls]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -167,7 +167,7 @@ CREATE TABLE [dbo].[Payrolls](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PayrollComponents]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[PayrollComponents]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,7 +183,7 @@ CREATE TABLE [dbo].[PayrollComponents](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Overtimes]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Overtimes]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +209,7 @@ CREATE TABLE [dbo].[Overtimes](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Messages]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Messages]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -233,7 +233,7 @@ CREATE TABLE [dbo].[Messages](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[LeaveTypes]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[LeaveTypes]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -254,7 +254,7 @@ CREATE TABLE [dbo].[LeaveTypes](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Leaves]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Leaves]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -281,7 +281,7 @@ CREATE TABLE [dbo].[Leaves](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[JobTitles]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[JobTitles]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,6 +291,7 @@ GO
 CREATE TABLE [dbo].[JobTitles](
 	[ID] [uniqueidentifier] NOT NULL,
 	[JobTitleName] [varchar](50) NULL,
+	[JobLevel] [varchar](50) NULL,
 	[Description] [varchar](50) NULL,
  CONSTRAINT [PK_JobTitles] PRIMARY KEY CLUSTERED 
 (
@@ -300,7 +301,7 @@ CREATE TABLE [dbo].[JobTitles](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[EmployeeSalaries]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[EmployeeSalaries]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -316,7 +317,7 @@ CREATE TABLE [dbo].[EmployeeSalaries](
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employees]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Employees]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -329,7 +330,7 @@ CREATE TABLE [dbo].[Employees](
 	[EmployeeName] [varchar](250) NULL,
 	[BirthDate] [datetime] NULL,
 	[BirthPlace] [varchar](50) NULL,
-	[Address] [varchar](50) NULL,
+	[Address] [varchar](250) NULL,
 	[City] [varchar](50) NULL,
 	[Province] [varchar](50) NULL,
 	[ZipCode] [varchar](50) NULL,
@@ -337,10 +338,10 @@ CREATE TABLE [dbo].[Employees](
 	[NationalIdentityId] [varchar](50) NULL,
 	[Phone] [varchar](50) NULL,
 	[Email] [varchar](50) NULL,
-	[Gender] [bit] NULL,
+	[Gender] [varchar](50) NULL,
 	[Religion] [varchar](50) NULL,
 	[MaritalStatus] [varchar](50) NULL,
-	[NumberOfChilds] [int] NULL,
+	[NumberOfChilds] [varchar](50) NULL,
 	[BloodType] [varchar](50) NULL,
 	[BranchId] [uniqueidentifier] NULL,
 	[DepartmentId] [uniqueidentifier] NULL,
@@ -366,7 +367,26 @@ CREATE TABLE [dbo].[Employees](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[EmployeeFamilies]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[EmployeeLeaves]    Script Date: 04/05/2021 18:31:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EmployeeLeaves](
+	[ID] [uniqueidentifier] NOT NULL,
+	[EmployeeId] [uniqueidentifier] NULL,
+	[Year] [int] NULL,
+	[Month] [int] NULL,
+	[Total] [int] NULL,
+	[Taken] [int] NULL,
+	[Remaining] [int] NULL,
+ CONSTRAINT [PK_EmployeeLeaves] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[EmployeeFamilies]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -390,7 +410,7 @@ CREATE TABLE [dbo].[EmployeeFamilies](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[EmployeeEducations]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[EmployeeEducations]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -413,7 +433,7 @@ CREATE TABLE [dbo].[EmployeeEducations](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[EmployeeCourses]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[EmployeeCourses]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -437,7 +457,7 @@ CREATE TABLE [dbo].[EmployeeCourses](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[EmployeeAttachments]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[EmployeeAttachments]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -459,7 +479,7 @@ CREATE TABLE [dbo].[EmployeeAttachments](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Departments]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Departments]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -478,7 +498,7 @@ CREATE TABLE [dbo].[Departments](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Claims]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Claims]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -499,7 +519,7 @@ CREATE TABLE [dbo].[Claims](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[ClaimRequests]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[ClaimRequests]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -508,11 +528,12 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[ClaimRequests](
 	[ID] [uniqueidentifier] NOT NULL,
+	[TransactionId] [varchar](50) NULL,
 	[EmployeeId] [uniqueidentifier] NULL,
 	[ClaimId] [uniqueidentifier] NULL,
 	[ClaimDate] [datetime] NULL,
-	[Note] [varchar](50) NULL,
-	[IsApproved] [bit] NULL,
+	[Description] [varchar](50) NULL,
+	[Status] [varchar](50) NULL,
 	[ApprovalLineId] [uniqueidentifier] NULL,
  CONSTRAINT [PK_ReimbursementRequests] PRIMARY KEY CLUSTERED 
 (
@@ -522,7 +543,27 @@ CREATE TABLE [dbo].[ClaimRequests](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Branches]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Calendars]    Script Date: 04/05/2021 18:31:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Calendars](
+	[ID] [uniqueidentifier] NOT NULL,
+	[Date] [datetime] NULL,
+	[Holiday] [varchar](50) NULL,
+	[Color] [varchar](50) NULL,
+ CONSTRAINT [PK_Calendars] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Branches]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -542,7 +583,7 @@ CREATE TABLE [dbo].[Branches](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Attendances]    Script Date: 03/29/2021 13:58:41 ******/
+/****** Object:  Table [dbo].[Attendances]    Script Date: 04/05/2021 18:31:34 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

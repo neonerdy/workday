@@ -1,4 +1,4 @@
-﻿
+
 /*--------------------------------------------------
  *
  *  Workday - HRIS and Payroll System
@@ -16,15 +16,15 @@ using System;
 
 namespace Workday.Models
 {
-    public class ClaimRequest
+    public class EmployeeLeave
     {
         public Guid ID { get; set; }
-        public string TransactionId { get; set; }  
         public Guid EmployeeId { get; set; }
-        public Guid ClaimId { get; set; }
-        public DateTime ClaimDate { get; set; }
-        public string Description { get; set; }
-        public string Status { get; set; }
-        public Guid ApprovalLineId { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Total { get; set; }
+        public int Taken { get; set; }
+        public int Remaining { get; set; }
+
     }
 }

@@ -64,7 +64,7 @@ export class NavBar extends Component {
 
                 <li>
                   <Link to="/leave">
-                    <i class="fa fa-calendar-o"></i>
+                    <i class="fa fa-plane"></i>
                     <span>Leave</span>
                   </Link>
                 </li>
@@ -83,14 +83,28 @@ export class NavBar extends Component {
                   </Link>
                 </li>
 
-
                 <li>
                   <Link to="/payroll">
                     <i class="fa fa-file-o"></i>
                     <span>Payroll</span>
-                   
                   </Link>
                 </li>
+
+                <li>
+                  <Link to="/calendar">
+                    <i class="fa fa-calendar-o"></i>
+                    <span>Calendar</span>
+                   
+                  </Link>
+                </li>    
+
+                 <li>
+                  <Link to="/file">
+                    <i class="fa fa-files-o"></i>
+                    <span>Files</span>
+                   
+                  </Link>
+                </li>                   
            
 
        

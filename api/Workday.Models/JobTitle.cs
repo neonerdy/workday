@@ -20,6 +20,7 @@ namespace Workday.Models
     {
         public Guid ID { get; set; }
         public string JobTitleName { get; set; }
+        public string JobLevel { get; set; }
         public string Description { get; set; }
     }
 }
