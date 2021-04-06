@@ -447,10 +447,10 @@ export class EmployeeAdd extends Component
                                             <div class="col-md-7 col-sm-12 required">
                                                 <select class="form-control" name="religion" onChange={this.onValueChange}>
                                                     <option>Select Religion</option>
-                                                    <option value="male">Islam</option>
-                                                    <option value="Female">Kristen</option>
-                                                    <option value="Female">Budha</option>
-                                                    <option value="Female">Hindu</option>
+                                                    <option value="Islam">Islam</option>
+                                                    <option value="Kristen">Kristen</option>
+                                                    <option value="Hindu">Hindu</option>
+                                                    <option value="Budha">Budha</option>
                                                </select>
                                             </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.religion}</span>

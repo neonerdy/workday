@@ -228,8 +228,8 @@ export class Employee extends Component
                                             <td>{e.phone}</td>
                                             <td>{e.email}</td>
                                             <td>
-                                            <a href="#" >Edit</a> &nbsp;|&nbsp; 
-                                            <a href="#"  data-toggle="modal" data-target="#deletePeople">Delete</a>                                            </td>
+                                            <a href="#" onClick={()=>this.editEmployee(e.id)}>Edit</a> &nbsp;|&nbsp; 
+                                            <a href="#" data-toggle="modal" data-target="#deletePeople">Delete</a>                                            </td>
                                         </tr>
                                         )}
                                      

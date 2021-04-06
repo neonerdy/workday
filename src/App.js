@@ -18,6 +18,7 @@ import { Login } from './Login';
 import { Dashboard } from './Dashboard';
 import { Employee } from './Employee';
 import { EmployeeAdd } from './EmployeeAdd';
+import { EmployeeEdit } from './EmployeeEdit';
 import { EmployeeDetail } from './EmployeeDetail';
 import { Leave } from './Leave';
 import { Attendance } from './Attendance';
@@ -34,6 +35,7 @@ class App extends Component {
           <Route exact path="/attendance" component={Attendance}/>
           <Route exact path="/leave" component={Leave}/>
           <Route exact path="/add-employee" component={EmployeeAdd}/>
+          <Route exact path="/edit-employee/:id" component={EmployeeEdit}/>
           <Route exact path="/employee-detail/:id" component={EmployeeDetail}/>
          
       </div>

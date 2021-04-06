@@ -78,9 +78,6 @@ export class EmployeeDetail extends Component
                 address: response.data.address,
                 phone: response.data.phone,
                 email: response.data.email,
-                
-                
-                
             })
       })
         
@@ -106,6 +103,13 @@ export class EmployeeDetail extends Component
             this.props.history.push("/employee");
         })
     }
+
+    updateStatus = (id, status) => {
+        axios.get(config.serverUrl + "/api/employee/updatestatus/" + id + "/" + status).then(response=> {
+            this.getEmployeeById(id);
+        })
+     }
+
 
 
     openNewTab = (fileName)=> {
@@ -267,9 +271,9 @@ export class EmployeeDetail extends Component
                                                 
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#!" >Probation</a></li>
-                                                    <li><a href="#!" >Permanent</a></li>
-                                                    <li><a href="#!" >Contract</a></li>
+                                                    <li><a href="#" onClick={()=>this.updateStatus(this.state.id, "Probation")} >Probation</a></li>
+                                                    <li><a href="#" onClick={()=>this.updateStatus(this.state.id, "Permanent")}>Permanent</a></li>
+                                                    <li><a href="#" onClick={()=>this.updateStatus(this.state.id, "Contract")}>Contract</a></li>
                                                 </ul>
                                         </div>
                                     </div>

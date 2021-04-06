@@ -121,6 +121,26 @@ namespace Workday.WebService
         }
 
 
+        [HttpGet("{id}/{status}")]
+        public async Task<IActionResult> UpdateStatus(Guid id, string status)
+        {
+            int result = 0;
+            try
+            {
+                var employee = await context.Employees.FindAsync(id);
+                employee.EmploymentStatus = status;
+                employee.ModifiedDate = DateTime.Now;
+                context.Update(employee);
+                result = await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok(result);
+        }
+
+
 
 
         [HttpDelete("{id}")]
