@@ -1,14 +1,13 @@
+
 /*--------------------------------------------------
  *
- *  Task Master
- * 
- *  Task Manager For Software Development
+ *  Workday - HRIS and Payroll System
  * 
  *  Version : 1.0
  *  Author  : Ariyanto
  *  E-mail  : neonerdy@gmail.com
  * 
- *  © 2019, Under Apache Licence  
+ *  © 2021, All Right Reserved  
  * 
  *--------------------------------------------------
  */
@@ -24,7 +23,7 @@ import axios from 'axios';
 import config from './Config';
 import moment from 'moment';
 
-export class AddEmployee extends Component
+export class EmployeeAdd extends Component
 {
 
     constructor(props) {
@@ -47,7 +46,7 @@ export class AddEmployee extends Component
             gender: '',
             religion: '',
             maritalStatus: '',
-            numberOfChilds: '',
+            numberOfChilds: '0',
             bloodType: '',
             photo: '',
             address: '',
@@ -188,14 +187,124 @@ export class AddEmployee extends Component
         let isValid = true;
         let error = {};
 
-        if (this.state.activeProjectId == '') {
-            error.projectId = 'is required';
+        if (this.state.employeeCode == '') {
+            error.employeeCode = 'is required';
+            isValid = false;
+        }
+        if (this.state.employeeName == '') {
+            error.employeeName = 'is required';
+            isValid = false;
+        }
+        if (this.birthDate.current.value === '') {
+            error.birthDate = 'is required';
+            isValid = false;
+        }
+        if (this.state.birthPlace == '') {
+            error.birthPlace = 'is required';
+            isValid = false;
+        }
+        if (this.state.gender == '') {
+            error.gender = 'is required';
+            isValid = false;
+        }
+        if (this.state.religion == '') {
+            error.religion = 'is required';
+            isValid = false;
+        }
+        if (this.state.maritalStatus == '') {
+            error.maritalStatus = 'is required';
+            isValid = false;
+        }
+        if (this.state.bloodType == '') {
+            error.bloodType = 'is required';
             isValid = false;
         }
 
-       
-               
-      
+        //address
+
+        if (this.state.address == '') {
+            error.address = 'is required';
+            isValid = false;
+        }
+        if (this.state.city == '') {
+            error.city = 'is required';
+            isValid = false;
+        }
+        if (this.state.province == '') {
+            error.province = 'is required';
+            isValid = false;
+        }
+        if (this.state.zipCode == '') {
+            error.zipCode = 'is required';
+            isValid = false;
+        }
+        if (this.state.nationality == '') {
+            error.nationality = 'is required';
+            isValid = false;
+        }
+        if (this.state.nationalIdentityId == '') {
+            error.nationalIdentityId = 'is required';
+            isValid = false;
+        }
+        if (this.state.phone == '') {
+            error.phone = 'is required';
+            isValid = false;
+        }
+        if (this.state.email == '') {
+            error.email = 'is required';
+            isValid = false;
+        }
+
+        //company
+
+        if (this.state.branchId == '') {
+            error.branchId = 'is required';
+            isValid = false;
+        }
+        if (this.state.departmentId == '') {
+            error.departmentId = 'is required';
+            isValid = false;
+        }
+        if (this.state.jobTitleId == '') {
+            error.jobTitleId = 'is required';
+            isValid = false;
+        }
+        if (this.joinDate.current.value === '') {
+            error.joinDate = 'is required';
+            isValid = false;
+        }
+        if (this.state.workScheduleId == '') {
+            error.workScheduleId = 'is required';
+            isValid = false;
+        }
+        if (this.state.employmentStatus == '') {
+            error.employmentStatus = 'is required';
+            isValid = false;
+        }
+
+        //payroll
+        
+        if (this.state.basicSalary == '') {
+            error.basicSalary = 'is required';
+            isValid = false;
+        }
+        if (this.state.paymentType == '') {
+            error.paymentType = 'is required';
+            isValid = false;
+        }
+        if (this.state.bankName == '') {
+            error.bankName = 'is required';
+            isValid = false;
+        }
+        if (this.state.bankAccount == '') {
+            error.bankAccount = 'is required';
+            isValid = false;
+        }
+        if (this.state.npwp == '') {
+            error.npwp = 'is required';
+            isValid = false;
+        }
+
         this.setState({
             error: error 
         })

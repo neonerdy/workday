@@ -1,17 +1,14 @@
-
 /*--------------------------------------------------
  *
- *  Task Master
- * 
- *  Task Manager For Software Development
+ *  Workday - HRIS and Payroll System
  * 
  *  Version : 1.0
  *  Author  : Ariyanto
  *  E-mail  : neonerdy@gmail.com
  * 
- *  © 2019, Under Apache Licence  
+ *  © 2021, All Right Reserved  
  * 
-  * --------------------------------------------------
+ *--------------------------------------------------
  */
 
 
@@ -39,170 +36,11 @@ export class Header extends Component {
     }
 
 
-    getUserById =(id)=> {
-        axios.get(config.serverUrl + "/api/people/getbyid/" + id).then(response=> {
-            this.setState({
-                activeProjectId: response.data.activeProjectId
-            })
-
-            if (this.state.activeProjectId == '00000000-0000-0000-0000-000000000000') {
-                this.getMyTask(id);
-                this.getHistoryByUserId(id)
-            } else {
-                this.getMyTaskByProject(id, this.state.activeProjectId);
-                this.getHistoryByProjectAndUserId(this.state.activeProjectId, id);
-            }
-        });
-    }
+   
 
 
 
-    getMyTask = (userId) => {
-        axios.get(config.serverUrl + "/api/task/getmytask/" + userId).then(response=> {
-            
-            this.setState({
-                tasks: response.data,
-            })
-        })
-    }
-
-
-    getMyTaskByProject = (userId, projectId) => {
-        axios.get(config.serverUrl + "/api/task/getmytaskbyproject/" + userId + "/" + projectId).then(response=> {
-            
-            this.setState({
-                tasks: response.data,
-            })
-        })
-    }
-
-
-    getHistoryByUserId =(id) => {
-        axios.get(config.serverUrl + "/api/history/getbyuserid/" + id).then(response=> {
-            this.setState({
-                histories: response.data,
-            })
-        })
-    }
-
-
-    getHistoryByProjectAndUserId =(projectId, userId) => {
-        axios.get(config.serverUrl + "/api/history/getbyprojectanduserid/" + projectId + "/" + userId).then(response=> {
-            this.setState({
-                histories: response.data,
-            })
-        })
-    }
-    
-
-    taskDetail = (id) => {
-        this.props.history.push("/task-detail/" + id);
-    }
-
-
-    logout=()=> {
-        localStorage.removeItem("user");
-        this.props.history.push("/");
-    }
-
-
-    renderDate = (date) => {
-      
-        const today = new Date
-        const yesterday = new Date; 
-
-        yesterday.setDate(today.getDate() - 1)
         
-        let d = moment(date).format('MM/DD/YYYY'); 
-        let t = moment(date).format('MM/DD/YYYY');
-        let ht =  moment(date).format('hh:mm');
-        let hy = moment(yesterday).format('hh:mm');
-
-        if(d == t) {
-            return (
-                <span>Today {ht}</span>
-            )
-        } else if (date == yesterday) {
-            return (
-                <span>Yesterday {hy}</span>
-            )
-        } else {
-            return(
-                <span>{moment(date).format('MM/DD/YYYY hh:mm')}</span>
-            )
-        }
-      
-    }
-
-    renderPhoto = (photo) => {
-
-        let userPhoto = '/api/Resources/' + photo;
-        
-        console.log(userPhoto);
-        
-      
-        if (photo != '') {
-            return(
-                <img src={userPhoto} class="img-circle"/>
-            )
-        } 
-    }
-
-
-    renderAvatar = (photo) => {
-        
-        let avatar = '';
-
-        if (photo == '') {
-            avatar='';
-            return(
-                <div>
-                    <br/>
-                    <i className="fa fa-user-circle-o fa-4x" style={{color:'white'}}></i>
-                </div>
-            )
-        } else {
-            avatar = '/api/Resources/' + photo;
-            return(
-                <img src={avatar} class="img-circle"/>
-            )
-        }
-
-    }
-        
-        
-
-    renderMyTaskTitle = (task) => {
-        if (task.title.length > 25) {
-            return(
-                <span>{task.tracker} {task.title.substring(0,25)}...</span>
-            )
-        } else {
-            return(
-                <span>{task.tracker} {task.title}</span>
-            )
-        }
-    }
-
-    renderMyTaskProgress = (task) => {
-
-        let progress = Math.ceil((task.totalTimeSpentInHour/task.estimationInHour) * 100) + '%';
-
-        if (task.category == 'Feature') {
-            return(
-                <div class="progress-bar progress-bar-green" style={{width: progress}} role="progressbar" aria-valuemin="0" aria-valuemax="100"/>
-            )
-        } else if (task.category == 'Bug') {
-            return(
-                <div class="progress-bar progress-bar-red" style={{width: progress}} role="progressbar" aria-valuemin="0" aria-valuemax="100"/>
-            )
-        } else if (task.category == 'Other') {
-            return(
-                <div class="progress-bar progress-bar-yellow" style={{width: progress}} role="progressbar" aria-valuemin="0" aria-valuemax="100"/>
-            )        
-        }
-    }
-
     
 
     render() {
@@ -211,22 +49,22 @@ export class Header extends Component {
     
         return(
 
-<header class="main-header">
+        <header class="main-header">
 
-    <a href="index2.html" class="logo">
-    <span class="logo-mini">WD</span>
-    <span class="logo-lg"><b>Work</b>DAY</span>
-    </a>
+            <a class="logo">
+            <span class="logo-mini">WD</span>
+            <span class="logo-lg"><b>Work</b>DAY</span>
+            </a>
 
-    <nav class="navbar navbar-static-top">
+            <nav class="navbar navbar-static-top">
 
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
 
-      <div class="navbar-custom-menu">
+           <div class="navbar-custom-menu">
             
-            <ul class="nav navbar-nav">
+             <ul class="nav navbar-nav">
                         
 
                     <li class="dropdown messages-menu">

@@ -1,14 +1,12 @@
 /*--------------------------------------------------
  *
- *  Task Master
- * 
- *  Task Manager For Software Development
+ *  Workday - HRIS and Payroll System
  * 
  *  Version : 1.0
  *  Author  : Ariyanto
  *  E-mail  : neonerdy@gmail.com
  * 
- *  © 2019, Under Apache Licence  
+ *  © 2021, All Right Reserved  
  * 
  *--------------------------------------------------
  */
@@ -23,7 +21,7 @@ export class Footer extends Component {
             <div class="pull-right hidden-xs">
               <b>Version</b> 1.0.0
             </div>
-            Copyright &copy; 2019 <b>RAVIGA</b>
+            Copyright &copy; 2021 <b>RAVIGA</b>
           
           </footer>
         )

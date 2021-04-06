@@ -1,14 +1,12 @@
 /*--------------------------------------------------
  *
- *  Task Master
- * 
- *  Task Manager For Software Development
+ *  Workday - HRIS and Payroll System
  * 
  *  Version : 1.0
  *  Author  : Ariyanto
  *  E-mail  : neonerdy@gmail.com
  * 
- *  © 2019, Under Apache Licence  
+ *  © 2021, All Right Reserved  
  * 
  *--------------------------------------------------
  */

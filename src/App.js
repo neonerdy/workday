@@ -1,14 +1,13 @@
+
 /*--------------------------------------------------
  *
- *  Task Master
- * 
- *  Task Manager For Software Development
+ *  Workday - HRIS and Payroll System
  * 
  *  Version : 1.0
  *  Author  : Ariyanto
  *  E-mail  : neonerdy@gmail.com
  * 
- *  © 2019, Under Apache Licence  
+ *  © 2021, All Right Reserved  
  * 
  *--------------------------------------------------
  */
@@ -18,10 +17,10 @@ import { Route } from 'react-router-dom';
 import { Login } from './Login';
 import { Dashboard } from './Dashboard';
 import { Employee } from './Employee';
-import { AddEmployee } from './AddEmployee';
+import { EmployeeAdd } from './EmployeeAdd';
 import { EmployeeDetail } from './EmployeeDetail';
 import { Leave } from './Leave';
-import { Atendance, Attendance } from './Attendance';
+import { Attendance } from './Attendance';
 
 
 class App extends Component {
@@ -34,7 +33,7 @@ class App extends Component {
           <Route exact path="/employee" component={Employee}/>
           <Route exact path="/attendance" component={Attendance}/>
           <Route exact path="/leave" component={Leave}/>
-          <Route exact path="/add-employee" component={AddEmployee}/>
+          <Route exact path="/add-employee" component={EmployeeAdd}/>
           <Route exact path="/employee-detail/:id" component={EmployeeDetail}/>
          
       </div>

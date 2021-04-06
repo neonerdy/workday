@@ -1,3 +1,16 @@
+/*--------------------------------------------------
+ *
+ *  Workday - HRIS and Payroll System
+ * 
+ *  Version : 1.0
+ *  Author  : Ariyanto
+ *  E-mail  : neonerdy@gmail.com
+ * 
+ *  © 2021, All Right Reserved  
+ * 
+ *--------------------------------------------------
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';

@@ -29,7 +29,6 @@ D:\Repos\workday\api\Workday.Models\bin\Debug\netcoreapp2.2\Workday.Models.deps.
 D:\Repos\workday\api\Workday.Models\bin\Debug\netcoreapp2.2\Workday.Models.dll
 D:\Repos\workday\api\Workday.Models\bin\Debug\netcoreapp2.2\Workday.Models.pdb
 D:\Repos\workday\api\Workday.Models\obj\Debug\netcoreapp2.2\Workday.Models.csprojAssemblyReference.cache
-D:\Repos\workday\api\Workday.Models\obj\Debug\netcoreapp2.2\Workday.Models.csproj.CoreCompileInputs.cache
 D:\Repos\workday\api\Workday.Models\obj\Debug\netcoreapp2.2\Workday.Models.AssemblyInfoInputs.cache
 D:\Repos\workday\api\Workday.Models\obj\Debug\netcoreapp2.2\Workday.Models.AssemblyInfo.cs
 D:\Repos\workday\api\Workday.Models\obj\Debug\netcoreapp2.2\Workday.Models.dll
