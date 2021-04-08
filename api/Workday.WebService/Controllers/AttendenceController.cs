@@ -44,7 +44,11 @@ namespace Workday.WebService
         {
             try
             {
-                var attendances = await context.Attendances.ToListAsync();
+                var attendances = await context.Attendances
+                    .Include(a=>a.Employee)
+                    .Include(a=>a.WorkSchedule)
+                   .ToListAsync();
+                
                 return Ok(attendances);
             }
             catch(Exception ex)

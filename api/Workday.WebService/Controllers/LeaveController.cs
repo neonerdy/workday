@@ -44,7 +44,11 @@ namespace Workday.WebService
         {
             try
             {
-                var leaves = await context.Leaves.ToListAsync();
+                var leaves = await context.Leaves
+                    .Include(l=>l.Employee)
+                    .Include(l=>l.LeaveType)
+                    .ToListAsync();
+                
                 return Ok(leaves);
             }
             catch(Exception ex)
@@ -79,6 +83,11 @@ namespace Workday.WebService
             try
             {
                 leave.ID = Guid.NewGuid();
+                leave.CreatedDate = DateTime.Now;
+                leave.ModifiedDate = DateTime.Now;
+                leave.Status = "Submitted";
+                leave.IsTaken = false;
+
                 context.Add(leave);
                 result = await context.SaveChangesAsync();
             }
@@ -98,6 +107,7 @@ namespace Workday.WebService
             try
             {
                 context.Update(leave);
+                leave.ModifiedDate = DateTime.Now;
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)

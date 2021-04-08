@@ -21,7 +21,9 @@ namespace Workday.Models
     {
         public Guid ID { get; set; }
         public Guid EmployeeId { get; set; }
+        public Employee Employee { get; set; }
         public Guid LeaveTypeId { get; set; }
+        public LeaveType LeaveType { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Note { get; set; }

@@ -17,6 +17,7 @@
  import { Footer } from './Footer';
  import axios from 'axios';
  import config from './Config';
+ import moment from 'moment';
  
  export class Attendance extends Component
  {
@@ -29,12 +30,12 @@
      }
  
      componentDidMount() {
-   
+        this.getAllAttendances();
      }
  
      
      getAllAttendances = () => {
-         axios.get(config.serverUrl + "/api/leave/attendance").then(response=> {
+         axios.get(config.serverUrl + "/api/attendance/getall").then(response=> {
              this.setState({
                 attendances: response.data
              })
@@ -175,17 +176,19 @@
                                              <th><u>STATUS</u></th>
                                              <th>ACTION</th>
                                          </tr>
+                                         {this.state.attendances.map(a=> 
                                          <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
+                                             <td>{a.employee.employeeName}</td>
+                                             <td>{a.workSchedule.scheduleName}</td>
+                                             <td>{moment(a.attendanceDate).format("MM/DD/YYYY")}</td>
+                                             <td>{a.clockIn}</td>
+                                             <td>{a.clockOut}</td>
+                                             <td>{a.status}</td>
                                              <td>
-                                             <a href="#" >Edit</a> &nbsp;|&nbsp; 
+                                             <a href="#" onClick={()=>this.editAttendance(a.id)}>Edit</a> &nbsp;|&nbsp; 
                                              <a href="#"  data-toggle="modal" data-target="#deletePeople">Delete</a>                                            </td>
                                          </tr>
+                                         )}
                                        
                                          </tbody>
                                      </table>

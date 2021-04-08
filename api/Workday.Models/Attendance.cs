@@ -27,7 +27,7 @@ namespace Workday.Models
         public string ClockIn { get; set; }
         public string ClockOut { get; set; }
         public string Status { get; set; }
-        public string LateDuration { get; set; }
+        public string WorkDuration { get; set; }
         public string Note { get; set; }
     }
 }

@@ -17,6 +17,7 @@ import { NavBar } from './NavBar';
 import { Footer } from './Footer';
 import axios from 'axios';
 import config from './Config';
+import moment from 'moment';
 
 export class Leave extends Component
 {
@@ -25,11 +26,12 @@ export class Leave extends Component
 
         this.state = {
             leaves: [],
+            leaveId: ''
         }
     }
 
     componentDidMount() {
-  
+        this.getAllLeaves();
     }
 
     
@@ -49,6 +51,18 @@ export class Leave extends Component
 
     editLeave = (id) => {
         this.props.history.push("/edit-leave/" + id)
+    }
+
+    deleteLeave = (id) => {
+        axios.delete(config.serverUrl + "/api/leave/delete/" + id).then(response=> {
+            this.getAllLeaves();
+        })
+    }
+
+    getLeaveId = (id) => {
+        this.setState({
+            leaveId: id,
+        })
     }
 
    
@@ -81,7 +95,7 @@ export class Leave extends Component
                     Leaves ({this.state.leaves.length})
                 </h1>
                 <ol class="breadcrumb">
-                    <button class="btn btn-primary" onClick={this.addEmployee}>Request Leave</button>
+                    <button class="btn btn-primary" onClick={this.addLeave}>Request Leave</button>
                 </ol>
                 </section>
                 <br></br>
@@ -89,7 +103,7 @@ export class Leave extends Component
 
            
 
-                <div id="deletePeople" class="modal fade">
+                <div id="deleteLeave" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -97,12 +111,13 @@ export class Leave extends Component
                                 <h4 class="modal-title">Delete</h4>
                             </div>
                             <div class="modal-body">
-                                Are you sure want to delete this?
+                                Are you sure want to delete this leave?
                             </div>
                             
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-danger"  onClick={()=>this.deleteLeave(this.state.leaveId)} 
+                                    data-dismiss="modal">Yes</button>
                             </div>
                         </div>
                     </div>
@@ -171,20 +186,25 @@ export class Leave extends Component
                                             <th><u>LEAVE TYPE</u></th>
                                             <th><u>START DATE</u></th>
                                             <th><u>END DATE</u></th>
-                                        
+                                            <th><u>SUBMITTED DATE</u></th>
                                             <th><u>STATUS</u></th>
+                                            <th><u>NOTE</u></th>
                                             <th>ACTION</th>
                                         </tr>
+                                       {this.state.leaves.map(l=> 
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{l.employee.employeeName}</td>
+                                            <td>{l.leaveType.leaveTypeName}</td>
+                                            <td>{moment(l.startDate).format("MM/DD/YYYY")}</td>
+                                            <td>{moment(l.endDate).format("MM/DD/YYYY")}</td>
+                                            <td>{moment(l.createdDate).format("MM/DD/YYYY HH:MM:SS")}</td>
+                                            <td>{l.status}</td>
+                                            <td>{l.note}</td>
                                             <td>
-                                            <a href="#" >Edit</a> &nbsp;|&nbsp; 
-                                            <a href="#"  data-toggle="modal" data-target="#deletePeople">Delete</a>                                            </td>
+                                            <a href="#" onClick={()=>this.editLeave(l.id)} >Edit</a> &nbsp;|&nbsp; 
+                                            <a href="#" data-toggle="modal" data-target="#deleteLeave"  onClick={()=>this.getLeaveId(l.id)}>Delete</a>                                            </td>
                                         </tr>
+                                        )}
                                       
                                         </tbody>
                                     </table>
