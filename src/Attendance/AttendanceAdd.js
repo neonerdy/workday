@@ -15,12 +15,12 @@
 
 
  import React, {Component} from 'react';
- import './App.css';
- import { Footer } from './Footer';
- import { Header } from './Header';
- import { NavBar } from './NavBar';
+ import '../App.css';
+ import { Footer } from '../Shared/Footer';
+ import { Header } from '../Shared/Header';
+ import { NavBar } from '../Shared/NavBar';
  import axios from 'axios';
- import config from './Config';
+ import config from '../Config';
  import moment from 'moment';
 
 

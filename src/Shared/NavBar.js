@@ -46,6 +46,13 @@ export class NavBar extends Component {
                 </li>
 
                 <li>
+                  <Link to="/master-data">
+                      <i class="fa fa-folder-o"></i>
+                      <span>Master Data</span>
+                  </Link>
+                </li>
+
+                <li>
                   <Link to="/employee">
                     <i class="fa fa-user"></i>
                     <span>Employee</span>

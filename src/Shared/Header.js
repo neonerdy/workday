@@ -15,7 +15,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import config from './Config';
+import config from '../Config';
 import moment from 'moment';
 
 

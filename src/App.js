@@ -15,17 +15,20 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { Login } from './Login';
-import { Dashboard } from './Dashboard';
-import { Employee } from './Employee';
-import { EmployeeAdd } from './EmployeeAdd';
-import { EmployeeEdit } from './EmployeeEdit';
-import { EmployeeDetail } from './EmployeeDetail';
-import { Leave } from './Leave';
-import { LeaveAdd } from './LeaveAdd';
-import { LeaveEdit } from './LeaveEdit';
-import { Attendance } from './Attendance';
-import { AttendanceAdd } from './AttendanceAdd';
-import { AttendanceEdit } from './AttendanceEdit';
+import { Dashboard } from './Dashboard/Dashboard';
+import { MasterData } from './Master/MasterData';
+import { Employee } from './Employee/Employee';
+import { EmployeeAdd } from './Employee/EmployeeAdd';
+import { EmployeeEdit } from './Employee/EmployeeEdit';
+import { EmployeeDetail } from './Employee/EmployeeDetail';
+import { Leave } from './Leave/Leave';
+import { LeaveAdd } from './Leave/LeaveAdd';
+import { LeaveEdit } from './Leave/LeaveEdit';
+import { Attendance } from './Attendance/Attendance';
+import { AttendanceAdd } from './Attendance/AttendanceAdd';
+import { AttendanceEdit } from './Attendance/AttendanceEdit';
+
+import { BranchAdd } from './Master/BranchAdd';
 
 
 
@@ -37,6 +40,11 @@ class App extends Component {
             
           <Route exact path="/" component={Dashboard}/>
           <Route exact path="/dashboard" component={Dashboard}/>
+          <Route exact path="/master-data" component={MasterData}/>
+
+          <Route exact path="/add-branch" component={BranchAdd}/>
+
+
           <Route exact path="/employee" component={Employee}/>
           <Route exact path="/attendance" component={Attendance}/>
           <Route exact path="/add-attendance" component={AttendanceAdd}/>

@@ -15,71 +15,46 @@
 
 
  import React, {Component} from 'react';
- import './App.css';
- import { Footer } from './Footer';
- import { Header } from './Header';
- import { NavBar } from './NavBar';
- import axios from 'axios';
- import config from './Config';
+ import '../App.css';
+ import { Footer } from '../Shared/Footer';
+ import { Header } from '../Shared/Header';
+ import { NavBar } from '../Shared/NavBar';
+  import axios from 'axios';
+ import config from '../Config';
  import moment from 'moment';
 
 
 
-export class AttendanceEdit extends Component
+export class LeaveAdd extends Component
 {
     constructor(props) {
         super(props);
 
-        this.attendanceDate = React.createRef();
-      
+        this.startDate = React.createRef();
+        this.endDate = React.createRef();
+
         this.state = {
             error: {},
             employees: [],
-            workSchedules: [],
-            id: '',
+            leaveTypes: [],
             employeeId: '',
-            workScheduleId: '',
-            attendanceDate: '',
-            clockIn: '',
-            clockOut: '',
-            status: '',
-            workDuration: '',
-            note: ''
-         }
+            leaveTypeId: '',
+            startDate: '',
+            endDate: '',
+            note: '',
+            approvedDate: ''
+        }
     }
 
 
     componentDidMount() {
-        
-        let id = this.props.match.params.id;
-
         this.getAllEmployees();
-        this.getAllWorkSchedules();
-
-        this.getAttendanceById(id);
+        this.getAllLeaveTypes();
     }
-
 
     onValueChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
-    }
-
-
-    getAttendanceById = (id) => {
-        axios.get(config.serverUrl + "/api/attendance/getbyid/" + id).then(response=> {
-            this.setState({
-                id: response.data.id,
-                employeeId: response.data.employeeId,
-                workScheduleId: response.data.workScheduleId,
-                attendanceDate: response.data.attendanceDate,
-                clockIn: response.data.clockIn,
-                clockOut: response.data.clockOut,
-                status: response.data.status,
-                workDuration: response.data.workDuration,
-                note: response.data.note                   
-            })
         })
     }
 
@@ -92,10 +67,10 @@ export class AttendanceEdit extends Component
         })
     }
 
-    getAllWorkSchedules = () => {
-        axios.get(config.serverUrl + "/api/workschedule/getall").then(response=> {
+    getAllLeaveTypes = () => {
+        axios.get(config.serverUrl + "/api/leavetype/getall").then(response=> {
             this.setState({
-                workSchedules: response.data
+                leaveTypes: response.data
             })
         })
     }
@@ -111,23 +86,21 @@ export class AttendanceEdit extends Component
             error.employeeId = 'is required';
             isValid = false;
         }
-        if (this.state.workScheduleId == '') {
-            error.workScheduleId = 'is required';
+        if (this.state.leaveTypeId == '') {
+            error.leaveTypeId = 'is required';
             isValid = false;
         }
-        if (this.attendanceDate.current.value === '') {
-            error.attendanceDate = 'is required';
+        if (this.startDate.current.value === '') {
+            error.startDate = 'is required';
             isValid = false;
         }
-        if (this.state.clockIn == '') {
-            error.clockIn = 'is required';
+        if (this.endDate.current.value === '') {
+            error.endDate = 'is required';
             isValid = false;
         }
-        if (this.state.clockOut == '') {
-            error.clockOut = 'is required';
-            isValid = false;
-        }
-       
+
+
+
         this.setState({
             error: error 
         })
@@ -137,32 +110,30 @@ export class AttendanceEdit extends Component
     }
 
 
-    updateAttendance = () => {
+    submitLeave = () => {
         
         let isValid = this.validate();
         if (isValid) {
      
-            let attendance = {
-                id: this.state.id,
+            let leave = {
                 employeeId: this.state.employeeId,
-                workScheduleId: this.state.workScheduleId,
-                attendanceDate: new Date(moment(this.attendanceDate.current.value)),
-                clockIn: this.state.clockIn,
-                clockOut: this.state.clockOut,
-                status: this.state.status,
-                workDuration: this.state.workDuration,
-                note: this.state.note
+                leaveTypeId: this.state.leaveTypeId,
+                startDate:  new Date(moment(this.startDate.current.value).add(1,'d')),
+                endDate: new Date(moment(this.endDate.current.value).add(1,'d')),
+                note: this.state.note,
+                approvedDate: new Date(moment("01/01/1900"))
             }
 
             this.setState({
                 isSaving: true
             })
 
-            axios.put(config.serverUrl + "/api/attendance/update",attendance).then(response=> {
+            axios.post(config.serverUrl + "/api/leave/save",leave).then(response=> {
                 this.setState({
                     isSaving: false
                 })                
-                this.props.history.push("/attendance");
+                this.props.history.push("/leave");
+            
             })
 
         }
@@ -170,8 +141,8 @@ export class AttendanceEdit extends Component
     }
 
 
-    cancelUpdate = () => {
-        this.props.history.push("/attendance");
+    cancelAdd = () => {
+        this.props.history.push("/leave");
     }
 
 
@@ -193,7 +164,7 @@ export class AttendanceEdit extends Component
               
                 <div class="content-wrapper" style={heightStyle}>
                     <section class="content-header">
-                        <h1>Edit Attendance</h1>
+                        <h1>Request Leave</h1>
                     </section>
                  
                     <section class="content">
@@ -207,7 +178,7 @@ export class AttendanceEdit extends Component
                                  <h3 class="box-title"></h3>
                                 <div class="box-tools pull-right">
                                     {this.state.isSaving ? 
-                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Updating ...</span>
+                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Saving ...</span>
                                     : null
                                     }
                                 </div>
@@ -222,7 +193,7 @@ export class AttendanceEdit extends Component
                         <div class="form-group">
                             <label class="col-md-3 control-label">Requested For</label>
                             <div class="col-md-7 col-sm-12 required">
-                                <select class="form-control" name="employeeId" value={this.state.employeeId} onChange={this.onValueChange}>
+                                <select class="form-control" name="employeeId" onChange={this.onValueChange}>
                                     <option>Select Employee</option>
                                     {this.state.employees.map(e=> 
                                         <option value={e.id}>{e.employeeName}</option>
@@ -233,69 +204,66 @@ export class AttendanceEdit extends Component
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Work Schedule</label>
+                            <label class="col-md-3 control-label">Leave Type</label>
                             <div class="col-md-7 col-sm-12 required">
-                                <select class="form-control" name="workScheduleId" value={this.state.workScheduleId} onChange={this.onValueChange}>
-                                    <option>Select Work Schedule</option>
-                                    {this.state.workSchedules.map(ws=> 
-                                        <option value={ws.id}>{ws.scheduleName}</option>
+                                <select class="form-control" name="leaveTypeId" onChange={this.onValueChange}>
+                                    <option>Select Leave Type</option>
+                                    {this.state.leaveTypes.map(lt=> 
+                                        <option value={lt.id}>{lt.leaveTypeName}</option>
                                     )}
                                 </select>
                             </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.workScheduleId}</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.leaveTypeId}</span>
                         </div>
                         
                       
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Attendance Date</label>
+                            <label class="col-md-3 control-label">Start Date</label>
                             <div class="col-md-7 col-sm-12 required">
                                 <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
-                                    <input type="text" class="form-control" 
-                                    value={moment(this.state.attendanceDate).format("MM/DD/YYYY")}
-                                    ref={this.attendanceDate}/>
+                                    <input type="text" class="form-control" ref={this.startDate}/>
                                     <div class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </div>
                                 </div>
                               </div>
                             <div class="col-md-2 col-sm-1">
-                            <span style={errStyle}>{this.state.error.attendanceDate}</span>
+                            <span style={errStyle}>{this.state.error.startDate}</span>
                             </div>
                         </div>
 
-
-                        <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Clock In</label>
-
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">End Date</label>
                             <div class="col-md-7 col-sm-12 required">
-                                <input class="form-control" type="text" name="clockIn" value={this.state.clockIn} onChange={this.onValueChange}/>
+                                <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
+                                    <input type="text" class="form-control" ref={this.endDate}/>
+                                    <div class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </div>
+                                </div>
+                              </div>
+                            <div class="col-md-2 col-sm-1">
+                            <span style={errStyle}>{this.state.error.endDate}</span>
                             </div>
-
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.clockIn}</span>
                         </div>
 
-                        
-                        <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Clock Out</label>
-                            <div class="col-md-7 col-sm-12 required">
-                                <input class="form-control" type="text" name="clockOut" value={this.state.clockOut} onChange={this.onValueChange}/>
-                            </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.clockOut}</span>
-                        </div>
+
 
                         <div id="initial" class="form-group">
                             <label class="col-md-3 control-label">Note</label>
                             <div class="col-md-7 col-sm-12">
-                                <input class="form-control" type="text" name="note" value={this.state.note} onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="note" onChange={this.onValueChange}/>
                             </div>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.note}</span>
                         </div>
+                        
                         
 
                         </form>
 
                           <div class="box-footer text-right">
-                            <a class="btn btn-link text-left" href="#" onClick={this.cancelUpdate}>Cancel</a>
-                            <button type="button" onClick={this.updateAttendance} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Update</button>
+                            <a class="btn btn-link text-left" href="#" onClick={this.cancelAdd}>Cancel</a>
+                            <button type="button" onClick={this.submitLeave} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Submit</button>
                         </div>
 
 

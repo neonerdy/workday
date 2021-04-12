@@ -12,11 +12,11 @@
  */
 
 import React, {Component} from 'react';
-import { Footer } from './Footer';
-import { Header } from './Header';
-import { NavBar } from './NavBar';
+import { Footer } from '../Shared/Footer';
+import { Header } from '../Shared/Header';
+import { NavBar } from '../Shared/NavBar';
 import axios from 'axios';
-import config from './Config'
+import config from '../Config'
 
 export class Dashboard extends Component
 {
