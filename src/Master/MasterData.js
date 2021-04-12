@@ -90,6 +90,19 @@
         this.props.history.push("/add-branch");
     }
 
+    editBranch = (id) => {
+        this.props.history.push("/edit-branch/" + id);
+    }
+
+    addDepartment = () => {
+        this.props.history.push("/add-department");
+    }
+
+    editDepartment = (id) => {
+        this.props.history.push("/edit-department/" + id);
+    }
+
+
  
  
      render() {
@@ -122,7 +135,7 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" onClick={this.addBranch}>Branch</a></li>
-                            <li><a href="#">Department</a></li>
+                            <li><a href="#" onClick={this.addDepartment}>Department</a></li>
                             <li><a href="#">Job Title</a></li>
                         </ul>
                     </div>
@@ -156,7 +169,7 @@
                                                     <li>
                                                         <span class="text">{jt.branchName}</span>
                                                         <div class="tools">
-                                                            <i class="fa fa-edit" style={{color:'black'}}></i>&nbsp;
+                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editBranch(jt.id)}></i>&nbsp;
                                                             <i class="fa fa-trash-o" style={{color:'black'}}></i>
                                                         </div>
                                                     </li>
@@ -175,7 +188,7 @@
                                                     <li>
                                                         <span class="text">{d.departmentName}</span>
                                                         <div class="tools">
-                                                            <i class="fa fa-edit" style={{color:'black'}}></i>&nbsp;
+                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editDepartment(d.id)}></i>&nbsp;
                                                             <i class="fa fa-trash-o" style={{color:'black'}}></i>
                                                         </div>
                                                     </li>

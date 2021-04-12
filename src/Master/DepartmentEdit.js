@@ -24,19 +24,26 @@
  import moment from 'moment';
 
 
-
-export class BranchAdd extends Component
+export class DepartmentEdit extends Component
 {
     constructor(props) {
         super(props);
 
         this.state = {
             error: {},
-            branchName: '',
-            province: '',
-            city: ''
+            departments: [],
+            id: '',
+            departmentName: '',
+            description: '',
         }
     }
+
+    
+    componentDidMount() {
+        let id = this.props.match.params.id;
+        this.getDepartmentById(id);
+    }
+
 
 
     onValueChange = (e) => {
@@ -46,14 +53,34 @@ export class BranchAdd extends Component
     }
 
 
+    getDepartmentById = (id) => {
+        axios.get(config.serverUrl + "/api/department/getbyid/" + id).then(response=> {
+            this.setState({
+                id: response.data.id,
+                departmentName: response.data.departmentName,
+                description: response.data.description,
+            })
+        });
+    }
+
+
+    getAllDepartments = () => {
+        axios.get(config.serverUrl + "/api/department/getall").then(response=> {
+            this.setState({
+                departments: response.data
+            })
+        });
+    }
+
+
 
     validate = () => {
 
         let isValid = true;
         let error = {};
 
-        if (this.state.branchName == '') {
-            error.branchName = 'is required';
+        if (this.state.departmentName == '') {
+            error.departmentName = 'is required';
             isValid = false;
         }
       
@@ -66,34 +93,34 @@ export class BranchAdd extends Component
     }
 
 
-    saveBranch = () => {
+    updateDepartment = () => {
         
         let isValid = this.validate();
         if (isValid) {
      
-            let branch = {
-                branchName: this.state.branchName,
-                province: this.state.province,
-                city: this.state.city
+            let department = {
+                id: this.state.id,
+                departmentName: this.state.departmentName,
+                description: this.state.description,
             }
 
             this.setState({
                 isSaving: true
             })
 
-            axios.post(config.serverUrl + "/api/branch/save",branch).then(response=> {
+            axios.put(config.serverUrl + "/api/department/update",department).then(response=> {
                 this.setState({
                     isSaving: false
                 })                
+                this.getAllDepartments();
                 this.props.history.push("/master-data");
             })
-
         }
-        
     }
 
 
-    cancelAdd = () => {
+    
+    cancelUpdate = () => {
         this.props.history.push("/master-data");
     }
 
@@ -116,7 +143,7 @@ export class BranchAdd extends Component
               
                 <div class="content-wrapper" style={heightStyle}>
                     <section class="content-header">
-                        <h1>Add Branch</h1>
+                        <h1>Update Department</h1>
                     </section>
                  
                     <section class="content">
@@ -130,7 +157,7 @@ export class BranchAdd extends Component
                                  <h3 class="box-title"></h3>
                                 <div class="box-tools pull-right">
                                     {this.state.isSaving ? 
-                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Saving ...</span>
+                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Updating ...</span>
                                     : null
                                     }
                                 </div>
@@ -145,35 +172,27 @@ export class BranchAdd extends Component
                        
 
                         <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Branch Name</label>
+                            <label class="col-md-3 control-label">Department Name</label>
                             <div class="col-md-7 col-sm-12 required">
-                                <input class="form-control" type="text" name="branchName" onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="departmentName" value={this.state.departmentName} onChange={this.onValueChange}/>
                             </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.branchName}</span>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.departmentName}</span>
                         </div>
 
                         <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Province</label>
+                            <label class="col-md-3 control-label">Description</label>
                             <div class="col-md-7 col-sm-12">
-                                <input class="form-control" type="text" name="province" onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="description" value={this.state.description} onChange={this.onValueChange}/>
                             </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.province}</span>
-                        </div>
-
-                        <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">City</label>
-                            <div class="col-md-7 col-sm-12">
-                                <input class="form-control" type="text" name="city" onChange={this.onValueChange}/>
-                            </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.city}</span>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.description}</span>
                         </div>
 
                         
                         </form>
 
                           <div class="box-footer text-right">
-                            <a class="btn btn-link text-left" href="#" onClick={this.cancelAdd}>Cancel</a>
-                            <button type="button" onClick={this.saveBranch} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Save</button>
+                            <a class="btn btn-link text-left" href="#" onClick={this.cancelUpdate}>Cancel</a>
+                            <button type="button" onClick={this.updateDepartment} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Update</button>
                         </div>
 
 

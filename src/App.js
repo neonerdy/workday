@@ -29,7 +29,9 @@ import { AttendanceAdd } from './Attendance/AttendanceAdd';
 import { AttendanceEdit } from './Attendance/AttendanceEdit';
 
 import { BranchAdd } from './Master/BranchAdd';
-
+import { BranchEdit} from './Master/BranchEdit';
+import { DepartmentAdd } from './Master/DepartmentAdd';
+import { DepartmentEdit } from './Master/DepartmentEdit';
 
 
 
@@ -43,8 +45,10 @@ class App extends Component {
           <Route exact path="/master-data" component={MasterData}/>
 
           <Route exact path="/add-branch" component={BranchAdd}/>
-
-
+          <Route exact path="/edit-branch/:id" component={BranchEdit}/>
+          <Route exact path="/add-department" component={DepartmentAdd}/>
+          <Route exact path="/edit-department/:id" component={DepartmentEdit}/>
+          
           <Route exact path="/employee" component={Employee}/>
           <Route exact path="/attendance" component={Attendance}/>
           <Route exact path="/add-attendance" component={AttendanceAdd}/>

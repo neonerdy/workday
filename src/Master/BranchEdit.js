@@ -25,19 +25,38 @@
 
 
 
-export class BranchAdd extends Component
+export class BranchEdit extends Component
 {
     constructor(props) {
         super(props);
 
         this.state = {
             error: {},
+            id: '',
             branchName: '',
             province: '',
             city: ''
         }
     }
 
+    componentDidMount() {
+
+        let id = this.props.match.params.id;
+        this.getBranchById(id);
+    }
+
+    
+    getBranchById = (id) => {
+        axios.get(config.serverUrl + "/api/branch/getbyid/" + id).then(response=> {
+            this.setState({
+                id: response.data.id,
+                branchName: response.data.branchName,
+                province: response.data.province,
+                city: response.data.city
+            })
+        });
+    }
+ 
 
     onValueChange = (e) => {
         this.setState({
@@ -66,12 +85,13 @@ export class BranchAdd extends Component
     }
 
 
-    saveBranch = () => {
+    updateBranch = () => {
         
         let isValid = this.validate();
         if (isValid) {
      
             let branch = {
+                id: this.state.id,
                 branchName: this.state.branchName,
                 province: this.state.province,
                 city: this.state.city
@@ -81,11 +101,12 @@ export class BranchAdd extends Component
                 isSaving: true
             })
 
-            axios.post(config.serverUrl + "/api/branch/save",branch).then(response=> {
+            axios.put(config.serverUrl + "/api/branch/update",branch).then(response=> {
                 this.setState({
                     isSaving: false
                 })                
                 this.props.history.push("/master-data");
+            
             })
 
         }
@@ -93,7 +114,7 @@ export class BranchAdd extends Component
     }
 
 
-    cancelAdd = () => {
+    cancelUpdate = () => {
         this.props.history.push("/master-data");
     }
 
@@ -116,7 +137,7 @@ export class BranchAdd extends Component
               
                 <div class="content-wrapper" style={heightStyle}>
                     <section class="content-header">
-                        <h1>Add Branch</h1>
+                        <h1>Update Branch</h1>
                     </section>
                  
                     <section class="content">
@@ -130,7 +151,7 @@ export class BranchAdd extends Component
                                  <h3 class="box-title"></h3>
                                 <div class="box-tools pull-right">
                                     {this.state.isSaving ? 
-                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Saving ...</span>
+                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Updating ...</span>
                                     : null
                                     }
                                 </div>
@@ -147,7 +168,7 @@ export class BranchAdd extends Component
                         <div id="initial" class="form-group">
                             <label class="col-md-3 control-label">Branch Name</label>
                             <div class="col-md-7 col-sm-12 required">
-                                <input class="form-control" type="text" name="branchName" onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="branchName" value={this.state.branchName} onChange={this.onValueChange}/>
                             </div>
                             &nbsp;&nbsp;<span style={errStyle}>{this.state.error.branchName}</span>
                         </div>
@@ -155,7 +176,7 @@ export class BranchAdd extends Component
                         <div id="initial" class="form-group">
                             <label class="col-md-3 control-label">Province</label>
                             <div class="col-md-7 col-sm-12">
-                                <input class="form-control" type="text" name="province" onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="province" value={this.state.province} onChange={this.onValueChange}/>
                             </div>
                             &nbsp;&nbsp;<span style={errStyle}>{this.state.error.province}</span>
                         </div>
@@ -163,7 +184,7 @@ export class BranchAdd extends Component
                         <div id="initial" class="form-group">
                             <label class="col-md-3 control-label">City</label>
                             <div class="col-md-7 col-sm-12">
-                                <input class="form-control" type="text" name="city" onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="city" value={this.state.city} onChange={this.onValueChange}/>
                             </div>
                             &nbsp;&nbsp;<span style={errStyle}>{this.state.error.city}</span>
                         </div>
@@ -172,8 +193,8 @@ export class BranchAdd extends Component
                         </form>
 
                           <div class="box-footer text-right">
-                            <a class="btn btn-link text-left" href="#" onClick={this.cancelAdd}>Cancel</a>
-                            <button type="button" onClick={this.saveBranch} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Save</button>
+                            <a class="btn btn-link text-left" href="#" onClick={this.cancelUpdate}>Cancel</a>
+                            <button type="button" onClick={this.updateBranch} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Update</button>
                         </div>
 
 
