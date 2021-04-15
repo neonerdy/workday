@@ -19,32 +19,31 @@
  import { Footer } from '../Shared/Footer';
  import { Header } from '../Shared/Header';
  import { NavBar } from '../Shared/NavBar';
-  import axios from 'axios';
+ import axios from 'axios';
  import config from '../Config';
- import moment from 'moment';
+ 
 
-
-export class DepartmentEdit extends Component
+export class WorkScheduleEdit extends Component
 {
     constructor(props) {
         super(props);
 
         this.state = {
             error: {},
-            departments: [],
+            workSchedules: [],
             id: '',
-            departmentName: '',
-            description: '',
+            scheduleName: '',
+            scheduleIn: '',
+            scheduleOut: '',
+            note: ''
         }
     }
 
-    
     componentDidMount() {
         let id = this.props.match.params.id;
-        this.getDepartmentById(id);
+        this.getWorkScheduleById(id);
     }
-
-
+    
 
     onValueChange = (e) => {
         this.setState({
@@ -53,21 +52,23 @@ export class DepartmentEdit extends Component
     }
 
 
-    getDepartmentById = (id) => {
-        axios.get(config.serverUrl + "/api/department/getbyid/" + id).then(response=> {
+    getWorkScheduleById = (id) => {
+        axios.get(config.serverUrl + "/api/workschedule/getbyid/" + id).then(response=> {
             this.setState({
                 id: response.data.id,
-                departmentName: response.data.departmentName,
-                description: response.data.description,
+                scheduleName: response.data.scheduleName,
+                scheduleIn: response.data.scheduleIn,
+                scheduleOut: response.data.scheduleOut,
+                note: response.data.note
             })
         });
     }
 
 
-    getAllDepartments = () => {
-        axios.get(config.serverUrl + "/api/department/getall").then(response=> {
+    getAllWorkSchedules = () => {
+        axios.get(config.serverUrl + "/api/workschedule/getall").then(response=> {
             this.setState({
-                departments: response.data
+                workSchedules: response.data
             })
         });
     }
@@ -79,11 +80,20 @@ export class DepartmentEdit extends Component
         let isValid = true;
         let error = {};
 
-        if (this.state.departmentName == '') {
-            error.departmentName = 'is required';
+        if (this.state.scheduleName == '') {
+            error.scheduleName = 'is required';
             isValid = false;
         }
-      
+        if (this.state.scheduleIn == '') {
+            error.scheduleIn = 'is required';
+            isValid = false;
+        }
+        if (this.state.scheduleOut == '') {
+            error.scheduleOut = 'is required';
+            isValid = false;
+        }
+
+
         this.setState({
             error: error 
         })
@@ -93,26 +103,28 @@ export class DepartmentEdit extends Component
     }
 
 
-    updateDepartment = () => {
+    updateWorkSchedule = () => {
         
         let isValid = this.validate();
         if (isValid) {
      
-            let department = {
+            let workSchedule = {
                 id: this.state.id,
-                departmentName: this.state.departmentName,
-                description: this.state.description,
+                scheduleName: this.state.scheduleName,
+                scheduleIn: this.state.scheduleIn,
+                scheduleOut: this.state.scheduleOut,
+                note: this.state.note
             }
 
             this.setState({
                 isSaving: true
             })
 
-            axios.put(config.serverUrl + "/api/department/update",department).then(response=> {
+            axios.put(config.serverUrl + "/api/workschedule/update", workSchedule).then(response=> {
                 this.setState({
                     isSaving: false
                 })                
-                this.getAllDepartments();
+                this.getAllWorkSchedules();
                 this.props.history.push("/master-data");
             })
         }
@@ -143,7 +155,7 @@ export class DepartmentEdit extends Component
               
                 <div class="content-wrapper" style={heightStyle}>
                     <section class="content-header">
-                        <h1>Edit Department</h1>
+                        <h1>Edit Work Schedule</h1>
                     </section>
                  
                     <section class="content">
@@ -171,28 +183,46 @@ export class DepartmentEdit extends Component
                       
                        
 
-                        <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Department Name</label>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Schedule Name</label>
                             <div class="col-md-7 col-sm-12 required">
-                                <input class="form-control" type="text" name="departmentName" value={this.state.departmentName} onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="scheduleName" value={this.state.scheduleName} 
+                                    onChange={this.onValueChange}/>
                             </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.departmentName}</span>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.scheduleName}</span>
                         </div>
 
-                        <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Description</label>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Schedule In</label>
+                            <div class="col-md-7 col-sm-12 required">
+                                <input class="form-control" type="text" name="scheduleIn" value={this.state.scheduleIn} 
+                                    onChange={this.onValueChange}/>
+                            </div>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.scheduleIn}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Schedule In</label>
+                            <div class="col-md-7 col-sm-12 required">
+                                <input class="form-control" type="text" name="scheduleOut" value={this.state.scheduleOut} 
+                                    onChange={this.onValueChange}/>
+                            </div>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.scheduleOut}</span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Note</label>
                             <div class="col-md-7 col-sm-12">
-                                <input class="form-control" type="text" name="description" value={this.state.description} onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="note" value={this.state.note} onChange={this.onValueChange}/>
                             </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.description}</span>
                         </div>
 
-                        
                         </form>
 
                           <div class="box-footer text-right">
                             <a class="btn btn-link text-left" href="#" onClick={this.cancelUpdate}>Cancel</a>
-                            <button type="button" onClick={this.updateDepartment} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Update</button>
+                            <button type="button" onClick={this.updateWorkSchedule} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Update</button>
                         </div>
 
 

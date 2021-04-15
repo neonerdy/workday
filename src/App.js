@@ -32,6 +32,10 @@ import { BranchAdd } from './Master/BranchAdd';
 import { BranchEdit} from './Master/BranchEdit';
 import { DepartmentAdd } from './Master/DepartmentAdd';
 import { DepartmentEdit } from './Master/DepartmentEdit';
+import { JobTitleAdd } from './Master/JobTitleAdd';
+import { JobTitleEdit } from './Master/JobTitleEdit';
+import { WorkScheduleAdd } from './Master/WorkScheduleAdd';
+import { WorkScheduleEdit } from './Master/WorkScheduleEdit';
 
 
 
@@ -45,9 +49,14 @@ class App extends Component {
           <Route exact path="/master-data" component={MasterData}/>
 
           <Route exact path="/add-branch" component={BranchAdd}/>
-          <Route exact path="/edit-branch/:id" component={BranchEdit}/>
           <Route exact path="/add-department" component={DepartmentAdd}/>
+          <Route exact path="/add-jobtitle" component={JobTitleAdd}/>
+          <Route exact path="/add-workschedule" component={WorkScheduleAdd}/>
+
+          <Route exact path="/edit-branch/:id" component={BranchEdit}/>
           <Route exact path="/edit-department/:id" component={DepartmentEdit}/>
+          <Route exact path="/edit-jobtitle/:id" component={JobTitleEdit}/>
+          <Route exact path="/edit-workschedule/:id" component={WorkScheduleEdit}/>
           
           <Route exact path="/employee" component={Employee}/>
           <Route exact path="/attendance" component={Attendance}/>

@@ -137,7 +137,7 @@ export class BranchEdit extends Component
               
                 <div class="content-wrapper" style={heightStyle}>
                     <section class="content-header">
-                        <h1>Update Branch</h1>
+                        <h1>Edit Branch</h1>
                     </section>
                  
                     <section class="content">

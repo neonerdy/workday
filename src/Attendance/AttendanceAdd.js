@@ -150,6 +150,15 @@ export class AttendanceAdd extends Component
         this.props.history.push("/attendance");
     }
 
+    addEmployee = () => {
+        this.props.history.push("/add-employee");
+    }
+
+    addWorkSchedule = () => {
+        this.props.history.push("/add-workschedule");
+    }
+
+
 
 
     render() {
@@ -205,6 +214,7 @@ export class AttendanceAdd extends Component
                                     )}
                                 </select>
                             </div>
+                            &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addEmployee}>New</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.employeeId}</span>
                         </div>
 
@@ -218,6 +228,7 @@ export class AttendanceAdd extends Component
                                     )}
                                 </select>
                             </div>
+                            &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addWorkSchedule}>New</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.workScheduleId}</span>
                         </div>
                         

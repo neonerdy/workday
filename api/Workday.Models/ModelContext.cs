@@ -56,6 +56,12 @@ namespace Workday.Models
             optionBuilder.UseSqlServer(ConnectionString);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<EmployeeFamily>()
+                .HasKey(c => c.EmployeeFamilyId);
+        }
+
 
     }
 }

@@ -39,6 +39,23 @@ namespace Workday.WebService
         }
 
 
+        [HttpGet("{employeeFamilyId}")]
+        public async Task<IActionResult> GetById(Guid employeeFamilyId)
+        {
+            try
+            {
+                var employeeFamily = await context.EmployeeFamilies.FindAsync(employeeFamilyId);
+                return Ok(employeeFamily);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
+        }
+
+
+
         [HttpGet("{employeeId}")]
         public async Task<IActionResult> GetByEmployeeId(Guid employeeId)
         {
@@ -63,7 +80,7 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                employeeFamily.ID = Guid.NewGuid();
+                employeeFamily.EmployeeFamilyId = Guid.NewGuid();
                 context.Add(employeeFamily);
                 result = await context.SaveChangesAsync();
             }

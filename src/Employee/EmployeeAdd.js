@@ -318,6 +318,27 @@ export class EmployeeAdd extends Component
         this.props.history.push("/employee");
     }
 
+
+    addBranch = () => {
+        this.props.history.push("/add-branch");
+    }
+
+    addDepartment = () => {
+        this.props.history.push("/add-department");
+    }
+
+    addJobTitle = () => {
+        this.props.history.push("/add-jobtitle");
+    }
+
+    addWorkSchedule = () => {
+        this.props.history.push("/add-workschedule");
+    }
+
+
+
+    
+
    
 
     render() {
@@ -435,7 +456,7 @@ export class EmployeeAdd extends Component
                                             <div class="col-md-7 col-sm-12 required">
                                                 <select class="form-control" name="gender" onChange={this.onValueChange}>
                                                     <option>Select Gender</option>
-                                                    <option value="male">Male</option>
+                                                    <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
                                                </select>
                                             </div>
@@ -601,6 +622,7 @@ export class EmployeeAdd extends Component
                                                             )}
                                                          </select>
                                                     </div>
+                                                    &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addBranch}>New</a>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.branchId}</span>
                                                 </div>
 
@@ -614,6 +636,7 @@ export class EmployeeAdd extends Component
                                                             )}
                                                     </select>
                                                     </div>
+                                                    &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addDepartment}>New</a>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.departmentId}</span>
                                                 </div>
 
@@ -627,6 +650,7 @@ export class EmployeeAdd extends Component
                                                             )}
                                                     </select>
                                                     </div>
+                                                    &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addJobTitle}>New</a>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.jobTitleId}</span>
                                                 </div>
                                               
@@ -656,6 +680,7 @@ export class EmployeeAdd extends Component
                                                             )}
                                                     </select>
                                                     </div>
+                                                    &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addWorkSchedule}>New</a>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.workScheduleId}</span>
                                                 </div>
 

@@ -208,7 +208,7 @@ export class Employee extends Component
                       
                         <br/><br/><br/>
 
-                         <table id="table-to-xls" class="table table-hover">
+                                <table id="table-to-xls" class="table table-hover">
                                     <tbody>
                                         <tr>
                                             <th><u>NIK</u></th>

@@ -145,6 +145,15 @@ export class LeaveAdd extends Component
         this.props.history.push("/leave");
     }
 
+    addEmployee = () => {
+        this.props.history.push("/add-employee");
+    }
+
+    addLeaveType = () => {
+        this.props.history.push("/add-leavetype");
+    }
+
+
 
 
     render() {
@@ -200,6 +209,7 @@ export class LeaveAdd extends Component
                                     )}
                                 </select>
                             </div>
+                            &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addEmployee}>New</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.employeeId}</span>
                         </div>
 
@@ -213,6 +223,7 @@ export class LeaveAdd extends Component
                                     )}
                                 </select>
                             </div>
+                            &nbsp;&nbsp; <a href="#" class="btn btn-sm btn-default" onClick={this.addLeaveType}>New</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.leaveTypeId}</span>
                         </div>
                         

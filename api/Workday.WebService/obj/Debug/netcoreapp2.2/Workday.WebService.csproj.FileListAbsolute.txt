@@ -67,5 +67,3 @@ D:\Repos\workday\api\Workday.WebService\obj\Debug\netcoreapp2.2\Workday.WebServi
 D:\Repos\workday\api\Workday.WebService\bin\Debug\netcoreapp2.2\appsettings.Development.json
 D:\Repos\workday\api\Workday.WebService\bin\Debug\netcoreapp2.2\appsettings.json
 D:\Repos\workday\api\Workday.WebService\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
-D:\Repos\workday\api\Workday.WebService\obj\Debug\netcoreapp2.2\Workday.WebService.csproj.CoreCompileInputs.cache
-D:\Repos\workday\api\Workday.WebService\obj\Debug\netcoreapp2.2\Workday.WebService.genruntimeconfig.cache

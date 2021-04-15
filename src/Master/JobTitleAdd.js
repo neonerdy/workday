@@ -24,7 +24,6 @@
  import moment from 'moment';
 
 
-
 export class JobTitleAdd extends Component
 {
     constructor(props) {
@@ -166,6 +165,21 @@ export class JobTitleAdd extends Component
                             </div>
                             &nbsp;&nbsp;<span style={errStyle}>{this.state.error.jobTitleName}</span>
                         </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Level</label>
+                            <div class="col-md-7 col-sm-12 required">
+                                <select class="form-control" name="jobLevel" onChange={this.onValueChange}>
+                                    <option>Select Level</option>
+                                    <option value="Director">Director</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Staff">Staff</option>
+                                </select>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span style={errStyle}>{this.state.error.jobLevel}</span>
+                        </div>
+
 
                         <div id="initial" class="form-group">
                             <label class="col-md-3 control-label">Description</label>

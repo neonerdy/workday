@@ -18,6 +18,7 @@
  import axios from 'axios';
  import config from '../Config'
  import { Scrollbars } from 'react-custom-scrollbars';
+import { AddBranch } from './AddBranch';
 
  export class MasterData extends Component
  {
@@ -43,7 +44,7 @@
         this.getAllDepartments();
         this.getAllJobTitles();      
         this.getAllLeaveTypes();       
-        
+        this.getAllWorkSchedules();
      }
 
 
@@ -75,7 +76,6 @@
     }
 
 
-
     getAllLeaveTypes = () => {
         axios.get(config.serverUrl + "/api/leavetype/getall").then(response=> {
             this.setState({
@@ -83,6 +83,17 @@
             })
         })
     }
+
+
+    getAllWorkSchedules = () => {
+        axios.get(config.serverUrl + "/api/workschedule/getall").then(response=> {
+            this.setState({
+                workSchedules: response.data
+            })
+        })
+    }
+
+
 
 
 
@@ -101,6 +112,26 @@
     editDepartment = (id) => {
         this.props.history.push("/edit-department/" + id);
     }
+
+    addJobTitle = () => {
+        this.props.history.push("/add-jobtitle");
+    }
+
+    editJobTitle = (id) => {
+        this.props.history.push("/edit-jobtitle/" + id);
+    }
+
+    addWorkSchedule = () => {
+        this.props.history.push("/add-workschedule");
+    }
+
+    editWorkSchedule = (id) => {
+        this.props.history.push("/edit-workschedule/" + id);
+    }
+
+
+
+
 
 
  
@@ -134,9 +165,10 @@
                         
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" onClick={this.addBranch}>Branch</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#addBranch">Branch</a></li>
                             <li><a href="#" onClick={this.addDepartment}>Department</a></li>
-                            <li><a href="#">Job Title</a></li>
+                            <li><a href="#" onClick={this.addJobTitle}>Job Title</a></li>
+                            <li><a href="#" onClick={this.addWorkSchedule}>Work Schedule</a></li>
                         </ul>
                     </div>
                  </ol>
@@ -144,6 +176,10 @@
                  <br></br>
  
                  <section class="content">
+
+                     <AddBranch
+                       onValueChange = {this.state.onValueChange}
+                     />
  
                  <div class="row">
  
@@ -208,7 +244,7 @@
                                                <li>
                                                    <span class="text">{j.jobTitleName}</span>
                                                    <div class="tools">
-                                                       <i class="fa fa-edit" style={{color:'black'}}></i>&nbsp;
+                                                       <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editJobTitle(j.id)}></i>&nbsp;
                                                        <i class="fa fa-trash-o" style={{color:'black'}}></i>
                                                    </div>
                                                </li>
@@ -228,9 +264,6 @@
  
                      <div class="col-md-4 col-sm-6 col-xs-12">
                         
-                        
-
-
                         <div class="nav-tabs-custom" >
                                 <ul class="nav nav-tabs pull-right ui-sortable-handle">
                                 <li class="active"><a href="#leaveType-tab" data-toggle="tab" aria-expanded="true">Leave Type</a></li>
@@ -325,13 +358,6 @@
  
                
  
- 
- 
- 
- 
- 
- 
- 
                  </div>
  
 
@@ -357,15 +383,12 @@
 
                                     <Scrollbars style={{ height: 310 }}>
                                         <ul class="todo-list ui-sortable">
-                                            {this.state.workSchedules.map(jt=> 
+                                            {this.state.workSchedules.map(ws=> 
                                                 <li>
-                                                    <span>
-                                                        <i class="fa fa-ellipsis-v"></i>
-                                                    </span>
-                                                    <span class="text"></span>
+                                                    <span class="text">{ws.scheduleName} ( {ws.scheduleIn} - {ws.scheduleOut} )</span>
                                                     <div class="tools">
-                                                        <i class="fa fa-edit"></i>
-                                                        <i class="fa fa-trash-o"></i>
+                                                        <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editWorkSchedule(ws.id)}></i>&nbsp;
+                                                        <i class="fa fa-trash-o" style={{color:'black'}}></i>
                                                     </div>
                                                 </li>
                                             )}
@@ -385,9 +408,6 @@
 
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         
-                        
-
-
                         <div class="nav-tabs-custom" >
                                 <ul class="nav nav-tabs pull-right ui-sortable-handle">
                                 <li class="active"><a href="#user-tab" data-toggle="tab" aria-expanded="true">User</a></li>
@@ -481,15 +501,6 @@
                     
 
                     </div>
-
-
-
-
-
-
-
-
-
 
 
                     </div>

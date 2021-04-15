@@ -10,14 +10,14 @@
         "projectUniqueName": "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj",
         "projectName": "Workday.Models",
         "projectPath": "D:\\Repos\\workday\\api\\Workday.Models\\Workday.Models.csproj",
-        "packagesPath": "C:\\Users\\Ariyanto\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\ISID-ID-ARIYANTO\\.nuget\\packages\\",
         "outputPath": "D:\\Repos\\workday\\api\\Workday.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ariyanto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ISID-ID-ARIYANTO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,6 +25,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\IdentityServer4\\packages": {},
+          "D:\\MUFG.SSO\\nuget": {},
+          "D:\\MUFG.SSO\\nuget2": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -62,7 +65,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.113\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -72,14 +75,14 @@
         "projectUniqueName": "D:\\Repos\\workday\\api\\Workday.WebService\\Workday.WebService.csproj",
         "projectName": "Workday.WebService",
         "projectPath": "D:\\Repos\\workday\\api\\Workday.WebService\\Workday.WebService.csproj",
-        "packagesPath": "C:\\Users\\Ariyanto\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\ISID-ID-ARIYANTO\\.nuget\\packages\\",
         "outputPath": "D:\\Repos\\workday\\api\\Workday.WebService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ariyanto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ISID-ID-ARIYANTO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -87,6 +90,9 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\IdentityServer4\\packages": {},
+          "D:\\MUFG.SSO\\nuget": {},
+          "D:\\MUFG.SSO\\nuget2": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -143,7 +149,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.113\\RuntimeIdentifierGraph.json"
         }
       }
     }

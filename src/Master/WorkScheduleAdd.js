@@ -19,32 +19,26 @@
  import { Footer } from '../Shared/Footer';
  import { Header } from '../Shared/Header';
  import { NavBar } from '../Shared/NavBar';
-  import axios from 'axios';
+ import axios from 'axios';
  import config from '../Config';
- import moment from 'moment';
+ 
 
-
-export class DepartmentEdit extends Component
+export class WorkScheduleAdd extends Component
 {
     constructor(props) {
         super(props);
 
         this.state = {
             error: {},
-            departments: [],
-            id: '',
-            departmentName: '',
-            description: '',
+            workSchedules: [],
+            scheduleName: '',
+            scheduleIn: '',
+            scheduleOut: '',
+            note: ''
         }
     }
 
     
-    componentDidMount() {
-        let id = this.props.match.params.id;
-        this.getDepartmentById(id);
-    }
-
-
 
     onValueChange = (e) => {
         this.setState({
@@ -53,21 +47,10 @@ export class DepartmentEdit extends Component
     }
 
 
-    getDepartmentById = (id) => {
-        axios.get(config.serverUrl + "/api/department/getbyid/" + id).then(response=> {
+    getAllWorkSchedules = () => {
+        axios.get(config.serverUrl + "/api/workschedule/getall").then(response=> {
             this.setState({
-                id: response.data.id,
-                departmentName: response.data.departmentName,
-                description: response.data.description,
-            })
-        });
-    }
-
-
-    getAllDepartments = () => {
-        axios.get(config.serverUrl + "/api/department/getall").then(response=> {
-            this.setState({
-                departments: response.data
+                workSchedules: response.data
             })
         });
     }
@@ -79,11 +62,20 @@ export class DepartmentEdit extends Component
         let isValid = true;
         let error = {};
 
-        if (this.state.departmentName == '') {
-            error.departmentName = 'is required';
+        if (this.state.scheduleName == '') {
+            error.scheduleName = 'is required';
             isValid = false;
         }
-      
+        if (this.state.scheduleIn == '') {
+            error.scheduleIn = 'is required';
+            isValid = false;
+        }
+        if (this.state.scheduleOut == '') {
+            error.scheduleOut = 'is required';
+            isValid = false;
+        }
+
+
         this.setState({
             error: error 
         })
@@ -93,26 +85,27 @@ export class DepartmentEdit extends Component
     }
 
 
-    updateDepartment = () => {
+    saveWorkSchedule = () => {
         
         let isValid = this.validate();
         if (isValid) {
      
-            let department = {
-                id: this.state.id,
-                departmentName: this.state.departmentName,
-                description: this.state.description,
+            let workSchedule = {
+                scheduleName: this.state.scheduleName,
+                scheduleIn: this.state.scheduleIn,
+                scheduleOut: this.state.scheduleOut,
+                note: this.state.note
             }
 
             this.setState({
                 isSaving: true
             })
 
-            axios.put(config.serverUrl + "/api/department/update",department).then(response=> {
+            axios.post(config.serverUrl + "/api/workschedule/save", workSchedule).then(response=> {
                 this.setState({
                     isSaving: false
                 })                
-                this.getAllDepartments();
+                this.getAllWorkSchedules();
                 this.props.history.push("/master-data");
             })
         }
@@ -120,7 +113,7 @@ export class DepartmentEdit extends Component
 
 
     
-    cancelUpdate = () => {
+    cancelAdd = () => {
         this.props.history.push("/master-data");
     }
 
@@ -143,7 +136,7 @@ export class DepartmentEdit extends Component
               
                 <div class="content-wrapper" style={heightStyle}>
                     <section class="content-header">
-                        <h1>Edit Department</h1>
+                        <h1>Add Work Schedule</h1>
                     </section>
                  
                     <section class="content">
@@ -157,7 +150,7 @@ export class DepartmentEdit extends Component
                                  <h3 class="box-title"></h3>
                                 <div class="box-tools pull-right">
                                     {this.state.isSaving ? 
-                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Updating ...</span>
+                                    <span><i className="fa fa-spinner fa-spin"></i>&nbsp;Saving ...</span>
                                     : null
                                     }
                                 </div>
@@ -171,28 +164,44 @@ export class DepartmentEdit extends Component
                       
                        
 
-                        <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Department Name</label>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Schedule Name</label>
                             <div class="col-md-7 col-sm-12 required">
-                                <input class="form-control" type="text" name="departmentName" value={this.state.departmentName} onChange={this.onValueChange}/>
+                                <input class="form-control" type="text" name="scheduleName" onChange={this.onValueChange}/>
                             </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.departmentName}</span>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.scheduleName}</span>
                         </div>
 
-                        <div id="initial" class="form-group">
-                            <label class="col-md-3 control-label">Description</label>
-                            <div class="col-md-7 col-sm-12">
-                                <input class="form-control" type="text" name="description" value={this.state.description} onChange={this.onValueChange}/>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Schedule In</label>
+                            <div class="col-md-7 col-sm-12 required">
+                                <input class="form-control" type="text" name="scheduleIn" onChange={this.onValueChange}/>
                             </div>
-                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.description}</span>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.scheduleIn}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Schedule In</label>
+                            <div class="col-md-7 col-sm-12 required">
+                                <input class="form-control" type="text" name="scheduleOut" onChange={this.onValueChange}/>
+                            </div>
+                            &nbsp;&nbsp;<span style={errStyle}>{this.state.error.scheduleOut}</span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Note</label>
+                            <div class="col-md-7 col-sm-12">
+                                <input class="form-control" type="text" name="note" onChange={this.onValueChange}/>
+                            </div>
                         </div>
 
                         
                         </form>
 
                           <div class="box-footer text-right">
-                            <a class="btn btn-link text-left" href="#" onClick={this.cancelUpdate}>Cancel</a>
-                            <button type="button" onClick={this.updateDepartment} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Update</button>
+                            <a class="btn btn-link text-left" href="#" onClick={this.cancelAdd}>Cancel</a>
+                            <button type="button" onClick={this.saveWorkSchedule} class="btn btn-primary"><i class="fa fa-check icon-white"></i> Save</button>
                         </div>
 
 
