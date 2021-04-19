@@ -31,6 +31,7 @@ namespace Workday.Models
         public DbSet<EmployeeEducation> EmployeeEducations { get; set; }
         public DbSet<EmployeeFamily> EmployeeFamilies { get; set; }
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
+        public DbSet<EmployeeInsurance> EmployeeInsurances { get; set; }
         public DbSet<WorkSchedule> WorkSchedules { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<LeaveType> LeaveTypes { get; set; }
@@ -58,8 +59,8 @@ namespace Workday.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EmployeeFamily>()
-                .HasKey(c => c.EmployeeFamilyId);
+            //modelBuilder.Entity<EmployeeFamily>().HasKey(ef => ef.EmployeeFamilyId);
+            //modelBuilder.Entity<EmployeeEducation>().HasKey(ee => ee.EmployeeEducationId);
         }
 
 

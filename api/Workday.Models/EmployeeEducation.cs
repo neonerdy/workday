@@ -18,7 +18,7 @@ namespace Workday.Models
 {
     public class EmployeeEducation
     {
-        public Guid ID { get; set; }
+        public Guid EmployeeEducationId { get; set; }
         public Guid EmployeeId { get; set; }
         public string Grade { get; set; }
         public string InstitutionName { get; set; }

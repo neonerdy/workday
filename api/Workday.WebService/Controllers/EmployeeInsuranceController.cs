@@ -26,25 +26,26 @@ using Microsoft.Extensions.Logging;
 namespace Workday.WebService
 {
     [Route("api/[controller]/[action]")]
-    public class EmployeeEducationController : Controller
+    public class EmployeeInsuranceController : Controller
     {
 
-        private ILogger<EmployeeEducationController> logger;
+        private ILogger<EmployeeInsuranceController> logger;
         private ModelContext context;
 
-        public EmployeeEducationController(ILogger<EmployeeEducationController> logger)
+        public EmployeeInsuranceController(ILogger<EmployeeInsuranceController> logger)
         {
             this.logger = logger;
             context = new ModelContext();
         }
 
-        [HttpGet("{employeeEducationId}")]
-        public async Task<IActionResult> GetById(Guid employeeEducationId)
+
+        [HttpGet("{employeeInsuranceId}")]
+        public async Task<IActionResult> GetById(Guid employeeInsuranceId)
         {
             try
             {
-                var employeeEducation = await context.EmployeeEducations.FindAsync(employeeEducationId);
-                return Ok(employeeEducation);
+                var employeeInsurance = await context.EmployeeInsurances.FindAsync(employeeInsuranceId);
+                return Ok(employeeInsurance);
             }
             catch(Exception ex)
             {
@@ -54,16 +55,15 @@ namespace Workday.WebService
         }
 
 
-
         [HttpGet("{employeeId}")]
         public async Task<IActionResult> GetByEmployeeId(Guid employeeId)
         {
             try
             {
-                var employeeEducations = await context.EmployeeEducations.Where(ee=>ee.EmployeeId == employeeId)
+                var employeeInsurances = await context.EmployeeInsurances.Where(ec=>ec.EmployeeId == employeeId)
                     .ToListAsync();
 
-                return Ok(employeeEducations);
+                return Ok(employeeInsurances);
             }
             catch(Exception ex)
             {
@@ -74,13 +74,13 @@ namespace Workday.WebService
 
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] EmployeeEducation employeeEducation)
+        public async Task<IActionResult> Save([FromBody] EmployeeInsurance employeeInsurance)
         {
             int result = 0;
             try
             {
-                employeeEducation.EmployeeEducationId = Guid.NewGuid();
-                context.Add(employeeEducation);
+                employeeInsurance.EmployeeInsuranceId = Guid.NewGuid();
+                context.Add(employeeInsurance);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -93,12 +93,12 @@ namespace Workday.WebService
 
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] EmployeeEducation employeeEducation)
+        public async Task<IActionResult> Update([FromBody] EmployeeInsurance employeeInsurance)
         {
             int result = 0;
             try
             {
-                context.Update(employeeEducation);
+                context.Update(employeeInsurance);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -117,8 +117,8 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var employeeEducation = await context.EmployeeEducations.FindAsync(id);
-                context.Remove(employeeEducation);
+                var employeeInsurance = await context.EmployeeInsurances.FindAsync(id);
+                context.Remove(employeeInsurance);
                 result = await context.SaveChangesAsync();
             }
             catch(Exception ex)
@@ -127,6 +127,8 @@ namespace Workday.WebService
             }
             return Ok(result);
         }
+
+
 
 
 

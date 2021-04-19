@@ -16,12 +16,7 @@
 
  import React, {Component} from 'react';
  import '../App.css';
- import { Footer } from '../Shared/Footer';
- import { Header } from '../Shared/Header';
- import { NavBar } from '../Shared/NavBar';
-  import axios from 'axios';
- import config from '../Config';
- import moment from 'moment';
+
 
 
 export class FamilyAdd extends Component
@@ -108,7 +103,7 @@ export class FamilyAdd extends Component
                         
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onClick={this.props.saveFamily}>Save Family</button>
+                                <button type="button" class="btn btn-primary" onClick={this.props.saveFamily} data-dismiss="modal">Save Family</button>
                             </div>
                     
                     </div>

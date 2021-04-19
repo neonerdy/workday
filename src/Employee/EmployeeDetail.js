@@ -21,6 +21,15 @@ import config from '../Config';
 import moment from 'moment';
 import { FamilyAdd } from './FamilyAdd';
 import { FamilyEdit } from './FamilyEdit';
+import { EducationAdd } from './EducationAdd';
+import { EducationEdit } from './EducationEdit';
+import { EmployeeInfo } from './EmployeeInfo';
+import { CourseAdd } from './CourseAdd';
+import { CourseEdit } from './CourseEdit';
+import { SalaryAdd } from './SalaryAdd';
+import { SalaryEdit } from './SalaryEdit';
+import { InsuranceAdd } from './InsuranceAdd';
+import { InsuranceEdit } from './InsuranceEdit';
 
 
 
@@ -29,8 +38,17 @@ export class EmployeeDetail extends Component
     constructor(props) {
         super(props);
 
+        this.courseStartDate = React.createRef();
+        this.courseEndDate = React.createRef();
+        this.insuranceEffectiveDate = React.createRef();
+ 
         this.state = {
             employeeFamilies: [],
+            employeeEducations: [],
+            employeeCourses: [],
+            employeeSalaries: [],
+            salaryComponents: [],
+            employeeInsurances: [],
             id: '',
             employeeCode: '',
             employeeName: '',
@@ -46,14 +64,38 @@ export class EmployeeDetail extends Component
             address: '',
             phone: '',
             email: '',
-            employeeFamilyId: '',
             employeeId: '',
+            
+            employeeFamilyId: '',
             familyName: '',
             familyRelationship: '',
             familyAddress: '',
-            familyPhone: '' 
+            familyPhone: '' ,
 
-           
+            employeeEducationId: '',
+            grade: '',
+            institutionName: '',
+            majors: '',
+            startYear: '',
+            endYear: '',
+
+            employeeCourseId: '',
+            courseName: '',
+            provider: '',
+            startDate: '',
+            endDate: '',
+            certificate: '',
+
+            employeeSalaryId: '',
+            employeeId: '',
+            salaryComponentId: '',
+            amount: '',
+
+            employeeInsuranceId: '',
+            insuranceName: '',
+            insuranceNumber: '',
+            effectiveDate: ''
+
         }
     }
 
@@ -61,10 +103,17 @@ export class EmployeeDetail extends Component
     componentDidMount() {
 
         let id = this.props.match.params.id;
+        
         this.getEmployeeById(id);
         this.getEmployeeFamilies(id);
-     
+        this.getEmployeeEducations(id);
+        this.getEmployeeCourses(id);
+        this.getEmployeeSalaries(id);
+        this.getEmployeeInsurances(id);
+
+        this.getSalaryComponents();
     }
+
 
     onValueChange = (e) => {
         this.setState({
@@ -73,6 +122,15 @@ export class EmployeeDetail extends Component
     }
 
 
+    getSalaryComponents = () => {
+        axios.get(config.serverUrl + "/api/salarycomponent/getall").then(response=> {
+            this.setState({
+              salaryComponents: response.data
+            })
+        })
+    }
+
+    
     getEmployeeById = (id) => {
         axios.get(config.serverUrl + "/api/employee/getbyid/" + id).then(response=> {
             this.setState({
@@ -124,13 +182,54 @@ export class EmployeeDetail extends Component
      }
 
 
-     getEmployeeFamilies = (id) => {
+    getEmployeeFamilies = (id) => {
         axios.get(config.serverUrl + "/api/employeefamily/getbyemployeeid/" + id).then(response=> {
             this.setState({ 
                 employeeFamilies: response.data
             })
         })
     }
+
+
+    getEmployeeEducations = (id) => {
+        axios.get(config.serverUrl + "/api/employeeeducation/getbyemployeeid/" + id).then(response=> {
+            this.setState({ 
+                employeeEducations: response.data
+            })
+        })
+    }
+
+
+    getEmployeeCourses = (id) => {
+        axios.get(config.serverUrl + "/api/employeecourse/getbyemployeeid/" + id).then(response=> {
+            this.setState({ 
+                employeeCourses: response.data
+            })
+        })
+    }
+
+
+    getEmployeeSalaries = (id) => {
+        axios.get(config.serverUrl + "/api/employeesalary/getbyemployeeid/" + id).then(response=> {
+            this.setState({ 
+                employeeSalaries: response.data
+            })
+        })
+    }
+
+
+    getEmployeeInsurances = (id) => {
+        axios.get(config.serverUrl + "/api/employeeinsurance/getbyemployeeid/" + id).then(response=> {
+            this.setState({ 
+                employeeInsurances: response.data
+            })
+        })
+    }
+
+
+
+
+    // EMPLOYEE FAMILY
 
 
      saveFamily = () => {
@@ -198,6 +297,282 @@ export class EmployeeDetail extends Component
             employeeFamilyId: id,
         })
     }
+
+
+    // EMPLOYEE EDUCATION
+
+
+    saveEducation = () => {
+
+        let employeeEducation = {
+            employeeId: this.state.id,
+            grade: this.state.grade,
+            institutionName: this.state.institutionName,
+            majors: this.state.majors,
+            startYear: this.state.startYear,
+            endYear: this.state.endYear 
+        }
+
+        axios.post(config.serverUrl + "/api/employeeeducation/save", employeeEducation).then(response=> {
+            this.getEmployeeEducations(this.state.id);
+        })
+       
+     }
+
+
+     editEducation = (id) =>{
+
+        axios.get(config.serverUrl + "/api/employeeeducation/getbyid/" + id).then(response=> {
+            this.setState({
+                employeeEducationId: response.data.employeeEducationId,
+                employeeId: response.data.employeeId,
+                grade: response.data.grade,
+                institutionName: response.data.institutionName,
+                majors: response.data.majors,
+                startYear: response.data.startYear,
+                endYear: response.data.endYear
+            })
+        })
+
+     }
+
+
+     updateEducation = () => {
+
+        let employeeEducation = {
+            employeeEducationId: this.state.employeeEducationId,
+            employeeId: this.state.employeeId,
+            grade: this.state.grade,
+            institutionName: this.state.institutionName,
+            majors: this.state.majors,
+            startYear: this.state.startYear,
+            endYear: this.state.endYear
+        }
+
+        axios.put(config.serverUrl + "/api/employeeeducation/update", employeeEducation).then(response=> {
+           this.getEmployeeEducations(this.state.id);
+        })
+
+     }
+
+
+     deleteEducation = (id) => {
+
+       axios.delete(config.serverUrl + "/api/employeeeducation/delete/" + id).then(response=> {
+           this.getEmployeeEducations(this.state.id);
+        })
+     }
+
+     getEducationId = (id) => {
+        this.setState({
+            employeeEducationId: id,
+        })
+    }
+
+
+
+     // EMPLOYEE COURSE
+
+     saveCourse = () => {
+
+        let employeeCourse = {
+            employeeId: this.state.id,
+            courseName: this.state.courseName,
+            provider: this.state.provider,
+            startDate:  new Date(moment(this.courseStartDate.current.value)),
+            endDate: new Date(moment(this.courseEndDate.current.value)),
+            certificate: this.state.certificate,
+        }
+
+        axios.post(config.serverUrl + "/api/employeecourse/save", employeeCourse).then(response=> {
+            this.getEmployeeCourses(this.state.id);
+        })
+       
+     }
+
+
+     editCourse = (id) =>{
+
+        axios.get(config.serverUrl + "/api/employeecourse/getbyid/" + id).then(response=> {
+            this.setState({
+                employeeCourseId: response.data.employeeCourseId,
+                employeeId: response.data.employeeId,
+                courseName: response.data.courseName,
+                provider: response.data.provider,
+                startDate: response.data.startDate,
+                endDate: response.data.endDate,
+                certificate: response.data.certificate,
+            })
+        })
+
+     }
+
+
+     updateCourse = () => {
+
+        let employeeCourse = {
+            employeeCourseId: this.state.employeeCourseId,
+            employeeId: this.state.employeeId,
+            courseName: this.state.courseName,
+            provider: this.state.provider,
+            startDate:  new Date(moment(this.courseStartDate.current.value)),
+            endDate: new Date(moment(this.courseEndDate.current.value)),
+            certificate: this.state.certificate,
+        }
+
+        axios.put(config.serverUrl + "/api/employeecourse/update", employeeCourse).then(response=> {
+           this.getEmployeeCourses(this.state.id);
+        })
+
+     }
+
+
+     deleteCourse = (id) => {
+
+       axios.delete(config.serverUrl + "/api/employeecourse/delete/" + id).then(response=> {
+           this.getEmployeeCourses(this.state.id);
+        })
+     }
+
+     getCourseId = (id) => {
+        this.setState({
+            employeeCourseId: id,
+        })
+    }
+
+
+
+    
+    
+    // EMPLOYEE SALARY
+
+    saveCourse = () => {
+
+        let employeeSalary = {
+            employeeId: this.state.id,
+            salaryComponentId: this.state.salaryComponentId,
+            amount: this.state.amount
+        }
+
+        axios.post(config.serverUrl + "/api/employeesalary/save", employeeSalary).then(response=> {
+            this.getEmployeeSalaries(this.state.id);
+        })
+    
+    }
+
+
+    editSalary = (id) =>{
+
+        axios.get(config.serverUrl + "/api/employeesalary/getbyid/" + id).then(response=> {
+            this.setState({
+                employeeSalaryId: response.data.employeeSalaryId,
+                employeeId: response.data.employeeId,
+                salaryComponentId: response.data.salaryComponentId,
+                amount: response.data.amount
+            })
+        })
+
+    }
+
+
+    updateSalary = () => {
+
+        let employeeSalary = {
+            employeeSalaryId: this.state.employeeSalaryId,
+            employeeId: this.state.employeeId,
+            salaryComponentId: this.state.salaryComponentId,
+            amount: this.state.amount
+        }
+
+        axios.put(config.serverUrl + "/api/employeesalary/update", employeeSalary).then(response=> {
+            this.getEmployeeSalaries(this.state.id);
+        })
+
+    }
+
+
+    deleteSalary = (id) => {
+
+        axios.delete(config.serverUrl + "/api/employeesalary/delete/" + id).then(response=> {
+            this.getEmployeeSalaries(this.state.id);
+        })
+    }
+
+    
+    getSalaryId = (id) => {
+        this.setState({
+            employeeSalaryId: id,
+        })
+    }
+
+
+
+    // EMPLOYEE INSURANCE
+
+    saveInsurance = () => {
+
+
+        let employeeInsurance = {
+            employeeId: this.state.id,
+            insuranceName: this.state.insuranceName,
+            insuranceNumber: this.state.insuranceNumber,
+            effectiveDate:  new Date(moment(this.insuranceEffectiveDate.current.value))
+        }
+
+        axios.post(config.serverUrl + "/api/employeeinsurance/save", employeeInsurance).then(response=> {
+            this.getEmployeeInsurances(this.state.id);
+        })
+    
+    }
+
+
+    editInsurance = (id) =>{
+
+        axios.get(config.serverUrl + "/api/employeeinsurance/getbyid/" + id).then(response=> {
+            this.setState({
+                employeeInsuranceId: response.data.employeeInsuranceId,
+                employeeId: response.data.employeeId,
+                insuranceName: response.data.insuranceName,
+                insuranceNumber: response.data.insuranceNumber,
+                effectiveDate: response.data.effectiveDate
+            })
+        })
+
+    }
+
+
+    updateInsurance = () => {
+
+        let employeeInsurance = {
+            employeeInsuranceId: this.state.employeeInsuranceId,
+            employeeId: this.state.id,
+            insuranceName: this.state.insuranceName,
+            insuranceNumber: this.state.insuranceNumber,
+            effectiveDate:  new Date(moment(this.insuranceEffectiveDate.current.value))
+        }
+
+
+        axios.put(config.serverUrl + "/api/employeeinsurance/update", employeeInsurance).then(response=> {
+            this.getEmployeeInsurances(this.state.id);
+        })
+
+    }
+
+
+    deleteInsurance = (id) => {
+
+        axios.delete(config.serverUrl + "/api/employeeinsurance/delete/" + id).then(response=> {
+            this.getEmployeeInsurances(this.state.id);
+        })
+    }
+
+    
+    getInsuranceId = (id) => {
+        this.setState({
+            employeeInsuranceId: id,
+        })
+    }
+    
 
 
 
@@ -337,7 +712,78 @@ export class EmployeeDetail extends Component
                                     
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default pull-left"  data-dismiss="modal" ref={this.closeBtn}>Close</button>
-                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteFamily(this.state.employeeFamilyId)}  data-dismiss="modal">Yes</button>
+                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteFamily(this.state.employeeFamilyId)} 
+                                             data-dismiss="modal">Yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                         
+                        {/* DELETE EMPLOYEE EDUCATION */}
+
+                        <div id="deleteEducation" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Delete Education</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure want to delete this education?
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteEducation(this.state.employeeEducationId)} 
+                                             data-dismiss="modal">Yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {/* DELETE EMPLOYEE COURSE */}
+
+                        <div id="deleteCourse" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Delete Course</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure want to delete this course?
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteCourse(this.state.employeeCourseId)} 
+                                             data-dismiss="modal">Yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {/* DELETE EMPLOYEE SALARY */}
+
+                        <div id="deleteSalary" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Delete Salary</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure want to delete this salary?
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteSalary(this.state.employeeSalaryId)} 
+                                             data-dismiss="modal">Yes</button>
                                     </div>
                                 </div>
                             </div>
@@ -345,7 +791,33 @@ export class EmployeeDetail extends Component
 
 
 
-                     {/* ADD EMPLOYEE FAMILY */}
+                        {/* DELETE EMPLOYEE INSURANCE */}
+
+                        <div id="deleteInsurance" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Delete Insurance</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure want to delete this insurance?
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteInsurance(this.state.employeeInsuranceId)} 
+                                             data-dismiss="modal">Yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                     {/* EMPLOYEE FAMILY */}
 
                       <FamilyAdd
                         onValueChange = {this.onValueChange}
@@ -353,8 +825,7 @@ export class EmployeeDetail extends Component
                       />
 
 
-                      {/* EDIT EMPLOYEE FAMILY */}
-                   
+                    
                       <FamilyEdit
                         employeeFamilyId = {this.state.employeeFamilyId}
                         employeeId = {this.state.employeeId}
@@ -367,328 +838,89 @@ export class EmployeeDetail extends Component
                       />
 
 
-                     {/* ADD EMPLOYEE EDUCATION */}
+                      {/* EMPLOYEE EDUCATION */}
 
-                     <div id="addEducation" class="modal fade" role="dialog">
-                        <div class="modal-dialog" style={{width: '400px'}}>
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" onClick={this.closeWorkLog}>&times;</button>
-                                    <h4 class="modal-title">Add Education</h4>
-                                </div>
-                                <div class="addEducation-ui">
-
-                                        <div class="modal-body row">
-                                            <input type="hidden" name="id" value=""/>
-                                    
-                                          
-                                            <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label style={{fontWeight:'normal'}}>Grade</label> 
-                                                            <select class="form-control" name="grade" onChange={this.onValueChange}>
-                                                                <option value=""></option>
-                                                                <option value="SD">SD</option>
-                                                                <option value="SMP">SMP</option>
-                                                                <option value="SMU">SMU</option>
-                                                                <option value="SMK">SMK</option>
-                                                                <option value="University">University</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <span></span>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label style={{fontWeight:'normal'}}>Institution Name</label> 
-                                                            <input type="text" class="form-control" name="institutionName" style={{fontWeight:'normal'}}/>   
-                                                        </div>
-                                                    </div>
-                                                    <span></span>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label style={{fontWeight:'normal'}}>Majors</label> 
-                                                            <input type="text" class="form-control" name="majors" style={{fontWeight:'normal'}}/>   
-                                                        </div>
-                                                    </div>
-                                                    <span></span>
-                                            </div>
+                     <EducationAdd 
+                        onValueChange = {this.onValueChange}
+                        saveEducation = {this.saveEducation}
+                     />
 
 
-                                            <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label style={{fontWeight:'normal'}}>Start Year</label> 
-                                                        <input type="text" class="form-control" name="startYear" style={{fontWeight:'normal'}}/>   
-                                                    </div>
-                                                    <span></span>
-                                                </div>
-                                    
-                                            <div class="col-md-6">
-                                                 <div class="form-group">
-                                                    <label style={{fontWeight:'normal'}}>End Year</label> 
-                                                    <input type="text" class="form-control" name="endYear" style={{fontWeight:'normal'}}/>   
-                                                </div>
-                                                <span></span> 
-                                            </div>                                    
-                                      
-
-                                        </div>
-                                    
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onClick={this.closeWorkLog} ref={this.workLogCloseBtn}>Close</button>
-                                            <button type="button" class="btn btn-primary" onClick={this.saveWorkLog}>Save Education</button>
-                                        </div>
-                             
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-
-
-
-                    {/* ADD EMPLOYEE COURSE */}
-
-                    <div id="addCourse" class="modal fade" role="dialog">
-                        <div class="modal-dialog" style={{width: '400px'}}>
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" onClick={this.closeWorkLog}>&times;</button>
-                                    <h4 class="modal-title">Add Course</h4>
-                                </div>
-                                <div class="addCourse-ui">
-
-                                        <div class="modal-body row">
-                                            <input type="hidden" name="id" value=""/>
-                                            
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label style={{fontWeight:'normal'}}>Course Name</label> 
-                                                        <input type="text" class="form-control" name="institutionName" style={{fontWeight:'normal'}}/>   
-                                                    </div>
-                                                </div>
-                                                <span></span>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label style={{fontWeight:'normal'}}>Provider</label> 
-                                                            <input type="text" class="form-control" name="majors" style={{fontWeight:'normal'}}/>   
-                                                        </div>
-                                                    </div>
-                                                    <span></span>
-                                            </div>
-
-
-
-                                            <div class="col-md-6">
-                                                    
-                                                <label style={{fontWeight:'normal'}}>Start Date</label>
-                                                <span class="input-group-btn">
-                                                    <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
-                                                        <input type="text" name="startDate" class="form-control"  
-                                                           />
-                                                        <div class="input-group-addon">
-                                                            <span class="fa fa-calendar"></span>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span></span>
-
-                                            </div>
-                                    
-                                            <div class="col-md-6">
-                                                    
-                                                <label style={{fontWeight:'normal'}}>End Date</label>
-                                                <span class="input-group-btn">
-                                                    <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
-                                                        <input type="text" name="endDate" class="form-control"  
-                                                            />
-                                                        <div class="input-group-addon">
-                                                            <span class="fa fa-calendar"></span>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span></span>
-
-                                            </div>      
-
-                                            <div class="col-md-12">&nbsp;</div>
-
-                                            <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label style={{fontWeight:'normal'}}>Certificate</label> 
-                                                            <select class="form-control" name="certificate" onChange={this.onValueChange}>
-                                                                <option value=""></option>
-                                                                <option value="YES">YES</option>
-                                                                <option value="NO">NO</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <span></span>
-                                            </div>
-
-                                      
-
-                                        </div>
-                                    
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onClick={this.closeWorkLog} ref={this.workLogCloseBtn}>Close</button>
-                                            <button type="button" class="btn btn-primary" onClick={this.saveWorkLog}>Save Course</button>
-                                        </div>
-                             
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-                     
-
-
-                      {/* ADD EMPLOYEE SALARY COMPONENT */}
-
-                    <div id="addSalaryComponent" class="modal fade" role="dialog">
-                        <div class="modal-dialog" style={{width: '400px'}}>
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" onClick={this.closeWorkLog}>&times;</button>
-                                    <h4 class="modal-title">Add Salary Component</h4>
-                                </div>
-                                <div class="addCourse-ui">
-
-                                        <div class="modal-body row">
-                                            <input type="hidden" name="id" value=""/>
-
-                                            <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label style={{fontWeight:'normal'}}>Salary Component</label> 
-                                                            <select class="form-control" name="salaryComponentId" onChange={this.onValueChange}>
-                                                                <option value=""></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <span></span>
-                                            </div>
-
-                                            
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label style={{fontWeight:'normal'}}>Amount</label> 
-                                                        <input type="text" class="form-control" name="amount" style={{fontWeight:'normal'}}/>   
-                                                    </div>
-                                                </div>
-                                                <span></span>
-                                            </div>
-
-
-                                        </div>
-                                    
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onClick={this.closeWorkLog} ref={this.workLogCloseBtn}>Close</button>
-                                            <button type="button" class="btn btn-primary" onClick={this.saveWorkLog}>Save Salary Component</button>
-                                        </div>
-                             
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-
-
-                         {/* ADD EMPLOYEE INSURANCE */}
-
-                         <div id="addInsurance" class="modal fade" role="dialog">
-                        <div class="modal-dialog" style={{width: '400px'}}>
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" onClick={this.closeWorkLog}>&times;</button>
-                                    <h4 class="modal-title">Add Insurance</h4>
-                                </div>
-                                <div class="addInsurance-ui">
-
-                                        <div class="modal-body row">
-                                            <input type="hidden" name="id" value=""/>
-                                            
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label style={{fontWeight:'normal'}}>Insurance Name</label> 
-                                                        <input type="text" class="form-control" name="institutionName" style={{fontWeight:'normal'}}/>   
-                                                    </div>
-                                                </div>
-                                                <span></span>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label style={{fontWeight:'normal'}}>Insurance Number</label> 
-                                                            <input type="text" class="form-control" name="majors" style={{fontWeight:'normal'}}/>   
-                                                        </div>
-                                                    </div>
-                                                    <span></span>
-                                            </div>
-
-
-
-                                            <div class="col-md-6">
-                                                    
-                                                <label style={{fontWeight:'normal'}}>Effective Date</label>
-                                                <span class="input-group-btn">
-                                                    <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
-                                                        <input type="text" name="startDate" class="form-control"  
-                                                           />
-                                                        <div class="input-group-addon">
-                                                            <span class="fa fa-calendar"></span>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span></span>
-
-                                            </div>
-                                    
-                                            <div class="col-md-6">
-                                                    
-                                                <label style={{fontWeight:'normal'}}>End Date</label>
-                                                <span class="input-group-btn">
-                                                    <div class="input-group date" data-provide="datepicker" data-date-autoclose="true" data-date-today-highlight="true">
-                                                        <input type="text" name="endDate" class="form-control"  
-                                                            />
-                                                        <div class="input-group-addon">
-                                                            <span class="fa fa-calendar"></span>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                                <span></span>
-
-                                            </div>      
-
-                                            <div class="col-md-12">&nbsp;</div>
-
-
-                                        </div>
-                                    
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" onClick={this.closeWorkLog} ref={this.workLogCloseBtn}>Close</button>
-                                            <button type="button" class="btn btn-primary" onClick={this.saveWorkLog}>Save Insurance</button>
-                                        </div>
-                             
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-
-
+                   <EducationEdit
+                        employeeEducationId = {this.state.employeeEducationId}
+                        grade = {this.state.grade}
+                        institutionName = {this.state.institutionName}
+                        majors = {this.state.majors}
+                        startYear = {this.state.startYear}
+                        endYear = {this.state.endYear}
+                        onValueChange = {this.onValueChange}
+                        updateEducation = {this.updateEducation}
+                   />
 
                 
+                    {/* EMPLOYEE COURSE */}
 
+                   <CourseAdd
+                        startDate = {this.courseStartDate}
+                        endDate = {this.courseEndDate}
+                        onValueChange = {this.onValueChange}
+                        saveCourse = {this.saveCourse}
+                   />
+
+
+                    <CourseEdit
+                        employeeCourseId =  {this.state.employeeCourseId}
+                        courseName = {this.state.courseName}
+                        provider = {this.state.provider}
+                        startDateValue = {moment(this.state.startDate).format("MM/DD/YYYY")} 
+                        endDateValue = {moment(this.state.endDate).format("MM/DD/YYYY")}
+                        startDate = {this.courseStartDate}
+                        endDate = {this.courseEndDate}
+                        certificate = {this.state.certificate}
+                        onValueChange = {this.onValueChange}
+                        updateCourse = {this.updateCourse}
+                    />
+
+
+
+                    {/* EMPLOYEE SALARY */}
+
+                    <SalaryAdd
+                        salaryComponents = {this.state.salaryComponents}
+                        onValueChange = {this.onValueChange}
+                        saveSalary = {this.saveCourse}
+                    />
+
+                    <SalaryEdit
+                        salaryComponents = {this.state.salaryComponents}
+                        employeeSalaryId = {this.state.employeeSalaryId}
+                        salaryComponentId = {this.state.salaryComponentId}
+                        amount = {this.state.amount}
+                        onValueChange = {this.onValueChange}
+                        updateSalary = {this.updateSalary}
+                    />
+
+                    
+                     {/* EMPLOYEE INSURANCE */}
+
+                    <InsuranceAdd
+                        effectiveDate = {this.insuranceEffectiveDate}
+                        onValueChange = {this.onValueChange}
+                        saveInsurance = {this.saveInsurance}
+                    />
+
+                    <InsuranceEdit
+                        employeeInsuranceId = {this.state.employeeInsuranceId}
+                        insuranceName = {this.state.insuranceName}
+                        insuranceNumber = {this.state.insuranceNumber}
+                        effectiveDate = {this.insuranceEffectiveDate}
+                        effectiveDateValue =  {moment(this.state.effectiveDate).format("MM/DD/YYYY")} 
+                        onValueChange = {this.onValueChange}
+                        updateInsurance = {this.updateInsurance}
+                    />
+
+                
+                
                         <div class="row">
                         
                             <div class="col-md-12">
@@ -737,78 +969,29 @@ export class EmployeeDetail extends Component
                                   
                                  <br/><br/>
 
-                          
-                            <section class="content">
-             
-                                <div class = "row">
-                                    <div class="col-md-6">
-
-                                      
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Department</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.departmentName}</label></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Job Title</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.jobTitleName}</label></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Join Date</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}> {moment(this.state.joinDate).format("MM/DD/YYYY")}</label></div>
-                                        </div>
-                                    
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Status</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.renderStatus(this.state.employmentStatus)} {this.state.employmentStatus}</label></div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Birth Date</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.birthPlace}, {moment(this.state.birthDate).format("MM/DD/YYYY")}</label></div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Religion</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.religion}</label></div>
-                                        </div>
-                                   
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Blood Type</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.bloodType}</label></div>
-                                        </div>
-                                    
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Marital Status</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.maritalStatus}</label></div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Address</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.address}</label></div>
-                                        </div>
+                                 {/* EMPLOYEE INFO */}
 
 
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>Phone</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.phone}</label></div>
-                                        </div>
+                                 <EmployeeInfo
+                                    fontStyle = {fontStyle} 
+                                    departmentName = {this.state.departmentName}
+                                    jobTitleName = {this.state.jobTitleName}
+                                    joinDate = {moment(this.state.joinDate).format("MM/DD/YYYY")}
+                                    employmentStatusIcon = {this.renderStatus(this.state.employmentStatus)}
+                                    employmentStatus = {this.state.employmentStatus}
+                                    birthPlace = {this.state.birthPlace}
+                                    birthDate = {moment(this.state.birthDate).format("MM/DD/YYYY")}
+                                    religion = {this.state.religion}
+                                    bloodType = {this.state.bloodType}
+                                    maritalStatus = {this.state.maritalStatus}
+                                    address = {this.state.address}
+                                    phone = {this.state.phone}
+                                    email = {this.state.email}
+                                 />
 
-                                        <div class="row">
-                                            <div class="col-lg-3"><label style={fontStyle}>E-mail</label> </div>
-                                            <div class="col-lg-6"><label style={fontStyle}>{this.state.email}</label></div>
-                                        </div>
-                                        
-                                        
-                                    
-                                        
-                                    </div>
-                                  
-                                </div>
 
-
-                         </section>
-
-                       <br/><br/>
+                            
+                                <br/><br/>
 
                                 {/* Attachment */}
 
@@ -869,8 +1052,10 @@ export class EmployeeDetail extends Component
                                                                     <li>
                                                                         <span> {ef.familyName} ( {ef.familyRelationship} ) - {ef.familyAddress} - {ef.familyPhone}</span>
                                                                         <div class="tools">
-                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editFamily(ef.employeeFamilyId)} data-toggle="modal" data-target="#editFamily"></i>&nbsp;
-                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getFamilyId(ef.employeeFamilyId)} data-toggle="modal" data-target="#deleteFamily"></i>
+                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editFamily(ef.employeeFamilyId)} 
+                                                                                data-toggle="modal" data-target="#editFamily"></i>&nbsp;
+                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getFamilyId(ef.employeeFamilyId)} 
+                                                                                data-toggle="modal" data-target="#deleteFamily"></i>
                                                                         </div>
                                                                     </li>
                                                                   )}
@@ -886,48 +1071,93 @@ export class EmployeeDetail extends Component
 
                                             <div class="tab-pane" id="tab_education">
 
-                                                <button type="button" class="btn btn-default" data-toggle="modal" 
-                                                    data-target="#addEducation">+ Education</button>
+                                                    <a href="#" data-toggle="modal" data-target="#addEducation">+ Add Education</a>
+                                                    <br/>
 
                                                     <div class="box-body">
                                                         <div class="row">
                                                     
-                                                        <div class="col-md-12">
-                                                        </div>
+                                                            <div class="col-md-12">
+                                                              <ul class="todo-list ui-sortable">
+                                                                {this.state.employeeEducations.map(ee=> 
+                                                                    <li>
+                                                                        <span> {ee.grade} ( {ee.startYear} - {ee.endYear} )  {ee.institutionName} {ee.majors}</span>
+                                                                        <div class="tools">
+                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editEducation(ee.employeeEducationId)} 
+                                                                                data-toggle="modal" data-target="#editEducation"></i>&nbsp;
+                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getEducationId(ee.employeeEducationId)} 
+                                                                                data-toggle="modal" data-target="#deleteEducation"></i>
+                                                                        </div>
+                                                                    </li>
+                                                                  )}
+                                                            </ul>
+
+                                                         </div>
+                                                            
                                                         </div>
                                                     </div>
+
 
                                             </div>
 
 
                                             <div class="tab-pane" id="tab_course">
 
-                                                <button type="button" class="btn btn-default" data-toggle="modal" 
-                                                    data-target="#addCourse">+ Course</button>
+                                                <a href="#" data-toggle="modal" data-target="#addCourse">+ Add Course</a>
 
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                    
-                                                        <div class="col-md-12">
-                                                        </div>
-                                                        </div>
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                
+                                                    <div class="col-md-12">
+                                                        <ul class="todo-list ui-sortable">
+                                                        {this.state.employeeCourses.map(ec=> 
+                                                            <li>
+                                                                <span> {ec.courseName} ( {moment(ec.startDate).format("MM/DD/YYYY")} - {moment(ec.endDate).format("MM/DD/YYYY")} ) - {ec.provider}</span>
+                                                                <div class="tools">
+                                                                    <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editCourse(ec.employeeCourseId)} 
+                                                                        data-toggle="modal" data-target="#editCourse"></i>&nbsp;
+                                                                    <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getCourseId(ec.employeeCourseId)} 
+                                                                        data-toggle="modal" data-target="#deleteCourse"></i>
+                                                                </div>
+                                                            </li>
+                                                            )}
+                                                    </ul>
+
                                                     </div>
-
+                                                        
+                                                    </div>
+                                                    </div>                       
+                                              
                                             </div>
 
 
                                             <div class="tab-pane" id="tab_salaryComponent">
 
-                                                <button type="button" class="btn btn-default" data-toggle="modal" 
-                                                    data-target="#addSalaryComponent">+ Salary Component</button>
+                                                    <a href="#" data-toggle="modal" data-target="#addSalary">+ Add Salary</a>
 
                                                     <div class="box-body">
                                                         <div class="row">
                                                     
-                                                        <div class="col-md-12">
-                                                        </div>
+                                                            <div class="col-md-12">
+                                                              <ul class="todo-list ui-sortable">
+                                                                {this.state.employeeSalaries.map(es=> 
+                                                                    <li>
+                                                                        <span> {es.salaryComponent.componentName} = {es.amount} </span>
+                                                                        <div class="tools">
+                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editSalary(es.employeeSalaryId)} 
+                                                                                data-toggle="modal" data-target="#editSalary"></i>&nbsp;
+                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getSalaryId(es.employeeSalaryId)} 
+                                                                                data-toggle="modal" data-target="#deleteSalary"></i>
+                                                                        </div>
+                                                                    </li>
+                                                                  )}
+                                                            </ul>
+
+                                                         </div>
+                                                            
                                                         </div>
                                                     </div>
+
 
                                              </div>
 
@@ -935,16 +1165,32 @@ export class EmployeeDetail extends Component
 
                                              <div class="tab-pane" id="tab_insurance">
 
-                                            <button type="button" class="btn btn-default" data-toggle="modal" 
-                                                data-target="#addInsurance">+ Insurance</button>
+                                                <a href="#" data-toggle="modal" data-target="#addInsurance">+ Add Insurance</a>
 
-                                                <div class="box-body">
-                                                    <div class="row">
-                                                
-                                                    <div class="col-md-12">
+                                                    <div class="box-body">
+                                                        <div class="row">
+                                                    
+                                                            <div class="col-md-12">
+                                                              <ul class="todo-list ui-sortable">
+                                                                {this.state.employeeInsurances.map(ei=> 
+                                                                    <li>
+                                                                        <span> {ei.insuranceName} - {ei.insuranceNumber} - {moment(ei.effectifeDate).format("MM/DD/YYYY")} </span>
+                                                                        <div class="tools">
+                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editInsurance(ei.employeeInsuranceId)} 
+                                                                                data-toggle="modal" data-target="#editInsurance"></i>&nbsp;
+                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getInsuranceId(ei.employeeInsuranceId)} 
+                                                                                data-toggle="modal" data-target="#deleteInsurance"></i>
+                                                                        </div>
+                                                                    </li>
+                                                                  )}
+                                                            </ul>
+
+                                                         </div>
+                                                            
+                                                        </div>
                                                     </div>
-                                                    </div>
-                                                </div>
+
+
 
                                             </div>
 

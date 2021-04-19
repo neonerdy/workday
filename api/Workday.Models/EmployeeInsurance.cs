@@ -1,4 +1,4 @@
-﻿
+
 /*--------------------------------------------------
  *
  *  Workday - HRIS and Payroll System
@@ -16,15 +16,13 @@ using System;
 
 namespace Workday.Models
 {
-    public class EmployeeCourse
+    public class EmployeeInsurance
     {
-        public Guid EmployeeCourseId { get; set; }
+        public Guid EmployeeInsuranceId { get; set; }
         public Guid EmployeeId { get; set; }
-        public string CourseName { get; set; }
-        public string Provider { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string Certificate { get; set; }
-    }
+        public string InsuranceName { get; set; }
+        public string InsuranceNumber { get; set; }
+        public DateTime EffectiveDate { get; set; }
+     }
 
 }

@@ -118,7 +118,7 @@ export class FamilyEdit extends Component
                             
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" onClick={this.props.updateFamily}>Update</button>
+                                    <button type="button" class="btn btn-primary" onClick={this.props.updateFamily} data-dismiss="modal">Update</button>
                                 </div>
                         
                         </div>

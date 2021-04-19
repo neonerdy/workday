@@ -39,12 +39,30 @@ namespace Workday.WebService
         }
 
 
+        
+        [HttpGet("{employeeSalaryId}")]
+        public async Task<IActionResult> GetById(Guid employeeSalaryId)
+        {
+            try
+            {
+                var employeeSalary = await context.EmployeeSalaries.FindAsync(employeeSalaryId);
+                return Ok(employeeSalary);
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex.ToString());
+            }
+            return Ok();
+        }
+
+
         [HttpGet("{employeeId}")]
         public async Task<IActionResult> GetByEmployeeId(Guid employeeId)
         {
             try
             {
                 var employeeSalaries = await context.EmployeeSalaries
+                    .Include(es=>es.SalaryComponent)
                     .Where(ee=>ee.EmployeeId == employeeId)
                     .ToListAsync();
 
@@ -64,7 +82,7 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                employeeSalary.ID = Guid.NewGuid();
+                employeeSalary.EmployeeSalaryId = Guid.NewGuid();
                 context.Add(employeeSalary);
                 result = await context.SaveChangesAsync();
             }
