@@ -111,13 +111,12 @@ export class Employee extends Component
                 </h1>
                 <ol class="breadcrumb">
                     <button class="btn btn-primary" onClick={this.addEmployee}>Add New Employee</button>
+               
                 </ol>
                 </section>
                 <br></br>
 
-
-           
-
+            
                 <div id="deletePeople" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">

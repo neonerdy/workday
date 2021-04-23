@@ -60,7 +60,7 @@ namespace Workday.WebService
         {
             try
             {
-                var leave = await context.Leaves.FindAsync(id);
+                var leave = await context.LeaveTypes.FindAsync(id);
                 return Ok(leave);
             }
             catch(Exception ex)

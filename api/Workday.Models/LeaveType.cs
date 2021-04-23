@@ -22,8 +22,9 @@ namespace Workday.Models
         public Guid ID { get; set; }
         public string LeaveTypeName { get; set; }
         public int DaysGiven { get; set; }
-        public bool IsDeduction { get; set; }
+        public string IsDeduction { get; set; }
         public string Note { get; set; }
+
 
     }
 }

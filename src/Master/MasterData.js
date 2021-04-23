@@ -18,22 +18,41 @@
  import axios from 'axios';
  import config from '../Config'
  import { Scrollbars } from 'react-custom-scrollbars';
-import { AddBranch } from './AddBranch';
+ import { AddBranch } from './AddBranch';
+ import { SalaryComponentAdd } from './SalaryComponentAdd';
+ import { SalaryComponentEdit } from './SalaryComponentEdit';
+import { LeaveTypeAdd } from './LeaveTypeAdd';
+import { LeaveTypeEdit } from './LeaveTypeEdit';
+
+
 
  export class MasterData extends Component
  {
      constructor(props) {
          super(props);
- 
+         
          this.state = {
             branches: [],
             departments: [],
             jobTitles: [],
             leaveTypes: [],
+            salaryComponents: [],
             claims: [],
             workSchedules: [],
             users: [],
-            settings: []
+            settings: [],
+
+            id: '',
+            componentName: '',
+            componentType: '',
+            occurance: '',
+            amount: '',
+
+            leaveTypeName: '',
+            daysGiven: '',
+            isDeduction: '',
+            note: '',
+
         }
      }
  
@@ -43,10 +62,16 @@ import { AddBranch } from './AddBranch';
         this.getAllBranches();
         this.getAllDepartments();
         this.getAllJobTitles();      
-        this.getAllLeaveTypes();       
+        this.getAllLeaveTypes();   
+        this.getAllSalaryComponents();    
         this.getAllWorkSchedules();
      }
 
+     onValueChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
 
 
     getAllBranches = () => {
@@ -80,6 +105,14 @@ import { AddBranch } from './AddBranch';
         axios.get(config.serverUrl + "/api/leavetype/getall").then(response=> {
             this.setState({
                 leaveTypes: response.data
+            })
+        })
+    }
+
+    getAllSalaryComponents = () => {
+        axios.get(config.serverUrl + "/api/salarycomponent/getall").then(response=> {
+            this.setState({
+                salaryComponents: response.data
             })
         })
     }
@@ -130,8 +163,165 @@ import { AddBranch } from './AddBranch';
     }
 
 
+   
+    //Salary Component
+
+    saveSalaryComponent = () => {
+
+        let salaryComponenet = {
+            componentName: this.state.componentName,
+            componentType: this.state.componentType,
+            occurance: this.state.occurance,
+            amount: parseFloat(this.state.amount)
+        }
+
+        console.log("amount=" + salaryComponenet.amount)
 
 
+        axios.post(config.serverUrl + "/api/salarycomponent/save", salaryComponenet).then(response=> {
+            this.closeSalaryComponent();
+            this.getAllSalaryComponents();
+        })
+
+    }
+
+
+    editSalaryComponent = (id) => {
+
+        axios.get(config.serverUrl + "/api/salarycomponent/getbyid/" + id).then(response=> {
+            this.setState({
+                id: response.data.id,
+                componentName: response.data.componentName,
+                componentType: response.data.componentType,
+                occurance: response.data.occurance,
+                amount: parseFloat(response.data.amount)
+            })
+        })
+    }
+
+
+
+    updateSalaryComponent = () => {
+
+        let salaryComponenet = {
+            id: this.state.id,
+            componentName: this.state.componentName,
+            componentType: this.state.componentType,
+            occurance: this.state.occurance,
+            amount: this.state.amount
+        }
+
+        axios.put(config.serverUrl + "/api/salarycomponent/update", salaryComponenet).then(response=> {
+            this.closeSalaryComponent();
+            this.getAllSalaryComponents();
+        })
+
+    }
+
+   
+    deleteSalaryComponent = (id) => {
+
+        axios.delete(config.serverUrl + "/api/salarycomponent/delete/" + id).then(response=> {
+            this.getAllSalaryComponents();
+         })
+      }
+ 
+
+      getSalaryComponentId = (id) => {
+         this.setState({
+             id: id,
+         })
+     }
+
+     closeSalaryComponent = ()=> {
+         this.setState({
+            id: '',
+            componentName: '',
+            componentType: '',
+            occurance: '',
+            amount: ''
+         })
+     }
+
+
+
+    //Leave Type
+
+    saveLeaveType = () => {
+
+        let leaveType = {
+            leaveTypeName: this.state.leaveTypeName,
+            daysGiven: this.state.daysGiven,
+            isDeduction: this.state.isDeduction,
+            note: this.state.note,
+        }
+
+        axios.post(config.serverUrl + "/api/leavetype/save", leaveType).then(response=> {
+            this.clearLeaveType();
+            this.getAllLeaveTypes();
+        })
+
+    }
+
+
+    editLeaveType = (id) => {
+
+        axios.get(config.serverUrl + "/api/leavetype/getbyid/" + id).then(response=> {
+            this.setState({
+                id: response.data.id,
+                leaveTypeName: response.data.leaveTypeName,
+                daysGiven: response.data.daysGiven,
+                isDeduction: response.data.isDeduction,
+                note: response.data.note
+            })
+
+            console.log("name=" + this.state.leaveTypeName)
+        })
+    }
+
+
+
+    updateLeaveType = () => {
+
+        let leaveType = {
+            id: this.state.id,
+            leaveTypeName: this.state.leaveTypeName,
+            daysGiven: this.state.daysGiven,
+            isDeduction: this.state.isDeduction,
+            note: this.state.note,
+        }
+
+        axios.put(config.serverUrl + "/api/leavetype/update", leaveType).then(response=> {
+            this.clearLeaveType();
+            this.getAllLeaveTypes();
+        })
+
+    }
+
+   
+    deleteLeaveType = (id) => {
+
+        axios.delete(config.serverUrl + "/api/leavetype/delete/" + id).then(response=> {
+            this.getAllLeaveTypes();
+         })
+      }
+ 
+
+      getLeaveTypeId = (id) => {
+         this.setState({
+             id: id,
+         })
+     }
+
+     clearLeaveType = ()=> {
+         this.setState({
+            id: '',
+            leaveTypeName: '',
+            daysGiven: '',
+            isDeduction: '',
+            note: ''
+         })
+     }
 
 
  
@@ -168,7 +358,11 @@ import { AddBranch } from './AddBranch';
                             <li><a href="#" data-toggle="modal" data-target="#addBranch">Branch</a></li>
                             <li><a href="#" onClick={this.addDepartment}>Department</a></li>
                             <li><a href="#" onClick={this.addJobTitle}>Job Title</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#addLeaveType">Leave Type</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#addSalaryComponent">Salary Component</a></li>
+                            
                             <li><a href="#" onClick={this.addWorkSchedule}>Work Schedule</a></li>
+
                         </ul>
                     </div>
                  </ol>
@@ -177,9 +371,96 @@ import { AddBranch } from './AddBranch';
  
                  <section class="content">
 
+
+                 <div id="deleteLeavType" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete Leave Type</h4>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure want to delete this leave type?
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" onClick={()=>this.deleteLeaveType(this.state.id)} 
+                                        data-dismiss="modal">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                 <div id="deleteSalaryComponent" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete Salary Component</h4>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure want to delete this salary component?
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" onClick={()=>this.deleteSalaryComponent(this.state.id)} 
+                                        data-dismiss="modal">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
                      <AddBranch
-                       onValueChange = {this.state.onValueChange}
+                       onValueChange = {this.onValueChange}
                      />
+
+                     <LeaveTypeAdd
+                        leaveTypeName = {this.state.leaveTypeName}
+                        daysGiven = {this.state.daysGiven}
+                        isDeduction = {this.state.isDeduction}
+                        note = {this.state.note}
+                        clearLeaveType = {this.clearLeaveType}
+                        saveLeaveType = {this.saveLeaveType}
+                        onValueChange = {this.onValueChange}
+                     />
+
+                     <LeaveTypeEdit
+                        leaveTypeName = {this.state.leaveTypeName}
+                        daysGiven = {this.state.daysGiven}
+                        isDeduction = {this.state.isDeduction}
+                        note = {this.state.note}
+                        clearLeaveType = {this.clearLeaveType}
+                        updateLeaveType = {this.updateLeaveType}
+                        onValueChange = {this.onValueChange}
+                     />
+
+
+
+                    <SalaryComponentAdd
+                       componentName = {this.state.componentName}
+                       componentType = {this.state.componentType}
+                       occurance = {this.state.occurance}
+                       amount = {this.state.amount}
+                       saveSalaryComponent = {this.saveSalaryComponent}
+                       onValueChange = {this.onValueChange}
+                       closeSalaryComponent = {this.closeSalaryComponent}
+                     />
+
+                     <SalaryComponentEdit
+                       componentName = {this.state.componentName}
+                       componentType = {this.state.componentType}
+                       occurance = {this.state.occurance}
+                       amount = {this.state.amount}
+                       updateSalaryComponent = {this.updateSalaryComponent}
+                       onValueChange = {this.onValueChange}
+                       closeSalaryComponent = {this.closeSalaryComponent}
+                     />
+
  
                  <div class="row">
  
@@ -193,6 +474,7 @@ import { AddBranch } from './AddBranch';
                                 <li class=""><a href="#department-tab" data-toggle="tab" aria-expanded="false">Department</a></li>
                                 <li class=""><a href="#jobTitle-tab" data-toggle="tab" aria-expanded="false">Job Title</a></li>
                                 <li class="pull-left header">Employee</li>
+
                             
                                 </ul>
                                 <div class="tab-content no-padding">
@@ -282,8 +564,12 @@ import { AddBranch } from './AddBranch';
                                                 <li>
                                                     <span class="text">{lt.leaveTypeName}</span>
                                                     <div class="tools">
-                                                        <i class="fa fa-edit" style={{color:'black'}}></i>&nbsp;
+                                                        <i class="fa fa-edit" style={{color:'black'}}
+                                                            onClick={()=>this.editLeaveType(lt.id)} 
+                                                            data-toggle="modal" data-target="#editLeaveType"></i>&nbsp;
+                                                            
                                                         <i class="fa fa-trash-o" style={{color:'black'}}></i>
+
                                                     </div>
                                                 </li>
                                             )}
@@ -315,27 +601,30 @@ import { AddBranch } from './AddBranch';
                       
                         <div class="nav-tabs-custom" >
                                 <ul class="nav nav-tabs pull-right ui-sortable-handle">
-                                <li class="active"><a href="#leaveType-tab" data-toggle="tab" aria-expanded="true">Claim</a></li>
-                                <li class=""><a href="#schedule-tab" data-toggle="tab" aria-expanded="false">Salary</a></li>
+                                <li class="active"><a href="#lsalaryComponent-tab" data-toggle="tab" aria-expanded="true">Salary Component</a></li>
+                                <li class=""><a href="#claim-tab" data-toggle="tab" aria-expanded="false">Claim</a></li>
                                 
                                 <li class="pull-left header">Finance</li>
                                     
                                 </ul>
                                 <div class="tab-content no-padding">
 
-                                    <div class="chart tab-pane active" id="leaveType-tab">
+                                    <div class="chart tab-pane active" id="salaryComponent-tab">
 
                                     <Scrollbars style={{ height: 310 }}>
                                         <ul class="todo-list ui-sortable">
-                                            {this.state.claims.map(lt=> 
+                                            {this.state.salaryComponents.map(sc=> 
                                                 <li>
-                                                    <span>
-                                                       <i class="fa fa-ellipsis-v"></i>
-                                                    </span>
-                                                    <span class="text"></span>
+                                                    <span class="text">{sc.componentName}</span>
                                                     <div class="tools">
-                                                        <i class="fa fa-edit"></i>
-                                                        <i class="fa fa-trash-o"></i>
+                                                    <i class="fa fa-edit" style={{color:'black'}} 
+                                                        onClick={()=>this.editSalaryComponent(sc.id)} 
+                                                        data-toggle="modal" data-target="#editSalaryComponent"></i>&nbsp;
+                                                    
+                                                    <i class="fa fa-trash-o" 
+                                                        onClick={()=>this.getSalaryComponentId(sc.id)}
+                                                        data-toggle="modal" data-target="#deleteSalaryComponent"
+                                                        style={{color:'black'}}></i>
                                                     </div>
                                                 </li>
                                             )}

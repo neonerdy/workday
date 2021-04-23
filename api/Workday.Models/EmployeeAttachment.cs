@@ -19,7 +19,7 @@ namespace Workday.Models
 {
     public class EmployeeAttachment
     {
-        public Guid ID { get; set; }
+        public Guid EmployeeAttachmentId { get; set; }
         public Guid EmployeeId { get; set; }
         public string FileName { get; set; }
         public string Type { get; set; }
