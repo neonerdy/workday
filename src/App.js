@@ -28,7 +28,7 @@ import { Attendance } from './Attendance/Attendance';
 import { AttendanceAdd } from './Attendance/AttendanceAdd';
 import { AttendanceEdit } from './Attendance/AttendanceEdit';
 
-import { BranchAdd } from './Master/BranchAdd';
+import { BranchAdd }from './Master/BranchAdd';
 import { BranchEdit} from './Master/BranchEdit';
 import { DepartmentAdd } from './Master/DepartmentAdd';
 import { DepartmentEdit } from './Master/DepartmentEdit';

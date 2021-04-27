@@ -18,7 +18,7 @@
  import axios from 'axios';
  import config from '../Config'
  import { Scrollbars } from 'react-custom-scrollbars';
- import { AddBranch } from './AddBranch';
+ import { BrachAdd, BranchAdd } from './BranchAdd';
  import { SalaryComponentAdd } from './SalaryComponentAdd';
  import { SalaryComponentEdit } from './SalaryComponentEdit';
 import { LeaveTypeAdd } from './LeaveTypeAdd';
@@ -372,7 +372,7 @@ import { LeaveTypeEdit } from './LeaveTypeEdit';
                  <section class="content">
 
 
-                 <div id="deleteLeavType" class="modal fade">
+                 <div id="deleteLeaveType" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -414,10 +414,9 @@ import { LeaveTypeEdit } from './LeaveTypeEdit';
                 </div>
 
 
+                    <BranchAdd
+                    />
 
-                     <AddBranch
-                       onValueChange = {this.onValueChange}
-                     />
 
                      <LeaveTypeAdd
                         leaveTypeName = {this.state.leaveTypeName}
@@ -568,7 +567,10 @@ import { LeaveTypeEdit } from './LeaveTypeEdit';
                                                             onClick={()=>this.editLeaveType(lt.id)} 
                                                             data-toggle="modal" data-target="#editLeaveType"></i>&nbsp;
                                                             
-                                                        <i class="fa fa-trash-o" style={{color:'black'}}></i>
+                                                        <i class="fa fa-trash-o" 
+                                                            onClick={()=>this.getLeaveTypeId(lt.id)}
+                                                            data-toggle="modal" data-target="#deleteLeaveType"
+                                                            style={{color:'black'}}></i>
 
                                                     </div>
                                                 </li>

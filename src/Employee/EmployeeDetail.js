@@ -19,6 +19,7 @@ import { Footer } from '../Shared/Footer';
 import axios from 'axios';
 import config from '../Config';
 import moment from 'moment';
+import { Family } from './Family';
 import { FamilyAdd } from './FamilyAdd';
 import { FamilyEdit } from './FamilyEdit';
 import { EducationAdd } from './EducationAdd';
@@ -30,6 +31,11 @@ import { SalaryAdd } from './SalaryAdd';
 import { SalaryEdit } from './SalaryEdit';
 import { InsuranceAdd } from './InsuranceAdd';
 import { InsuranceEdit } from './InsuranceEdit';
+import { Education } from './Education';
+import { Course } from './Course';
+import { Salary } from './Salary';
+import { Insurance } from './Insurance';
+
 
 
 
@@ -696,126 +702,7 @@ export class EmployeeDetail extends Component
                             </div>
                         </div>
 
-                        
-                        {/* DELETE EMPLOYEE FAMILY */}
-
-                        <div id="deleteFamily" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Delete Family</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure want to delete this family?
-                                    </div>
-                                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal" ref={this.closeBtn}>Close</button>
-                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteFamily(this.state.employeeFamilyId)} 
-                                             data-dismiss="modal">Yes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                         
-                        {/* DELETE EMPLOYEE EDUCATION */}
-
-                        <div id="deleteEducation" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Delete Education</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure want to delete this education?
-                                    </div>
-                                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteEducation(this.state.employeeEducationId)} 
-                                             data-dismiss="modal">Yes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        {/* DELETE EMPLOYEE COURSE */}
-
-                        <div id="deleteCourse" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Delete Course</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure want to delete this course?
-                                    </div>
-                                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteCourse(this.state.employeeCourseId)} 
-                                             data-dismiss="modal">Yes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        {/* DELETE EMPLOYEE SALARY */}
-
-                        <div id="deleteSalary" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Delete Salary</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure want to delete this salary?
-                                    </div>
-                                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteSalary(this.state.employeeSalaryId)} 
-                                             data-dismiss="modal">Yes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        {/* DELETE EMPLOYEE INSURANCE */}
-
-                        <div id="deleteInsurance" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Delete Insurance</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure want to delete this insurance?
-                                    </div>
-                                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default pull-left"  data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" onClick={()=>this.deleteInsurance(this.state.employeeInsuranceId)} 
-                                             data-dismiss="modal">Yes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
+                      
 
                      {/* EMPLOYEE FAMILY */}
 
@@ -919,7 +806,6 @@ export class EmployeeDetail extends Component
                         updateInsurance = {this.updateInsurance}
                     />
 
-                
                 
                         <div class="row">
                         
@@ -1041,156 +927,67 @@ export class EmployeeDetail extends Component
                                         <div class="tab-content">
                         
                                             <div class="tab-pane active" id="tab_family">
-                                                   <a href="#" data-toggle="modal" data-target="#addFamily">+ Add Family</a>
-                                                    <br/>
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                    
-                                                            <div class="col-md-12">
-                                                              <ul class="todo-list ui-sortable">
-                                                                {this.state.employeeFamilies.map(ef=> 
-                                                                    <li>
-                                                                        <span> {ef.familyName} ( {ef.familyRelationship} ) - {ef.familyAddress} - {ef.familyPhone}</span>
-                                                                        <div class="tools">
-                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editFamily(ef.employeeFamilyId)} 
-                                                                                data-toggle="modal" data-target="#editFamily"></i>&nbsp;
-                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getFamilyId(ef.employeeFamilyId)} 
-                                                                                data-toggle="modal" data-target="#deleteFamily"></i>
-                                                                        </div>
-                                                                    </li>
-                                                                  )}
-                                                            </ul>
-
-                                                         </div>
-                                                            
-                                                        </div>
-                                                    </div>
+                                                  
+                                                  <Family 
+                                                    employeeFamilies = {this.state.employeeFamilies}
+                                                    editFamily = {this.editFamily}
+                                                    getFamilyId = {this.getFamilyId}
+                                                    deleteFamily = {this.deleteFamily}
+                                                    employeeFamilyId = {this.state.employeeFamilyId}
+                                                  />
 
                                             </div>
 
 
                                             <div class="tab-pane" id="tab_education">
 
-                                                    <a href="#" data-toggle="modal" data-target="#addEducation">+ Add Education</a>
-                                                    <br/>
-
-                                                    <div class="box-body">
-                                                        <div class="row">
                                                     
-                                                            <div class="col-md-12">
-                                                              <ul class="todo-list ui-sortable">
-                                                                {this.state.employeeEducations.map(ee=> 
-                                                                    <li>
-                                                                        <span> {ee.grade} ( {ee.startYear} - {ee.endYear} )  {ee.institutionName} {ee.majors}</span>
-                                                                        <div class="tools">
-                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editEducation(ee.employeeEducationId)} 
-                                                                                data-toggle="modal" data-target="#editEducation"></i>&nbsp;
-                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getEducationId(ee.employeeEducationId)} 
-                                                                                data-toggle="modal" data-target="#deleteEducation"></i>
-                                                                        </div>
-                                                                    </li>
-                                                                  )}
-                                                            </ul>
-
-                                                         </div>
-                                                            
-                                                        </div>
-                                                    </div>
-
+                                                <Education 
+                                                    employeeEducations = {this.state.employeeEducations}
+                                                    editEducation = {this.editEducation}
+                                                    getEducationId = {this.getEducationId}
+                                                    deleteEducation = {this.deleteEducation}
+                                                    employeeEducationId = {this.state.employeeEducationId}
+                                                />
 
                                             </div>
 
 
                                             <div class="tab-pane" id="tab_course">
-
-                                                <a href="#" data-toggle="modal" data-target="#addCourse">+ Add Course</a>
-
-                                                <div class="box-body">
-                                                    <div class="row">
-                                                
-                                                    <div class="col-md-12">
-                                                        <ul class="todo-list ui-sortable">
-                                                        {this.state.employeeCourses.map(ec=> 
-                                                            <li>
-                                                                <span> {ec.courseName} ( {moment(ec.startDate).format("MM/DD/YYYY")} - {moment(ec.endDate).format("MM/DD/YYYY")} ) - {ec.provider}</span>
-                                                                <div class="tools">
-                                                                    <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editCourse(ec.employeeCourseId)} 
-                                                                        data-toggle="modal" data-target="#editCourse"></i>&nbsp;
-                                                                    <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getCourseId(ec.employeeCourseId)} 
-                                                                        data-toggle="modal" data-target="#deleteCourse"></i>
-                                                                </div>
-                                                            </li>
-                                                            )}
-                                                    </ul>
-
-                                                    </div>
-                                                        
-                                                    </div>
-                                                    </div>                       
-                                              
+                                            
+                                                 <Course 
+                                                    employeeCourses = {this.state.employeeCourses}
+                                                    editCourse = {this.editCourse}
+                                                    getCourseId = {this.getCourseId}
+                                                    deleteCourse = {this.deleteCourse}
+                                                    employeeCourseId = {this.state.employeeCourseId}
+                                                />
+                                            
                                             </div>
 
 
                                             <div class="tab-pane" id="tab_salaryComponent">
-
-                                                    <a href="#" data-toggle="modal" data-target="#addSalary">+ Add Salary</a>
-
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                    
-                                                            <div class="col-md-12">
-                                                              <ul class="todo-list ui-sortable">
-                                                                {this.state.employeeSalaries.map(es=> 
-                                                                    <li>
-                                                                        <span> {es.salaryComponent.componentName} = {es.amount} </span>
-                                                                        <div class="tools">
-                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editSalary(es.employeeSalaryId)} 
-                                                                                data-toggle="modal" data-target="#editSalary"></i>&nbsp;
-                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getSalaryId(es.employeeSalaryId)} 
-                                                                                data-toggle="modal" data-target="#deleteSalary"></i>
-                                                                        </div>
-                                                                    </li>
-                                                                  )}
-                                                            </ul>
-
-                                                         </div>
-                                                            
-                                                        </div>
-                                                    </div>
-
+       
+                                                 <Salary 
+                                                    employeeSalaries = {this.state.employeeSalaries}
+                                                    editSalary = {this.editSalary}
+                                                    getSalaryId = {this.getSalaryId}
+                                                    deleteSalary = {this.deleteSalary}
+                                                    employeeSalaryId = {this.state.employeeSalaryId}
+                                                />
 
                                              </div>
 
 
-
                                              <div class="tab-pane" id="tab_insurance">
 
-                                                <a href="#" data-toggle="modal" data-target="#addInsurance">+ Add Insurance</a>
-
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                    
-                                                            <div class="col-md-12">
-                                                              <ul class="todo-list ui-sortable">
-                                                                {this.state.employeeInsurances.map(ei=> 
-                                                                    <li>
-                                                                        <span> {ei.insuranceName} - {ei.insuranceNumber} - {moment(ei.effectifeDate).format("MM/DD/YYYY")} </span>
-                                                                        <div class="tools">
-                                                                            <i class="fa fa-edit" style={{color:'black'}} onClick={()=>this.editInsurance(ei.employeeInsuranceId)} 
-                                                                                data-toggle="modal" data-target="#editInsurance"></i>&nbsp;
-                                                                            <i class="fa fa-trash-o" style={{color:'black'}}  onClick={()=>this.getInsuranceId(ei.employeeInsuranceId)} 
-                                                                                data-toggle="modal" data-target="#deleteInsurance"></i>
-                                                                        </div>
-                                                                    </li>
-                                                                  )}
-                                                            </ul>
-
-                                                         </div>
-                                                            
-                                                        </div>
-                                                    </div>
-
-
+                                                 <Insurance 
+                                                    employeeInsurances = {this.state.employeeInsurances}
+                                                    editInsurance = {this.editInsurance}
+                                                    getInsuranceId = {this.getInsuranceId}
+                                                    deleteInsurance = {this.deleteInsurance}
+                                                    employeeInsuranceId = {this.state.employeeInsuranceId}
+                                                 />
 
                                             </div>
 
@@ -1198,7 +995,8 @@ export class EmployeeDetail extends Component
                                
 
                                         </div>
-                                </div>
+                                    
+                                    </div>
 
 
 

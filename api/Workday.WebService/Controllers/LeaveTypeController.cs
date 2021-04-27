@@ -115,7 +115,7 @@ namespace Workday.WebService
             int result = 0;
             try
             {
-                var leaveType = await context.Leaves.FindAsync(id);
+                var leaveType = await context.LeaveTypes.FindAsync(id);
                 context.Remove(leaveType);
                 result = await context.SaveChangesAsync();
             }
